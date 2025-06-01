@@ -4,7 +4,7 @@ import { getCarouselAnime } from "@/hooks/anime";
 import { HeroCarousel } from "@/components/fragments/carousel";
 import { Skeleton } from "@/components/ui/skeleton";
 
-export function HomePage() {
+export default function HomePage() {
   const [carousel, setCarousel] = useState([]);
   const [loading, setLoading] = useState(true);
 
