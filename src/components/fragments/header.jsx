@@ -4,6 +4,7 @@ import { House, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
+import { SfwToggle } from "@/components/fragments/sfw-toggle";
 import { ModeToggle } from "@/components/elements/theme/mode-toggle";
 
 export function Header() {
@@ -26,7 +27,7 @@ export function Header() {
 
   return (
     <header className="w-full bg-background">
-      {/* Top section with logo, search and theme toggle */}
+      {/* Top section with logo, search and toggles */}
       <div className="flex items-center justify-between p-4 max-w-7xl mx-auto">
         {/* Logo */}
         <div className="flex items-center">
@@ -52,7 +53,7 @@ export function Header() {
           </svg>
         </div>
 
-        {/* Mobile Search Toggle */}
+        {/* Mobile Search Toggle and Controls */}
         <div className="md:hidden flex items-center gap-2">
           <Button
             variant="ghost"
@@ -63,18 +64,20 @@ export function Header() {
             <Search className="h-5 w-5" />
           </Button>
           <ModeToggle />
+          <SfwToggle />
         </div>
 
-        {/* Desktop Search Bar */}
-        <div className="hidden md:flex min-w-lg flex-row gap-3">
+        {/* Desktop Search Bar and Controls */}
+        <div className="hidden md:flex min-w-lg flex-row gap-3 items-center">
           <div className="relative flex-1 max-w-md">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
             <Input type="search" placeholder="Search..." className="pl-10" />
           </div>
 
-          {/* Mode Toggle */}
-          <div className="flex items-center">
+          {/* Control toggles */}
+          <div className="flex items-center gap-2">
             <ModeToggle />
+            <SfwToggle />
           </div>
         </div>
       </div>

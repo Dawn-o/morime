@@ -1,60 +1,80 @@
 import { Suspense } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { HomeCarousel } from "@/components/fragments/carousel";
-import { getAnime, getUpcomingAnime } from "@/hooks/anime";
-import Image from "next/image";
-import { Separator } from "@/components/ui/separator";
+import { getAnime, getAnimeGenresList, getUpcomingAnime } from "@/hooks/anime";
+import { SectionHeader } from "@/components/fragments/section-header";
+import { AnimeCarousel } from "@/components/anime/anime-carousel";
 
 export default async function HomePage() {
-  const apiConfig = { type: "seasons/now?filter=tv", limit: 24 };
+  const upcomingApiConfig = { type: "seasons/now?filter=tv", limit: 20 };
+  const topApiConfig = { type: "top/anime?", limit: 20 };
 
-  const carouselItemsPromise = getUpcomingAnime();
-  const animesPromise = getAnime(1, apiConfig);
-
-  const [carouselItems, animes] = await Promise.all([
-    carouselItemsPromise,
-    animesPromise,
+  // Parallel data fetching
+  const [carouselItems, animes, topAnimes, genresList] = await Promise.all([
+    getUpcomingAnime(),
+    getAnime(1, upcomingApiConfig),
+    getAnime(1, topApiConfig),
+    getAnimeGenresList(),
   ]);
 
   return (
-    <>
-      <Suspense
-        fallback={
-          <Skeleton className="w-full h-[25vh] md:h-[40vh] lg:h-[60vh] rounded-lg" />
-        }
-      >
-        <div className="bg-primary-foreground">
-          <HomeCarousel items={carouselItems} />
-          <Separator />
-          <div className="w-full relative p-4 md:p-8">
-            <h1 className="text-2xl font-bold pb-6">Ongoing Anime</h1>
-            <div className="grid grid-cols-3 lg:grid-cols-6 gap-4 md:gap-6">
-              {animes.data.map((anime) => (
-                <div
-                  className="w-full md:max-w-[15rem] h-auto aspect-[2/3]"
-                  key={anime.mal_id * 0.1 * Math.random()}
-                >
-                  <div className="w-full h-full overflow-hidden rounded-lg shadow-[0_0_20px_rgba(0,0,0,0.3)] relative">
-                    <Image
-                      src={anime.images.webp.image_url}
-                      alt={anime.title}
-                      fill
-                      className="object-cover"
-                      sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 15rem"
-                    />
-                  </div>
-                  <p className="text-sm lg:text-base pt-1 truncate">
-                    {anime.title}
-                  </p>
-                  <div className="text-sm text-muted-foreground truncate">
-                    {anime.year}
+    <main className="min-h-screen pb-12">
+      {/* Hero Section */}
+      <section className="mb-12">
+        <Suspense
+          fallback={
+            <div className="w-full h-[25vh] md:h-[40vh] lg:h-[60vh] rounded-lg overflow-hidden bg-muted/50">
+              <div className="grid grid-cols-1 lg:grid-cols-3 h-full relative">
+                <div className="flex flex-col lg:flex-row lg:items-end gap-6 p-8 lg:col-span-2">
+                  <Skeleton className="hidden lg:block w-48 h-72 rounded-lg" />
+                  <div className="flex flex-col justify-end flex-1 space-y-3">
+                    <Skeleton className="h-5 w-20" />
+                    <Skeleton className="h-8 w-3/4" />
+                    <Skeleton className="h-5 w-1/2" />
+                    <div className="flex gap-2 mt-2">
+                      <Skeleton className="h-6 w-16" />
+                      <Skeleton className="h-6 w-16" />
+                      <Skeleton className="h-6 w-16" />
+                    </div>
                   </div>
                 </div>
-              ))}
+              </div>
             </div>
+          }
+        >
+          <div className="bg-primary-foreground rounded-lg overflow-hidden shadow-xl">
+            <HomeCarousel items={carouselItems} />
           </div>
+        </Suspense>
+      </section>
+
+      {/* Top Rated Section */}
+      <section className="mb-12">
+        <div className="container px-4 mx-auto">
+          <SectionHeader
+            title="Top Rated"
+            subtitle="Most popular among fans"
+            viewAllLink="/anime/top"
+          />
+          <AnimeCarousel animes={topAnimes.data} />
         </div>
-      </Suspense>
-    </>
+      </section>
+
+      {/* Current Season Section */}
+      <section>
+        <div className="container px-4 mx-auto">
+          <SectionHeader
+            title="Ongoing Anime"
+            subtitle="Currently airing this season"
+            viewAllLink="/anime/season/current"
+          />
+          <AnimeCarousel animes={animes.data} />
+        </div>
+      </section>
+
+      <section>
+        
+      </section>
+    </main>
   );
 }

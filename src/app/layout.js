@@ -20,7 +20,7 @@ export default function RootLayout({ children }) {
       <body className={`${poppins.variable} font-sans`}>
         <ThemeProvider
           attribute="class"
-          defaultTheme="system"
+          defaultTheme="dark"
           enableSystem
           disableTransitionOnChange
         >

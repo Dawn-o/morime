@@ -1,12 +1,34 @@
 import { notFound } from 'next/navigation';
+import { cookies } from 'next/headers';
 
 // API base configuration
 const API_BASE = 'https://api.jikan.moe/v4';
 
 // Revalidation times
-const CACHE_SHORT = { next: { revalidate: 60 } };        // 1 minute
-const CACHE_MEDIUM = { next: { revalidate: 3600 } };     // 1 hour
-const CACHE_LONG = { next: { revalidate: 86400 } };      // 1 day
+const CACHE_SHORT = { next: { revalidate: 60 } }; // 1 minute
+const CACHE_MEDIUM = { next: { revalidate: 3600 } }; // 1 hour
+const CACHE_LONG = { next: { revalidate: 86400 } }; // 1 day
+
+/**
+ * Helper to get SFW mode from cookie (default: true)
+ */
+async function getSfwParam() {
+  try {
+    const cookieStore = await cookies(); // Must await cookies()
+    const sfw = cookieStore.get('sfw');
+    return sfw?.value === 'false' ? 'false' : 'true';
+  } catch {
+    return 'true';
+  }
+}
+
+/**
+ * Helper to append sfw param to url
+ */
+async function appendSfw(url) {
+  const sfw = await getSfwParam(); // Must await the result
+  return url + (url.includes('?') ? '&' : '?') + `sfw=${sfw}`;
+}
 
 /**
  * Get anime list with pagination
@@ -15,10 +37,10 @@ export async function getAnime(page = 1, apiConfig) {
   const { type, limit = 24 } = apiConfig;
 
   try {
-    const response = await fetch(
-      `${API_BASE}/${type}&limit=${limit}&page=${page}`,
-      CACHE_SHORT
-    );
+    let url = `${API_BASE}/${type}&limit=${limit}&page=${page}`;
+    url = await appendSfw(url); // Must await the result
+
+    const response = await fetch(url, CACHE_SHORT);
 
     if (!response.ok) {
       throw new Error(`API error: ${response.status}`);
@@ -34,7 +56,7 @@ export async function getAnime(page = 1, apiConfig) {
     const totalPages = Math.ceil(totalItems / limit);
 
     return {
-      data: data.data,
+      data: deduplicateAnimeById(data.data),
       totalPages,
       currentPage: page,
     };
@@ -42,6 +64,23 @@ export async function getAnime(page = 1, apiConfig) {
     console.error("Error fetching anime list:", error);
     return { data: [], totalPages: 0, currentPage: page };
   }
+}
+
+/**
+ * Helper function to deduplicate anime arrays by mal_id
+ */
+function deduplicateAnimeById(animeArray) {
+  const uniqueData = [];
+  const seenIds = new Set();
+
+  for (const item of animeArray || []) {
+    if (item.mal_id && !seenIds.has(item.mal_id)) {
+      seenIds.add(item.mal_id);
+      uniqueData.push(item);
+    }
+  }
+
+  return uniqueData;
 }
 
 /**
@@ -59,7 +98,7 @@ export async function getUpcomingAnime(limit = 6) {
     }
 
     const data = await response.json();
-    return data.data || [];
+    return deduplicateAnimeById(data.data);
   } catch (error) {
     console.error('Failed to fetch carousel anime:', error);
     return [];
@@ -118,8 +157,17 @@ export async function getEpisodeAnime(malId) {
  */
 export async function getAnimeGenresList() {
   try {
+    // For genres, we need to use filter=explicit_genres instead of sfw
+    let url = `${API_BASE}/genres/anime`;
+    
+    // Add the explicit_genres filter based on SFW setting
+    const sfw = await getSfwParam();
+    if (sfw === 'true') {
+      url = url + (url.includes('?') ? '&' : '?') + 'filter=genres';
+    }
+    
     const response = await fetch(
-      `${API_BASE}/genres/anime`,
+      url,
       CACHE_LONG // Genres rarely change
     );
 
@@ -143,7 +191,7 @@ export async function getAnimeGenre(page = 1, apiConfig, malId) {
 
   try {
     const response = await fetch(
-      `${baseURL}${malId}&limit=${limit}&page=${page}`,
+      url,
       CACHE_SHORT
     );
 
@@ -161,7 +209,7 @@ export async function getAnimeGenre(page = 1, apiConfig, malId) {
     const totalPages = Math.ceil(totalItems / limit);
 
     return {
-      data: data.data,
+      data: deduplicateAnimeById(data.data),
       totalPages,
       currentPage: page,
     };
