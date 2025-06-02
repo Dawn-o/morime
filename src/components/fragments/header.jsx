@@ -25,7 +25,7 @@ export function Header() {
   ];
 
   return (
-    <header className="text-card-foreground w-full container absolute top-0 z-50">
+    <header className="sticky top-0 z-50 w-full bg-background">
       {/* Top section with logo, search and theme toggle */}
       <div className="flex items-center justify-between p-4 max-w-7xl mx-auto">
         {/* Logo */}
@@ -93,7 +93,7 @@ export function Header() {
 
       {/* Scrollable Navigation Menu (All screen sizes) */}
       <div className="overflow-x-auto scrollbar-hide">
-        <div className="flex items-center justify-normal lg:justify-center gap-1 p-2 mx-auto whitespace-nowrap lg:flex-wrap">
+        <div className="flex items-center justify-normal gap-1 p-2 mx-auto whitespace-nowrap">
           <Button
             variant="secondary"
             size="sm"
