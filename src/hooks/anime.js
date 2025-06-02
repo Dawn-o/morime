@@ -1,102 +1,172 @@
-import axios from "axios";
-import rateLimit from "axios-rate-limit";
-const api = axios.create();
+import { notFound } from 'next/navigation';
 
-const apiWithRateLimit = rateLimit(api, {
-  maxRequests: 1,
-  perMilliseconds: 1000,
-});
+// API base configuration
+const API_BASE = 'https://api.jikan.moe/v4';
 
-export const getAnime = async (page, apiConfig) => {
-  const { baseURL, limit } = apiConfig;
-  const itemsPerPage = limit || 24;
+// Revalidation times
+const CACHE_SHORT = { next: { revalidate: 60 } };        // 1 minute
+const CACHE_MEDIUM = { next: { revalidate: 3600 } };     // 1 hour
+const CACHE_LONG = { next: { revalidate: 86400 } };      // 1 day
+
+/**
+ * Get anime list with pagination
+ */
+export async function getAnime(page = 1, apiConfig) {
+  const { type, limit = 24 } = apiConfig;
+
   try {
-    const response = await apiWithRateLimit.get(
-      `${baseURL}&limit=${itemsPerPage}&page=${page}`
+    const response = await fetch(
+      `${API_BASE}/${type}&limit=${limit}&page=${page}`,
+      CACHE_SHORT
     );
-    const data = response.data;
-    if (!data || !data.data || !data.pagination || !data.pagination.items) {
+
+    if (!response.ok) {
+      throw new Error(`API error: ${response.status}`);
+    }
+
+    const data = await response.json();
+
+    if (!data?.data || !data?.pagination?.items) {
       throw new Error("Invalid API response format");
     }
+
     const totalItems = data.pagination.items.total;
-    const totalPages = Math.ceil(totalItems / itemsPerPage);
+    const totalPages = Math.ceil(totalItems / limit);
+
     return {
-      data: data.data || [],
-      totalPages: totalPages || 0,
+      data: data.data,
+      totalPages,
+      currentPage: page,
     };
   } catch (error) {
-    console.log(error);
-    throw error;
-  } finally {
-    console.log("success");
+    console.error("Error fetching anime list:", error);
+    return { data: [], totalPages: 0, currentPage: page };
   }
-};
+}
 
-export const getCarouselAnime = async (callback) => {
+/**
+ * Get upcoming anime for carousel
+ */
+export async function getUpcomingAnime(limit = 6) {
   try {
-    const response = await apiWithRateLimit.get(
-      `https://api.jikan.moe/v4/seasons/upcoming?limit=6`
+    const response = await fetch(
+      `${API_BASE}/seasons/upcoming?limit=${limit}`,
+      CACHE_MEDIUM // Cache for longer since upcoming doesn't change often
     );
-    callback(response.data.data);
+
+    if (!response.ok) {
+      throw new Error(`API error: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data.data || [];
   } catch (error) {
-    console.error(error);
+    console.error('Failed to fetch carousel anime:', error);
+    return [];
   }
-};
+}
 
-export const getDetailAnime = async (mal_id, callback) => {
+/**
+ * Get detailed anime information
+ */
+export async function getDetailAnime(malId) {
   try {
-    const response = await apiWithRateLimit.get(
-      `https://api.jikan.moe/v4/anime/${mal_id}/full`
+    const response = await fetch(
+      `${API_BASE}/anime/${malId}/full`,
+      CACHE_MEDIUM
     );
-    callback(response.data.data);
+
+    if (!response.ok) {
+      if (response.status === 404) {
+        notFound(); // Uses Next.js not-found.js page
+      }
+      throw new Error(`API error: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data.data;
   } catch (error) {
-    console.error(error);
+    console.error(`Error fetching anime details for ID ${malId}:`, error);
+    throw error; // Let the component handle the error
   }
-};
+}
 
-export const getEpisodeAnime = async (mal_id, callback) => {
+/**
+ * Get anime episodes
+ */
+export async function getEpisodeAnime(malId) {
   try {
-    const response = await apiWithRateLimit.get(
-      `https://api.jikan.moe/v4/anime/${mal_id}/episodes`
+    const response = await fetch(
+      `${API_BASE}/anime/${malId}/episodes`,
+      CACHE_SHORT // Episodes may update frequently
     );
-    callback(response.data.data);
+
+    if (!response.ok) {
+      throw new Error(`API error: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data.data || [];
   } catch (error) {
-    console.error(error);
+    console.error(`Error fetching episodes for ID ${malId}:`, error);
+    return [];
   }
-};
+}
 
-export const getAnimeGenresList = async (callback) => {
+/**
+ * Get anime genres list
+ */
+export async function getAnimeGenresList() {
   try {
-    const response = await apiWithRateLimit.get(
-      `https://api.jikan.moe/v4/genres/anime`
+    const response = await fetch(
+      `${API_BASE}/genres/anime`,
+      CACHE_LONG // Genres rarely change
     );
-    callback(response.data.data);
+
+    if (!response.ok) {
+      throw new Error(`API error: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data.data || [];
   } catch (error) {
-    console.error(error);
+    console.error('Error fetching anime genres list:', error);
+    return [];
   }
-};
+}
 
-export const getAnimeGenre = async (page, apiConfig, mal_id) => {
-  const { baseURL, limit } = apiConfig;
-  const itemsPerPage = limit || 24;
+/**
+ * Get anime by genre
+ */
+export async function getAnimeGenre(page = 1, apiConfig, malId) {
+  const { baseURL, limit = 24 } = apiConfig;
+
   try {
-    const response = await apiWithRateLimit.get(
-      `${baseURL}${mal_id}&limit=${itemsPerPage}&page=${page}`
+    const response = await fetch(
+      `${baseURL}${malId}&limit=${limit}&page=${page}`,
+      CACHE_SHORT
     );
-    const data = response.data;
-    if (!data || !data.data || !data.pagination || !data.pagination.items) {
+
+    if (!response.ok) {
+      throw new Error(`API error: ${response.status}`);
+    }
+
+    const data = await response.json();
+
+    if (!data?.data || !data?.pagination?.items) {
       throw new Error("Invalid API response format");
     }
+
     const totalItems = data.pagination.items.total;
-    const totalPages = Math.ceil(totalItems / itemsPerPage);
+    const totalPages = Math.ceil(totalItems / limit);
+
     return {
-      data: data.data || [],
-      totalPages: totalPages || 0,
+      data: data.data,
+      totalPages,
+      currentPage: page,
     };
   } catch (error) {
-    console.log(error);
-    throw error;
-  } finally {
-    console.log("success");
+    console.error(`Error fetching anime for genre ${malId}:`, error);
+    return { data: [], totalPages: 0, currentPage: page };
   }
-};
+}

@@ -25,7 +25,7 @@ export function Header() {
   ];
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-background">
+    <header className="w-full bg-background">
       {/* Top section with logo, search and theme toggle */}
       <div className="flex items-center justify-between p-4 max-w-7xl mx-auto">
         {/* Logo */}

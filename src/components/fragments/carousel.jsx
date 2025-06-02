@@ -41,7 +41,7 @@ export function HomeCarousel({ items = [] }) {
   if (!items.length) return null;
 
   return (
-    <div className="dark relative overflow-hidden rounded-lg">
+    <div className="dark relative overflow-hidden">
       <Carousel
         setApi={setApi}
         plugins={[plugin.current]}
@@ -75,7 +75,7 @@ export function HomeCarousel({ items = [] }) {
                   ) : (
                     <div className="w-full h-full bg-gray-900/50"></div>
                   )}
-                  {/* Overlay gradient from left to right */}
+                  {/* Overlay gradient */}
                   <div className="absolute inset-0 bg-gradient-to-t lg:bg-gradient-to-r from-primary-foreground from-15% lg:from-1% via-primary-foreground/90 via-30% lg:via-5% to-transparent to-70% lg:to-100%"></div>
                 </div>
               </div>
@@ -86,9 +86,9 @@ export function HomeCarousel({ items = [] }) {
                   {/* Left poster image */}
                   <div className="hidden lg:block w-48 h-72 flex-shrink-0">
                     <div className="w-full h-full overflow-hidden rounded-lg shadow-[0_0_20px_rgba(0,0,0,0.3)] relative">
-                      {item.images?.jpg?.large_image_url && (
+                      {item.images?.webp?.large_image_url && (
                         <Image
-                          src={item.images.jpg.large_image_url}
+                          src={item.images.webp.large_image_url}
                           alt={`${item.title} cover`}
                           fill
                           className="object-cover"
