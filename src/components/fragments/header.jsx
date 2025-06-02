@@ -6,6 +6,8 @@ import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { SfwToggle } from "@/components/fragments/sfw-toggle";
 import { ModeToggle } from "@/components/elements/theme/mode-toggle";
+import Link from "next/link";
+import { toSnakeCase } from "@/lib/utils";
 
 export function Header() {
   const [isSearchVisible, setIsSearchVisible] = useState(false);
@@ -30,7 +32,7 @@ export function Header() {
       {/* Top section with logo, search and toggles */}
       <div className="flex items-center justify-between p-4 max-w-7xl mx-auto">
         {/* Logo */}
-        <div className="flex items-center">
+        <Link href="/" className="flex items-center">
           <svg
             width="135"
             height="40"
@@ -51,7 +53,7 @@ export function Header() {
               MORIME
             </text>
           </svg>
-        </div>
+        </Link>
 
         {/* Mobile Search Toggle and Controls */}
         <div className="md:hidden flex items-center gap-2">
@@ -59,7 +61,7 @@ export function Header() {
             variant="ghost"
             size="icon"
             onClick={() => setIsSearchVisible(!isSearchVisible)}
-            className="relative"
+            className="relative cursor-pointer"
           >
             <Search className="h-5 w-5" />
           </Button>
@@ -96,7 +98,7 @@ export function Header() {
 
       {/* Scrollable Navigation Menu (All screen sizes) */}
       <div className="overflow-x-auto scrollbar-hide">
-        <div className="flex items-center justify-normal gap-1 p-2 mx-auto whitespace-nowrap">
+        <div className="flex items-center justify-normal 2xl:justify-center gap-1 p-2 mx-auto whitespace-nowrap 2xl:flex">
           <Button
             variant="secondary"
             size="sm"
@@ -105,14 +107,15 @@ export function Header() {
             <House />
           </Button>
           {navItems.map((item, index) => (
-            <Button
-              key={index}
-              variant="secondary"
-              size="sm"
-              className="text-xs cursor-pointer flex-shrink-0"
-            >
-              {item.label}
-            </Button>
+            <Link key={index} href={`/${toSnakeCase(item.label)}`}>
+              <Button
+                variant="secondary"
+                size="sm"
+                className="text-xs cursor-pointer flex-shrink-0"
+              >
+                {item.label}
+              </Button>
+            </Link>
           ))}
         </div>
       </div>

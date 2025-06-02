@@ -1,17 +1,14 @@
 import { Header } from "@/components/fragments/header";
 import { Footer } from "@/components/fragments/footer";
-import HomePage from "@/pages/home";
 
-export default function Home() {
+export default function AnimeDetailsLayout({ children }) {
   return (
     <>
       <div className="bg-background text-foreground min-h-screen flex flex-col">
-        <div className="container mx-auto">
-          <Header />
-          <div className="flex-grow">
-            <HomePage />
-          </div>
-        </div>
+        <Header />
+        <main className="flex-grow">
+          {children}
+        </main>
         <Footer />
       </div>
     </>

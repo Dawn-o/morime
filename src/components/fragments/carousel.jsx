@@ -86,7 +86,7 @@ export function HomeCarousel({ items = [] }) {
                     <div className="w-full h-full bg-gray-900/50"></div>
                   )}
                   {/* Overlay gradient */}
-                  <div className="absolute inset-0 bg-gradient-to-t lg:bg-gradient-to-r from-primary-foreground from-15% lg:from-1% via-primary-foreground/90 via-30% lg:via-5% to-transparent to-70% lg:to-100%"></div>
+                  <div className="absolute inset-0 -left-1 bg-gradient-to-t lg:bg-gradient-to-r from-primary-foreground from-15% lg:from-1% via-primary-foreground/90 via-30% lg:via-5% to-transparent to-70% lg:to-100%"></div>
                 </div>
               </div>
 

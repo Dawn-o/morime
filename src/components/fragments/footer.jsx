@@ -7,10 +7,12 @@ import { toSnakeCase } from "@/lib/utils";
 export async function Footer() {
   const topApiConfig = { type: "top/anime?", limit: 5 };
   const topAiringApiConfig = { type: "top/anime?filter=airing", limit: 5 };
+  const mostPopularApiConfig = { type: "top/anime?filter=bypopularity", limit: 5 };
 
-  const [topAnimes, topAiringAnimes] = await Promise.all([
+  const [topAnimes, topAiringAnimes, mostPopularAnimes] = await Promise.all([
     getAnime(1, topApiConfig),
     getAnime(1, topAiringApiConfig),
+    getAnime(1, mostPopularApiConfig),
   ]);
   return (
     <footer className="bg-background border-t">
@@ -67,7 +69,7 @@ export async function Footer() {
             </div>
 
             <div>
-              <h3 className="font-bold text-lg mb-4">Top Airing Anime</h3>
+              <h3 className="font-bold text-lg mb-4">Top Airing</h3>
               <ul className="space-y-2">
                 {topAiringAnimes.data.map((anime) => (
                   <li key={anime.mal_id}>
@@ -85,48 +87,20 @@ export async function Footer() {
             </div>
 
             <div>
-              <h3 className="font-bold text-lg mb-4">Quick Link</h3>
+              <h3 className="font-bold text-lg mb-4">Most Popular</h3>
               <ul className="space-y-2">
-                <li>
-                  <Link
-                    href="/"
-                    className="text-muted-foreground hover:text-foreground"
-                  >
-                    Home
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/anime"
-                    className="text-muted-foreground hover:text-foreground"
-                  >
-                    Anime List
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/top-anime"
-                    className="text-muted-foreground hover:text-foreground"
-                  >
-                    Top Anime
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/genres"
-                    className="text-muted-foreground hover:text-foreground"
-                  >
-                    Genres
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/schedule"
-                    className="text-muted-foreground hover:text-foreground"
-                  >
-                    Schedule
-                  </Link>
-                </li>
+                {mostPopularAnimes.data.map((anime) => (
+                  <li key={anime.mal_id}>
+                    <Link
+                      href={`/anime/${anime.mal_id}/${toSnakeCase(
+                        anime.title
+                      )}`}
+                      className="text-muted-foreground hover:text-foreground"
+                    >
+                      {anime.title}
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </div>
           </div>
