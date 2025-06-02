@@ -12,7 +12,8 @@ import {
 } from "@/components/ui/carousel";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { cn, toSnakeCase } from "@/lib/utils";
+import Link from "next/link";
 
 export function HomeCarousel({ items = [] }) {
   const [api, setApi] = useState(null);
@@ -54,8 +55,17 @@ export function HomeCarousel({ items = [] }) {
       >
         <CarouselContent>
           {items.map((item, index) => (
-            <CarouselItem key={index} className="relative h-[25vh] md:h-[40vh] lg:h-[60vh]">
+            <CarouselItem
+              key={index}
+              className="relative h-[25vh] md:h-[40vh] lg:h-[60vh]"
+            >
               {/* Background elements with split design */}
+              <Link
+                href={`/anime/${item.mal_id}/${toSnakeCase(item.title)}`}
+                className="absolute inset-0 z-30 cursor-pointer"
+                aria-label={`View details for ${item.title}`}
+              />
+
               <div className="absolute inset-0 grid grid-cols-1 lg:grid-cols-3 z-0">
                 {/* Left side - Gradient background */}
                 <div className="hidden lg:block bg-primary-foreground"></div>

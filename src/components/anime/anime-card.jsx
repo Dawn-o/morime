@@ -1,11 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Star, Calendar, Clock } from "lucide-react";
+import { toSnakeCase } from "@/lib/utils";
 
 export function AnimeCard({ anime }) {
   return (
     <Link
-      href={`/anime/${anime.mal_id}`}
+      href={`/anime/${anime.mal_id}/${toSnakeCase(anime.title)}`}
       className="group transition-all duration-300 hover:-translate-y-1"
     >
       <div className="w-full h-auto aspect-[2/3] flex flex-col">
