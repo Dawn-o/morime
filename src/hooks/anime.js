@@ -157,15 +157,9 @@ export async function getEpisodeAnime(malId) {
  */
 export async function getAnimeGenresList() {
   try {
-    // For genres, we need to use filter=explicit_genres instead of sfw
-    let url = `${API_BASE}/genres/anime`;
-    
-    // Add the explicit_genres filter based on SFW setting
-    const sfw = await getSfwParam();
-    if (sfw === 'true') {
-      url = url + (url.includes('?') ? '&' : '?') + 'filter=genres';
-    }
-    
+    // Just fetch all genres without special filtering
+    const url = `${API_BASE}/genres/anime`;
+
     const response = await fetch(
       url,
       CACHE_LONG // Genres rarely change

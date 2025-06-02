@@ -1,0 +1,149 @@
+import Link from "next/link";
+import { Github, Twitter, Instagram } from "lucide-react";
+import { Separator } from "@/components/ui/separator";
+import { getAnime } from "@/hooks/anime";
+import { toSnakeCase } from "@/lib/utils";
+
+export async function Footer() {
+  const topApiConfig = { type: "top/anime?", limit: 5 };
+  const topAiringApiConfig = { type: "top/anime?filter=airing", limit: 5 };
+
+  const [topAnimes, topAiringAnimes] = await Promise.all([
+    getAnime(1, topApiConfig),
+    getAnime(1, topAiringApiConfig),
+  ]);
+  return (
+    <footer className="bg-background border-t">
+      <div className="container mx-auto py-8 px-4">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div>
+            <h3 className="font-bold text-lg mb-4">Morime</h3>
+            <p className="text-muted-foreground text-sm">
+              Your ultimate anime & manga tracking platform with comprehensive
+              database and personalized recommendations.
+            </p>
+            <div className="flex mt-4 space-x-4">
+              <Link
+                href="https://github.com/dawn-o"
+                className="text-muted-foreground hover:text-foreground"
+              >
+                <Github size={20} />
+                <span className="sr-only">GitHub</span>
+              </Link>
+              <Link
+                href="https://twitter.com"
+                className="text-muted-foreground hover:text-foreground"
+              >
+                <Twitter size={20} />
+                <span className="sr-only">Twitter</span>
+              </Link>
+              <Link
+                href="https://instagram.com/dawn_bloodfallen"
+                className="text-muted-foreground hover:text-foreground"
+              >
+                <Instagram size={20} />
+                <span className="sr-only">Instagram</span>
+              </Link>
+            </div>
+          </div>
+
+          <div className="flex flex-col md:flex-row items-normal md:items-center justify-normal md:justify-around colspan-1 md:col-span-3 gap-8">
+            <div>
+              <h3 className="font-bold text-lg mb-4">Top Anime</h3>
+              <ul className="space-y-2">
+                {topAnimes.data.map((anime) => (
+                  <li key={anime.mal_id}>
+                    <Link
+                      href={`/anime/${anime.mal_id}/${toSnakeCase(
+                        anime.title
+                      )}`}
+                      className="text-muted-foreground hover:text-foreground"
+                    >
+                      {anime.title}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="font-bold text-lg mb-4">Top Airing Anime</h3>
+              <ul className="space-y-2">
+                {topAiringAnimes.data.map((anime) => (
+                  <li key={anime.mal_id}>
+                    <Link
+                      href={`/anime/${anime.mal_id}/${toSnakeCase(
+                        anime.title
+                      )}`}
+                      className="text-muted-foreground hover:text-foreground"
+                    >
+                      {anime.title}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="font-bold text-lg mb-4">Quick Link</h3>
+              <ul className="space-y-2">
+                <li>
+                  <Link
+                    href="/"
+                    className="text-muted-foreground hover:text-foreground"
+                  >
+                    Home
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/anime"
+                    className="text-muted-foreground hover:text-foreground"
+                  >
+                    Anime List
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/top-anime"
+                    className="text-muted-foreground hover:text-foreground"
+                  >
+                    Top Anime
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/genres"
+                    className="text-muted-foreground hover:text-foreground"
+                  >
+                    Genres
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/schedule"
+                    className="text-muted-foreground hover:text-foreground"
+                  >
+                    Schedule
+                  </Link>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <Separator className="my-8" />
+
+        <div className="flex flex-col md:flex-row justify-between items-center text-sm text-muted-foreground">
+          <p>© 2025 Morime. All rights reserved.</p>
+          <p className="mt-2 md:mt-0">
+            Powered by{" "}
+            <Link href="https://jikan.moe/" className="underline">
+              Jikan API
+            </Link>
+          </p>
+        </div>
+      </div>
+    </footer>
+  );
+}

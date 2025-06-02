@@ -4,6 +4,8 @@ import { HomeCarousel } from "@/components/fragments/carousel";
 import { getAnime, getAnimeGenresList, getUpcomingAnime } from "@/hooks/anime";
 import { SectionHeader } from "@/components/fragments/section-header";
 import { AnimeCarousel } from "@/components/anime/anime-carousel";
+import { GenreGrid } from "@/components/anime/genre-grid";
+import { Separator } from "@/components/ui/separator";
 
 export default async function HomePage() {
   const upcomingApiConfig = { type: "seasons/now?filter=tv", limit: 20 };
@@ -61,7 +63,7 @@ export default async function HomePage() {
       </section>
 
       {/* Current Season Section */}
-      <section>
+      <section className="mb-12">
         <div className="container px-4 mx-auto">
           <SectionHeader
             title="Ongoing Anime"
@@ -73,7 +75,9 @@ export default async function HomePage() {
       </section>
 
       <section>
-        
+        <div className="container p-4 mx-auto border border-primary-foreground">
+          <GenreGrid genres={genresList} />
+        </div>
       </section>
     </main>
   );
