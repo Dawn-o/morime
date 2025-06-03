@@ -39,7 +39,7 @@ export default async function AnimeDetailsPage({ params }) {
     return (
         <>
             {/* Hero Banner Section */}
-            <section className="w-full min-h-[40vh] sm:min-h-[45vh] md:min-h-[50vh] relative overflow-hidden bg-gradient-to-b from-background/80 to-background">
+            <section className="w-full min-h-[40vh] md:h-[40vh] relative overflow-hidden bg-gradient-to-b from-background/80 to-background">
                 {animeData.images?.jpg?.large_image_url && (
                     <>
                         {/* Better Background Image with Overlay */}
