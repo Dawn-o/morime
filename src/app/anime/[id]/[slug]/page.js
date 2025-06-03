@@ -39,7 +39,7 @@ export default async function AnimeDetailsPage({ params }) {
     return (
         <>
             {/* Hero Banner Section */}
-            <section className="w-full h-[40vh] sm:h-[35vh] md:h-[40vh] relative overflow-hidden bg-gradient-to-b from-background/80 to-background">
+            <section className="w-full min-h-[40vh] sm:min-h-[45vh] md:min-h-[50vh] relative overflow-hidden bg-gradient-to-b from-background/80 to-background">
                 {animeData.images?.jpg?.large_image_url && (
                     <>
                         {/* Better Background Image with Overlay */}
@@ -71,12 +71,10 @@ export default async function AnimeDetailsPage({ params }) {
 
                 {/* Content - Better mobile layout */}
                 <div className="container mx-auto h-full relative z-10 px-4">
-                    <div className="flex h-full items-end pb-0 md:pb-8 pt-14 sm:pt-0">
+                    <div className="flex h-full items-end pb-6 md:pb-8 pt-16 sm:pt-20">
                         <div className="flex flex-col sm:flex-row w-full gap-4 sm:gap-6 items-center sm:items-start md:items-end">
                             {/* Poster - Improved sizing and positioning on mobile */}
-                            <div className="h-[170px] w-[120px] sm:h-[200px] sm:w-[140px] lg:h-[240px] lg:w-[170px] 
-                              rounded-lg overflow-hidden shadow-xl shrink-0 -mt-16 sm:mt-0 sm:mb-0 
-                              ring-2 ring-white/10 bg-card">
+                            <div className="h-[170px] w-[120px] sm:h-[200px] sm:w-[140px] lg:h-[240px] lg:w-[170px] rounded-lg overflow-hidden shadow-xl shrink-0 -mt-12 sm:-mt-16 md:-mt-20 sm:mb-0 ring-2 ring-white/10 bg-card">
                                 {animeData.images?.jpg?.large_image_url && (
                                     <Image
                                         src={animeData.images.jpg.large_image_url}
@@ -90,7 +88,7 @@ export default async function AnimeDetailsPage({ params }) {
                             </div>
 
                             {/* Title section - Better spacing on mobile */}
-                            <div className="text-center sm:text-left max-w-full">
+                            <div className="flex-1 text-center sm:text-left max-w-full">
                                 {/* Type Badge - Simplified for mobile */}
                                 <div className="flex items-center justify-center sm:justify-start flex-wrap gap-1.5 mb-1.5 sm:mb-2">
                                     <Badge variant="secondary" className="text-xs sm:text-sm">
@@ -191,6 +189,16 @@ export default async function AnimeDetailsPage({ params }) {
                     <div className="md:col-span-1">
                         {/* Info Table - More compact on mobile */}
                         <div className="bg-card rounded-lg p-3 sm:p-4 shadow-sm sm:shadow divide-y divide-border">
+                            {/* Add full title display for long titles */}
+                            {animeData.title && animeData.title.length > 50 && (
+                                <div className="py-1.5 sm:py-2">
+                                    <span className="text-xs sm:text-sm font-medium">Title</span>
+                                    <p className="text-xs sm:text-sm text-muted-foreground break-words">
+                                        {animeData.title}
+                                    </p>
+                                </div>
+                            )}
+
                             <div className="py-1.5 sm:py-2">
                                 <span className="text-xs sm:text-sm font-medium">Status</span>
                                 <p className="text-xs sm:text-sm text-muted-foreground">{animeData.status || "N/A"}</p>
