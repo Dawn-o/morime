@@ -56,11 +56,6 @@ export default async function HomePage() {
 
       <section>
         <div className="container px-4 mx-auto">
-          <SectionHeader
-            title="Popular Genres"
-            subtitle="Explore anime by category"
-            viewAllLink="/genres"
-          />
           <Suspense fallback={<GenreGridSkeleton />}>
             <div className="border border-primary-foreground p-4 rounded-lg">
               <GenreGrid genres={genresList} />

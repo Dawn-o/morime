@@ -71,7 +71,7 @@ export default async function AnimeDetailsPage({ params }) {
 
                 {/* Content - Better mobile layout */}
                 <div className="container mx-auto h-full relative z-10 px-4">
-                    <div className="flex h-full items-end pb-6 md:pb-8 pt-14 sm:pt-0">
+                    <div className="flex h-full items-end pb-0 md:pb-8 pt-14 sm:pt-0">
                         <div className="flex flex-col sm:flex-row w-full gap-4 sm:gap-6 items-center sm:items-start md:items-end">
                             {/* Poster - Improved sizing and positioning on mobile */}
                             <div className="h-[170px] w-[120px] sm:h-[200px] sm:w-[140px] lg:h-[240px] lg:w-[170px] 
@@ -90,7 +90,7 @@ export default async function AnimeDetailsPage({ params }) {
                             </div>
 
                             {/* Title section - Better spacing on mobile */}
-                            <div className="flex-1 text-center sm:text-left max-w-full">
+                            <div className="text-center sm:text-left max-w-full">
                                 {/* Type Badge - Simplified for mobile */}
                                 <div className="flex items-center justify-center sm:justify-start flex-wrap gap-1.5 mb-1.5 sm:mb-2">
                                     <Badge variant="secondary" className="text-xs sm:text-sm">
@@ -106,8 +106,8 @@ export default async function AnimeDetailsPage({ params }) {
                                                         : "default"
                                             }
                                             className={`text-xs sm:text-sm ${animeData.status.toLowerCase().includes("not yet aired")
-                                                    ? "font-medium"
-                                                    : ""
+                                                ? "font-medium"
+                                                : ""
                                                 }`}
                                         >
                                             {animeData.status.includes("Currently")

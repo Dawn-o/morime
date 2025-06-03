@@ -155,14 +155,6 @@ export function HomeCarousel({ items = [] }) {
             </CarouselItem>
           ))}
         </CarouselContent>
-
-        {/* Navigation Buttons */}
-        {items.length > 1 && (
-          <div className="absolute bottom-4 right-4 flex gap-4 z-20">
-            <CarouselPrevious className="relative inset-0 translate-y-0 h-8 w-8 bg-background/50 backdrop-blur-sm hover:bg-background/70" />
-            <CarouselNext className="relative inset-0 translate-y-0 h-8 w-8 bg-background/50 backdrop-blur-sm hover:bg-background/70" />
-          </div>
-        )}
       </Carousel>
 
       {/* Custom Indicators */}
