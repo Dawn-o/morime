@@ -21,7 +21,7 @@ export default async function HomePage() {
   ]);
 
   return (
-    <main className="min-h-screen pb-12">
+    <main className="container mx-auto min-h-screen pb-12">
       <section className="mb-12">
         <Suspense fallback={<HomeCarouselSkeleton />}>
           <HomeCarousel items={carouselItems} />

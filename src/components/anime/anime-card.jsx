@@ -16,11 +16,11 @@ export function AnimeCard({ anime }) {
 
           {/* Image */}
           <Image
-            src={anime.images.webp.image_url}
+            src={anime.images.webp.large_image_url}
             alt={anime.title}
             fill
             className="object-cover transition-transform duration-500 group-hover:scale-110"
-            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 15rem"
+            sizes="1024px"
           />
 
           {/* Score badge */}

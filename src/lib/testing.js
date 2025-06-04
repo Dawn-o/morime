@@ -22,7 +22,7 @@ export function withTestingDelay(fetchFn, ms = 2000) {
 
 /**
  * Example usage:
- * import { withTestingDelay } from './testing
+ * import { withTestingDelay } from "@lib/testing";
  * 
  * const getDetailAnimeWithDelay = withTestingDelay(getDetailAnime);
  * const getEpisodeAnimeWithDelay = withTestingDelay(getEpisodeAnime);

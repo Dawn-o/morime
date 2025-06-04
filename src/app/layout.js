@@ -1,5 +1,7 @@
-import { Poppins } from "next/font/google";
 import "./globals.css";
+import { Poppins } from "next/font/google";
+import { Header } from "@/components/fragments/header";
+import { Footer } from "@/components/fragments/footer";
 import { ThemeProvider } from "@/components/elements/theme/theme-provider";
 
 const poppins = Poppins({
@@ -24,7 +26,9 @@ export default function RootLayout({ children }) {
           enableSystem
           disableTransitionOnChange
         >
+          <Header />
           {children}
+          <Footer />
         </ThemeProvider>
       </body>
     </html>

@@ -99,13 +99,15 @@ export function Header() {
       {/* Scrollable Navigation Menu (All screen sizes) */}
       <div className="overflow-x-auto scrollbar-hide">
         <div className="flex items-center justify-normal 2xl:justify-center gap-1 p-2 mx-auto whitespace-nowrap 2xl:flex">
-          <Button
-            variant="secondary"
-            size="sm"
-            className="text-xs cursor-pointer flex-shrink-0"
-          >
-            <House />
-          </Button>
+          <Link href="/">
+            <Button
+              variant="secondary"
+              size="sm"
+              className="text-xs cursor-pointer flex-shrink-0"
+            >
+              <House />
+            </Button>
+          </Link>
           {navItems.map((item, index) => (
             <Link key={index} href={`/${toSnakeCase(item.label)}`}>
               <Button
@@ -120,7 +122,7 @@ export function Header() {
         </div>
       </div>
 
-      <Separator className="my-2" />
+      <Separator className="mt-2" />
     </header>
   );
 }

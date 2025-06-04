@@ -2,8 +2,16 @@
 const nextConfig = {
     images: {
         remotePatterns: [
-            new URL('https://cdn.myanimelist.net/images/**'),
-            new URL('https://img.youtube.com/vi/**')
+            {
+                protocol: 'https',
+                hostname: 'cdn.myanimelist.net',
+                pathname: '/images/**',
+            },
+            {
+                protocol: 'https',
+                hostname: 'img.youtube.com',
+                pathname: '/vi/**',
+            }
         ],
     },
 };

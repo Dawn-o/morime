@@ -80,7 +80,7 @@ export function HomeCarousel({ items = [] }) {
                       className="object-cover"
                       priority={index === 0}
                       quality={85}
-                      sizes="(max-width: 768px) 100vw, (min-width: 769px) 100vw"
+                      sizes="1024px"
                     />
                   ) : (
                     <div className="w-full h-full bg-gray-900/50"></div>
@@ -102,7 +102,7 @@ export function HomeCarousel({ items = [] }) {
                           alt={`${item.title} cover`}
                           fill
                           className="object-cover"
-                          sizes="(max-width: 768px) 0vw, 192px"
+                          sizes="1024px"
                         />
                       )}
                     </div>

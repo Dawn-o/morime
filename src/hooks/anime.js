@@ -214,3 +214,22 @@ export async function getAnimeGenre(page = 1, apiConfig, malId) {
     return { data: [], totalPages: 0, currentPage: page };
   }
 }
+
+export async function getAnimeCharacters(malId) {
+  try {
+    const response = await fetch(
+      `${API_BASE}/anime/${malId}/characters`,
+      CACHE_MEDIUM // Characters don't change often
+    );
+
+    if (!response.ok) {
+      throw new Error(`API error: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data.data || [];
+  } catch (error) {
+    console.error(`Error fetching characters for anime ID ${malId}:`, error);
+    return [];
+  }
+}
