@@ -40,7 +40,7 @@ export function HomeCarousel({ items = [] }) {
   if (!items.length) return null;
 
   return (
-    <div className="dark relative overflow-hidden">
+    <div className="relative overflow-hidden">
       <Carousel
         setApi={setApi}
         plugins={[plugin.current]}
@@ -57,7 +57,6 @@ export function HomeCarousel({ items = [] }) {
               key={index}
               className="relative h-[25vh] md:h-[40vh] lg:h-[60vh]"
             >
-              {/* Background elements with split design */}
               <Link
                 href={`/anime/${item.mal_id}/${toSnakeCase(item.title)}`}
                 className="absolute inset-0 z-30 cursor-pointer"
@@ -65,10 +64,8 @@ export function HomeCarousel({ items = [] }) {
               />
 
               <div className="absolute inset-0 grid grid-cols-1 lg:grid-cols-3 z-0">
-                {/* Left side - Gradient background */}
-                <div className="hidden lg:block bg-primary-foreground"></div>
+                <div className="hidden lg:block bg-background"></div>
 
-                {/* Right side - Image background */}
                 <div className="relative h-full lg:col-span-2">
                   {item.trailer?.images?.maximum_image_url ? (
                     <Image
@@ -81,17 +78,14 @@ export function HomeCarousel({ items = [] }) {
                       sizes="1024px"
                     />
                   ) : (
-                    <div className="w-full h-full bg-gray-900/50"></div>
+                    <div className="w-full h-full bg-muted/50"></div>
                   )}
-                  {/* Overlay gradient */}
-                  <div className="absolute inset-0 -left-1 bg-gradient-to-t lg:bg-gradient-to-r from-primary-foreground from-15% lg:from-1% via-primary-foreground/90 via-30% lg:via-5% to-transparent to-70% lg:to-100%"></div>
+                  <div className="absolute inset-0 -left-1 bg-gradient-to-t lg:bg-gradient-to-r from-background from-15% lg:from-1% via-background/90 via-30% lg:via-5% to-transparent to-70% lg:to-100%"></div>
                 </div>
               </div>
 
               <div className="grid grid-cols-1 lg:grid-cols-3 h-full relative z-10">
-                {/* Left side - Anime details */}
                 <div className="flex flex-col lg:flex-row lg:items-end gap-6 p-0 lg:p-8 z-20 lg:col-span-2">
-                  {/* Left poster image */}
                   <div className="hidden lg:block w-48 h-72 flex-shrink-0">
                     <div className="w-full h-full overflow-hidden rounded-lg shadow-[0_0_20px_rgba(0,0,0,0.3)] relative">
                       {item.images?.webp?.large_image_url && (
@@ -106,9 +100,7 @@ export function HomeCarousel({ items = [] }) {
                     </div>
                   </div>
 
-                  {/* Right side - Anime details */}
                   <div className="flex flex-col justify-end pb-9 lg:pb-0 lg:justify-center flex-1">
-                    {/* Status badge */}
                     {item.status && (
                       <div className="mb-3">
                         <Badge
@@ -133,14 +125,13 @@ export function HomeCarousel({ items = [] }) {
                       </div>
                     )}
 
-                    {/* Genres */}
                     {item.genres && (
                       <div className="flex flex-wrap gap-2 mt-3">
                         {item.genres.slice(0, 3).map((genre, idx) => (
                           <Badge
                             key={idx}
                             variant="outline"
-                            className="text-xs border-gray-700"
+                            className="text-xs border-border"
                           >
                             {genre.name}
                           </Badge>
@@ -155,7 +146,6 @@ export function HomeCarousel({ items = [] }) {
         </CarouselContent>
       </Carousel>
 
-      {/* Custom Indicators */}
       {items.length > 1 && (
         <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-20">
           {items.map((_, index) => (

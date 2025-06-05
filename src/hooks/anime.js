@@ -1,4 +1,4 @@
-import { API_BASE, CACHE_CONFIG, DEFAULT_LIMITS } from '@/lib/anime/config';
+import { CACHE_CONFIG, DEFAULT_LIMITS } from '@/lib/anime/config';
 import { fetchWithSfw, deduplicateAnimeById } from '@/lib/anime/utils';
 
 export async function getAnime(page = 1, apiConfig = {}) {
@@ -7,7 +7,7 @@ export async function getAnime(page = 1, apiConfig = {}) {
   try {
     let endpoint = `/${type}`;
     const params = { limit, page };
-    
+
     if (filter) {
       params.filter = filter;
     }
@@ -39,13 +39,55 @@ export async function getAnime(page = 1, apiConfig = {}) {
   }
 }
 
-export async function getUpcomingAnime(limit = DEFAULT_LIMITS.UPCOMING) {
+export async function getTopAnime(page = 1, options = {}) {
+  const {
+    type,
+    filter,
+    rating,
+    sfw,
+    limit = DEFAULT_LIMITS.ANIME_LIST
+  } = options;
+
   try {
-    const data = await fetchWithSfw('/seasons/upcoming', { limit }, CACHE_CONFIG.MEDIUM);
-    return deduplicateAnimeById(data.data || []);
+    const params = { limit, page };
+
+    if (type) {
+      params.type = type;
+    }
+    if (filter) {
+      params.filter = filter;
+    }
+    if (rating) {
+      params.rating = rating;
+    }
+    if (sfw) {
+      params.sfw = '';
+    }
+
+    const data = await fetchWithSfw('/top/anime', params, CACHE_CONFIG.SHORT);
+
+    if (!data?.data) {
+      throw new Error("Invalid API response format");
+    }
+
+    const totalItems = data.pagination?.items?.total || data.data.length;
+    const totalPages = data.pagination ? Math.ceil(totalItems / limit) : 1;
+
+    return {
+      data: deduplicateAnimeById(data.data),
+      totalPages,
+      currentPage: page,
+      totalItems
+    };
   } catch (error) {
-    console.error('Failed to fetch upcoming anime:', error);
-    return [];
+    console.error("Error fetching top anime:", error);
+    return {
+      data: [],
+      totalPages: 0,
+      currentPage: page,
+      totalItems: 0,
+      error: error.message
+    };
   }
 }
 

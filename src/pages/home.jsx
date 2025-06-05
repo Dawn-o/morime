@@ -1,7 +1,7 @@
 import { Suspense } from "react";
-import { Skeleton } from "@/components/ui/skeleton";
 import { HomeCarousel } from "@/components/fragments/carousel";
-import { getAnime, getAnimeGenresList, getUpcomingAnime } from "@/hooks/anime";
+import { getTopAnime, getAnimeGenresList } from "@/hooks/anime";
+import { getSeason } from "@/hooks/season";
 import { SectionHeader } from "@/components/fragments/section-header";
 import { AnimeCarousel } from "@/components/anime/anime-carousel";
 import { GenreGrid } from "@/components/anime/genre-grid";
@@ -10,13 +10,10 @@ import { GenreGridSkeleton } from "@/components/skeleton/genre-grid-skeleton";
 import { HomeCarouselSkeleton } from "@/components/skeleton/home-carousel-skeleton";
 
 export default async function HomePage() {
-  const upcomingApiConfig = { type: "seasons/now", limit: 20, filter: "tv" };
-  const topApiConfig = { type: "top/anime", limit: 20 };
-
-  const [carouselItems, animes, topAnimes, genresList] = await Promise.all([
-    getUpcomingAnime(),
-    getAnime(1, upcomingApiConfig),
-    getAnime(1, topApiConfig),
+  const [upcomings, animes, topAnimes, genresList] = await Promise.all([
+    getSeason(1, { type: "seasons/upcoming", limit: 8, filter: "tv" }),
+    getSeason(1, { type: "seasons/now", limit: 20, filter: "tv" }),
+    getTopAnime(1),
     getAnimeGenresList(),
   ]);
 
@@ -24,7 +21,7 @@ export default async function HomePage() {
     <main className="container mx-auto min-h-screen pb-12">
       <section className="mb-12">
         <Suspense fallback={<HomeCarouselSkeleton />}>
-          <HomeCarousel items={carouselItems} />
+          <HomeCarousel items={upcomings.data} />
         </Suspense>
       </section>
 
@@ -46,7 +43,7 @@ export default async function HomePage() {
           <SectionHeader
             title="Ongoing Anime"
             subtitle="Currently airing this season"
-            viewAllLink="/anime/season/current"
+            viewAllLink="/anime/season"
           />
           <Suspense fallback={<AnimeCarouselSkeleton />}>
             <AnimeCarousel animes={animes.data} />

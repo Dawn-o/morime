@@ -1,25 +1,20 @@
 import Link from "next/link";
 import { Github, Twitter, Instagram } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
-import { getAnime } from "@/hooks/anime";
+import { getTopAnime } from "@/hooks/anime";
 import { toSnakeCase } from "@/lib/utils";
 
 export async function Footer() {
-  // Fix the API config - remove the '?' from type
-  const topApiConfig = { type: "top/anime", limit: 5 };
-  const topAiringApiConfig = { type: "top/anime", limit: 5, filter: "airing" };
-  const mostPopularApiConfig = { type: "top/anime", limit: 5, filter: "bypopularity" };
-
   const [topAnimes, topAiringAnimes, mostPopularAnimes] = await Promise.all([
-    getAnime(1, topApiConfig),
-    getAnime(1, topAiringApiConfig),
-    getAnime(1, mostPopularApiConfig),
+    getTopAnime(1, { limit: 5 }),
+    getTopAnime(1, { limit: 5, filter: "airing" }),
+    getTopAnime(1, { limit: 5, filter: "bypopularity" }),
   ]);
 
   return (
     <footer className="bg-background border-t">
-      <div className="container mx-auto py-8 px-4">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+      <div className="py-8 px-4">
+        <div className="container mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
             <h3 className="font-bold text-lg mb-4">Morime</h3>
             <p className="text-muted-foreground text-sm">
@@ -58,7 +53,9 @@ export async function Footer() {
                 {topAnimes.data?.map((anime) => (
                   <li key={anime.mal_id}>
                     <Link
-                      href={`/anime/${anime.mal_id}/${toSnakeCase(anime.title)}`}
+                      href={`/anime/${anime.mal_id}/${toSnakeCase(
+                        anime.title
+                      )}`}
                       className="text-muted-foreground hover:text-foreground"
                     >
                       {anime.title}
@@ -74,7 +71,9 @@ export async function Footer() {
                 {topAiringAnimes.data?.map((anime) => (
                   <li key={anime.mal_id}>
                     <Link
-                      href={`/anime/${anime.mal_id}/${toSnakeCase(anime.title)}`}
+                      href={`/anime/${anime.mal_id}/${toSnakeCase(
+                        anime.title
+                      )}`}
                       className="text-muted-foreground hover:text-foreground"
                     >
                       {anime.title}
@@ -90,7 +89,9 @@ export async function Footer() {
                 {mostPopularAnimes.data?.map((anime) => (
                   <li key={anime.mal_id}>
                     <Link
-                      href={`/anime/${anime.mal_id}/${toSnakeCase(anime.title)}`}
+                      href={`/anime/${anime.mal_id}/${toSnakeCase(
+                        anime.title
+                      )}`}
                       className="text-muted-foreground hover:text-foreground"
                     >
                       {anime.title}
@@ -102,9 +103,11 @@ export async function Footer() {
           </div>
         </div>
 
-        <Separator className="my-8" />
+        <div className="-mx-4">
+          <Separator className="my-8" />
+        </div>
 
-        <div className="flex flex-col md:flex-row justify-between items-center text-sm text-muted-foreground">
+        <div className="container mx-auto flex flex-col md:flex-row justify-between items-center text-sm text-muted-foreground">
           <p>© 2025 Morime. All rights reserved.</p>
           <p className="mt-2 md:mt-0">
             Powered by{" "}

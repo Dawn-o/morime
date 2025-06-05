@@ -1,4 +1,4 @@
-export const API_BASE = process.env.JIKAN_API_BASE_URL || 'https://api.jikan.moe/v4';
+export const JIKAN_API = process.env.JIKAN_API_BASE_URL || 'https://api.jikan.moe/v4';
 
 export const CACHE_CONFIG = {
     SHORT: {

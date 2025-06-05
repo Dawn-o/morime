@@ -1,9 +1,9 @@
 import { notFound } from 'next/navigation';
-import { API_BASE, CACHE_CONFIG } from '@/lib/anime/config';
+import { JIKAN_API, CACHE_CONFIG } from '@/lib/anime/config';
 import { getSfwParam } from '@/lib/anime/cookies';
 
 export function buildUrl(endpoint, params = {}) {
-  const url = new URL(`${API_BASE}${endpoint}`);
+  const url = new URL(`${JIKAN_API}${endpoint}`);
   Object.entries(params).forEach(([key, value]) => {
     if (value !== undefined && value !== null) {
       url.searchParams.append(key, value.toString());

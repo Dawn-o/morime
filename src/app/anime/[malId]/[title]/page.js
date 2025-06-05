@@ -6,8 +6,8 @@ import { AnimeContentSections } from "@/components/anime/anime-content-sections"
 
 // Generate metadata for SEO
 export async function generateMetadata({ params }) {
-    const { id } = await params;
-    const animeData = await getDetailAnime(id);
+    const { malId } = await params;
+    const animeData = await getDetailAnime(malId);
 
     if (!animeData) {
         return {
@@ -27,12 +27,12 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function AnimeDetailsPage({ params }) {
-    const { id } = await params;
+    const { malId } = await params;
 
     const [animeData, episodesData, charactersData] = await Promise.all([
-        getDetailAnime(id),
-        getEpisodeAnime(id),
-        getAnimeCharacters(id)
+        getDetailAnime(malId),
+        getEpisodeAnime(malId),
+        getAnimeCharacters(malId)
     ]);
 
     if (!animeData) {
