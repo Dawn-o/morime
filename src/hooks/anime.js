@@ -1,152 +1,75 @@
-"use server";
+import { API_BASE, CACHE_CONFIG, DEFAULT_LIMITS } from '@/lib/anime/config';
+import { fetchWithSfw, deduplicateAnimeById } from '@/lib/anime/utils';
 
-import { notFound } from 'next/navigation';
-import { cookies } from 'next/headers';
-
-// API base configuration
-const API_BASE = 'https://api.jikan.moe/v4';
-
-// Revalidation times
-const CACHE_SHORT = { next: { revalidate: 60 } }; // 1 minute
-const CACHE_MEDIUM = { next: { revalidate: 3600 } }; // 1 hour
-const CACHE_LONG = { next: { revalidate: 86400 } }; // 1 day
-
-/**
- * Helper to get SFW mode from cookie (default: true)
- */
-async function getSfwParam() {
-  try {
-    const cookieStore = await cookies(); // Must await cookies()
-    const sfw = cookieStore.get('sfw');
-    return sfw?.value === 'false' ? 'false' : 'true';
-  } catch {
-    return 'true';
-  }
-}
-
-/**
- * Helper to append sfw param to url
- */
-async function appendSfw(url) {
-  const sfw = await getSfwParam(); // Must await the result
-  return url + (url.includes('?') ? '&' : '?') + `sfw=${sfw}`;
-}
-
-/**
- * Get anime list with pagination
- */
-export async function getAnime(page = 1, apiConfig) {
-  const { type, limit = 24 } = apiConfig;
+export async function getAnime(page = 1, apiConfig = {}) {
+  const { type = 'anime', limit = DEFAULT_LIMITS.ANIME_LIST, filter } = apiConfig;
 
   try {
-    let url = `${API_BASE}/${type}&limit=${limit}&page=${page}`;
-    url = await appendSfw(url); // Must await the result
-
-    const response = await fetch(url, CACHE_SHORT);
-
-    if (!response.ok) {
-      throw new Error(`API error: ${response.status}`);
+    let endpoint = `/${type}`;
+    const params = { limit, page };
+    
+    if (filter) {
+      params.filter = filter;
     }
 
-    const data = await response.json();
+    const data = await fetchWithSfw(endpoint, params, CACHE_CONFIG.SHORT);
 
-    if (!data?.data || !data?.pagination?.items) {
+    if (!data?.data) {
       throw new Error("Invalid API response format");
     }
 
-    const totalItems = data.pagination.items.total;
-    const totalPages = Math.ceil(totalItems / limit);
+    const totalItems = data.pagination?.items?.total || data.data.length;
+    const totalPages = data.pagination ? Math.ceil(totalItems / limit) : 1;
 
     return {
       data: deduplicateAnimeById(data.data),
       totalPages,
       currentPage: page,
+      totalItems
     };
   } catch (error) {
     console.error("Error fetching anime list:", error);
-    return { data: [], totalPages: 0, currentPage: page };
+    return {
+      data: [],
+      totalPages: 0,
+      currentPage: page,
+      totalItems: 0,
+      error: error.message
+    };
   }
 }
 
-/**
- * Helper function to deduplicate anime arrays by mal_id
- */
-function deduplicateAnimeById(animeArray) {
-  const uniqueData = [];
-  const seenIds = new Set();
-
-  for (const item of animeArray || []) {
-    if (item.mal_id && !seenIds.has(item.mal_id)) {
-      seenIds.add(item.mal_id);
-      uniqueData.push(item);
-    }
-  }
-
-  return uniqueData;
-}
-
-/**
- * Get upcoming anime for carousel
- */
-export async function getUpcomingAnime(limit = 6) {
+export async function getUpcomingAnime(limit = DEFAULT_LIMITS.UPCOMING) {
   try {
-    const response = await fetch(
-      `${API_BASE}/seasons/upcoming?limit=${limit}`,
-      CACHE_MEDIUM // Cache for longer since upcoming doesn't change often
-    );
-
-    if (!response.ok) {
-      throw new Error(`API error: ${response.status}`);
-    }
-
-    const data = await response.json();
-    return deduplicateAnimeById(data.data);
+    const data = await fetchWithSfw('/seasons/upcoming', { limit }, CACHE_CONFIG.MEDIUM);
+    return deduplicateAnimeById(data.data || []);
   } catch (error) {
-    console.error('Failed to fetch carousel anime:', error);
+    console.error('Failed to fetch upcoming anime:', error);
     return [];
   }
 }
 
-/**
- * Get detailed anime information
- */
 export async function getDetailAnime(malId) {
+  if (!malId || isNaN(malId)) {
+    throw new Error('Invalid anime ID');
+  }
+
   try {
-    const response = await fetch(
-      `${API_BASE}/anime/${malId}/full`,
-      CACHE_MEDIUM
-    );
-
-    if (!response.ok) {
-      if (response.status === 404) {
-        notFound(); // Uses Next.js not-found.js page
-      }
-      throw new Error(`API error: ${response.status}`);
-    }
-
-    const data = await response.json();
+    const data = await fetchWithSfw(`/anime/${malId}/full`, {}, CACHE_CONFIG.MEDIUM);
     return data.data;
   } catch (error) {
     console.error(`Error fetching anime details for ID ${malId}:`, error);
-    throw error; // Let the component handle the error
+    throw error;
   }
 }
 
-/**
- * Get anime episodes
- */
 export async function getEpisodeAnime(malId) {
+  if (!malId || isNaN(malId)) {
+    return [];
+  }
+
   try {
-    const response = await fetch(
-      `${API_BASE}/anime/${malId}/episodes`,
-      CACHE_SHORT // Episodes may update frequently
-    );
-
-    if (!response.ok) {
-      throw new Error(`API error: ${response.status}`);
-    }
-
-    const data = await response.json();
+    const data = await fetchWithSfw(`/anime/${malId}/episodes`, {}, CACHE_CONFIG.SHORT);
     return data.data || [];
   } catch (error) {
     console.error(`Error fetching episodes for ID ${malId}:`, error);
@@ -154,24 +77,9 @@ export async function getEpisodeAnime(malId) {
   }
 }
 
-/**
- * Get anime genres list
- */
 export async function getAnimeGenresList() {
   try {
-    // Just fetch all genres without special filtering
-    const url = `${API_BASE}/genres/anime`;
-
-    const response = await fetch(
-      url,
-      CACHE_LONG // Genres rarely change
-    );
-
-    if (!response.ok) {
-      throw new Error(`API error: ${response.status}`);
-    }
-
-    const data = await response.json();
+    const data = await fetchWithSfw('/genres/anime', {}, CACHE_CONFIG.LONG);
     return data.data || [];
   } catch (error) {
     console.error('Error fetching anime genres list:', error);
@@ -179,57 +87,83 @@ export async function getAnimeGenresList() {
   }
 }
 
-/**
- * Get anime by genre
- */
-export async function getAnimeGenre(page = 1, apiConfig, malId) {
-  const { baseURL, limit = 24 } = apiConfig;
+export async function getAnimeByGenre(page = 1, genreId, limit = DEFAULT_LIMITS.ANIME_LIST) {
+  if (!genreId) {
+    throw new Error('Genre ID is required');
+  }
 
   try {
-    const response = await fetch(
-      url,
-      CACHE_SHORT
-    );
+    const data = await fetchWithSfw('/anime', {
+      genres: genreId,
+      page,
+      limit
+    }, CACHE_CONFIG.SHORT);
 
-    if (!response.ok) {
-      throw new Error(`API error: ${response.status}`);
-    }
-
-    const data = await response.json();
-
-    if (!data?.data || !data?.pagination?.items) {
+    if (!data?.data) {
       throw new Error("Invalid API response format");
     }
 
-    const totalItems = data.pagination.items.total;
+    const totalItems = data.pagination?.items?.total || 0;
     const totalPages = Math.ceil(totalItems / limit);
 
     return {
       data: deduplicateAnimeById(data.data),
       totalPages,
       currentPage: page,
+      totalItems
     };
   } catch (error) {
-    console.error(`Error fetching anime for genre ${malId}:`, error);
-    return { data: [], totalPages: 0, currentPage: page };
+    console.error(`Error fetching anime for genre ${genreId}:`, error);
+    return {
+      data: [],
+      totalPages: 0,
+      currentPage: page,
+      totalItems: 0,
+      error: error.message
+    };
   }
 }
 
 export async function getAnimeCharacters(malId) {
+  if (!malId || isNaN(malId)) {
+    return [];
+  }
+
   try {
-    const response = await fetch(
-      `${API_BASE}/anime/${malId}/characters`,
-      CACHE_MEDIUM // Characters don't change often
-    );
-
-    if (!response.ok) {
-      throw new Error(`API error: ${response.status}`);
-    }
-
-    const data = await response.json();
+    const data = await fetchWithSfw(`/anime/${malId}/characters`, {}, CACHE_CONFIG.MEDIUM);
     return data.data || [];
   } catch (error) {
     console.error(`Error fetching characters for anime ID ${malId}:`, error);
     return [];
+  }
+}
+
+export async function searchAnime(query, page = 1, limit = DEFAULT_LIMITS.SEARCH) {
+  if (!query?.trim()) {
+    return { data: [], total: 0, hasNextPage: false };
+  }
+
+  try {
+    const data = await fetchWithSfw('/anime', {
+      q: query.trim(),
+      page,
+      limit
+    }, CACHE_CONFIG.SHORT);
+
+    return {
+      data: deduplicateAnimeById(data.data || []),
+      total: data.pagination?.items?.total || 0,
+      hasNextPage: data.pagination?.has_next_page || false,
+      currentPage: page
+    };
+  } catch (error) {
+    console.error('Error searching anime:', error);
+    return {
+      data: [],
+      total: 0,
+      hasNextPage: false,
+      currentPage: page,
+      error: error.message
+    };
   }
 }

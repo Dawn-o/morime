@@ -6,9 +6,7 @@ import Autoplay from "embla-carousel-autoplay";
 import {
   Carousel,
   CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
+  CarouselItem
 } from "@/components/ui/carousel";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";

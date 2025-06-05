@@ -5,15 +5,17 @@ import { getAnime } from "@/hooks/anime";
 import { toSnakeCase } from "@/lib/utils";
 
 export async function Footer() {
-  const topApiConfig = { type: "top/anime?", limit: 5 };
-  const topAiringApiConfig = { type: "top/anime?filter=airing", limit: 5 };
-  const mostPopularApiConfig = { type: "top/anime?filter=bypopularity", limit: 5 };
+  // Fix the API config - remove the '?' from type
+  const topApiConfig = { type: "top/anime", limit: 5 };
+  const topAiringApiConfig = { type: "top/anime", limit: 5, filter: "airing" };
+  const mostPopularApiConfig = { type: "top/anime", limit: 5, filter: "bypopularity" };
 
   const [topAnimes, topAiringAnimes, mostPopularAnimes] = await Promise.all([
     getAnime(1, topApiConfig),
     getAnime(1, topAiringApiConfig),
     getAnime(1, mostPopularApiConfig),
   ]);
+
   return (
     <footer className="bg-background border-t">
       <div className="container mx-auto py-8 px-4">
@@ -53,12 +55,10 @@ export async function Footer() {
             <div>
               <h3 className="font-bold text-lg mb-4">Top Anime</h3>
               <ul className="space-y-2">
-                {topAnimes.data.map((anime) => (
+                {topAnimes.data?.map((anime) => (
                   <li key={anime.mal_id}>
                     <Link
-                      href={`/anime/${anime.mal_id}/${toSnakeCase(
-                        anime.title
-                      )}`}
+                      href={`/anime/${anime.mal_id}/${toSnakeCase(anime.title)}`}
                       className="text-muted-foreground hover:text-foreground"
                     >
                       {anime.title}
@@ -71,12 +71,10 @@ export async function Footer() {
             <div>
               <h3 className="font-bold text-lg mb-4">Top Airing</h3>
               <ul className="space-y-2">
-                {topAiringAnimes.data.map((anime) => (
+                {topAiringAnimes.data?.map((anime) => (
                   <li key={anime.mal_id}>
                     <Link
-                      href={`/anime/${anime.mal_id}/${toSnakeCase(
-                        anime.title
-                      )}`}
+                      href={`/anime/${anime.mal_id}/${toSnakeCase(anime.title)}`}
                       className="text-muted-foreground hover:text-foreground"
                     >
                       {anime.title}
@@ -89,12 +87,10 @@ export async function Footer() {
             <div>
               <h3 className="font-bold text-lg mb-4">Most Popular</h3>
               <ul className="space-y-2">
-                {mostPopularAnimes.data.map((anime) => (
+                {mostPopularAnimes.data?.map((anime) => (
                   <li key={anime.mal_id}>
                     <Link
-                      href={`/anime/${anime.mal_id}/${toSnakeCase(
-                        anime.title
-                      )}`}
+                      href={`/anime/${anime.mal_id}/${toSnakeCase(anime.title)}`}
                       className="text-muted-foreground hover:text-foreground"
                     >
                       {anime.title}

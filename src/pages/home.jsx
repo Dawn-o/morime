@@ -10,8 +10,8 @@ import { GenreGridSkeleton } from "@/components/skeleton/genre-grid-skeleton";
 import { HomeCarouselSkeleton } from "@/components/skeleton/home-carousel-skeleton";
 
 export default async function HomePage() {
-  const upcomingApiConfig = { type: "seasons/now?filter=tv", limit: 20 };
-  const topApiConfig = { type: "top/anime?", limit: 20 };
+  const upcomingApiConfig = { type: "seasons/now", limit: 20, filter: "tv" };
+  const topApiConfig = { type: "top/anime", limit: 20 };
 
   const [carouselItems, animes, topAnimes, genresList] = await Promise.all([
     getUpcomingAnime(),
