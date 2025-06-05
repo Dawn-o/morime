@@ -1,60 +1,45 @@
-import Image from "next/image";
-import Link from "next/link";
-import { toSnakeCase } from "@/lib/utils";
-
-export function CharactersSection({ characters }) {
-  if (!characters || characters.length === 0) {
-    return (
-      <p className="text-muted-foreground">No characters data available.</p>
-    );
-  }
-
+export function CharactersSection({ characters, showAll = false }) {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-      {characters.slice(0, 10).map((character) => (
-        <div
-          key={character.character.mal_id}
-          className="flex gap-3 p-3 bg-card/50 rounded-lg border border-border/40"
-        >
-          <div className="w-16 h-20 relative rounded overflow-hidden flex-shrink-0">
-            <Image
-              src={
-                character.character.images?.webp?.image_url ||
-                character.character.images?.jpg?.image_url
-              }
-              alt={character.character.name}
-              fill
-              className="object-cover"
-              sizes="1024px"
-            />
-          </div>
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      {characters.map((character, index) => {
+        const japaneseVA = character.voice_actors?.find(
+          (va) => va.language === "Japanese"
+        );
 
-          <div className="flex-1 min-w-0">
-            <Link
-              href={`/character/${character.character.mal_id}/${toSnakeCase(
-                character.character.name
-              )}`}
-              className="font-medium text-sm hover:text-primary line-clamp-1"
-            >
-              {character.character.name}
-            </Link>
-            <p className="text-xs text-muted-foreground mt-1">
-              {character.role}
-            </p>
+        return (
+          <div
+            key={`${character.character?.mal_id}-${index}`}
+            className="flex items-center gap-4 p-4 rounded-lg bg-card border border-border/50 hover:border-border transition-all duration-200 hover:shadow-sm"
+          >
+            <div className="flex-shrink-0">
+              <img
+                src={
+                  character.character?.images?.jpg?.image_url ||
+                  "/placeholder-character.png"
+                }
+                alt={character.character?.name || "Character"}
+                className="w-16 h-16 rounded-lg object-cover shadow-sm"
+                loading="lazy"
+              />
+            </div>
 
-            <div className="mt-2">
-              <div className="text-xs text-muted-foreground">
-                {(() => {
-                  const japaneseVA = character.voice_actors?.find(
-                    (va) => va.language === "Japanese"
-                  );
-                  return japaneseVA?.person?.name || "Unknown Voice Actor";
-                })()}
+            <div className="flex-1 min-w-0 space-y-1">
+              <h4 className="font-semibold text-sm text-foreground truncate">
+                {character.character?.name || "Unknown Character"}
+              </h4>
+              <p className="text-xs text-muted-foreground font-medium">
+                {character.role || "Unknown Role"}
+              </p>
+
+              <div className="space-y-0.5">
+                <p className="text-xs text-muted-foreground truncate">
+                  {japaneseVA?.person?.name || "Unknown Voice Actor"}
+                </p>
               </div>
             </div>
           </div>
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 }
