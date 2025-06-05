@@ -87,10 +87,10 @@ export function AnimeContentSections({
           }
         >
           <Tabs defaultValue="all" className="w-full">
-            <TabsList className="grid w-full grid-cols-1 md:grid-cols-3 h-auto md:h-10 gap-1 md:gap-0 p-1">
+            <TabsList className="grid w-full grid-cols-1 md:grid-cols-3 h-auto md:h-10 gap-1 md:gap-0 p-1 md:p-0">
               <TabsTrigger
                 value="all"
-                className="w-full py-2.5 md:py-2 text-sm justify-center"
+                className="w-full py-2.5 md:py-0 text-sm justify-center"
               >
                 All ({charactersData.length})
               </TabsTrigger>
@@ -101,7 +101,7 @@ export function AnimeContentSections({
 
               <TabsTrigger
                 value="main"
-                className="w-full py-2.5 md:py-2 text-sm justify-center"
+                className="w-full py-2.5 md:py-0 text-sm justify-center"
               >
                 Main ({characterGroups.main.length})
               </TabsTrigger>
@@ -112,7 +112,7 @@ export function AnimeContentSections({
 
               <TabsTrigger
                 value="supporting"
-                className="w-full py-2.5 md:py-2 text-sm justify-center"
+                className="w-full py-2.5 md:py-0 text-sm justify-center"
               >
                 Supporting ({characterGroups.supporting.length})
               </TabsTrigger>
