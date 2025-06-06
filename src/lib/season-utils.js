@@ -6,15 +6,46 @@ export const getCurrentSeason = () => {
     return 'fall';
 };
 
-export const getSeasonTitle = (pageType, routeParams) => {
+export function getSeasonTitle(pageType, routeParams) {
     switch (pageType) {
-        case 'upcoming': return 'Upcoming Season';
-        case 'schedule': return 'Anime Schedule';
-        case 'year': return `${routeParams[0]} Season Anime`;
-        case 'specific': return `${routeParams[1]?.charAt(0).toUpperCase() + routeParams[1]?.slice(1)} ${routeParams[0]} Anime`;
-        default: return 'Current Season';
+        case 'current':
+            return {
+                title: 'Current Season',
+                description: 'Discover the latest anime currently airing this season',
+            };
+        case 'upcoming':
+            return {
+                title: 'Upcoming Season',
+                description: 'Preview anime coming in the next season',
+            };
+        case 'schedule':
+            return {
+                title: 'Anime Schedule',
+                description: 'Weekly anime broadcast schedule by day',
+            };
+        case 'archive':
+            return {
+                title: 'Season Archive',
+                description: 'Browse anime seasons by year',
+            };
+        case 'year':
+            return {
+                title: `${routeParams[0]} Anime`,
+                description: `All anime seasons from ${routeParams[0]}`,
+            };
+        case 'specific':
+            const season = routeParams[1].charAt(0).toUpperCase() + routeParams[1].slice(1);
+            return {
+                title: `${season} ${routeParams[0]} Anime`,
+                description: `Anime from ${season} ${routeParams[0]} season`,
+            };
+        default:
+            return {
+                title: 'Season Anime',
+                description: 'Explore seasonal anime collections',
+            };
     }
-};
+}
 
 export const getSeasonBasePath = (pageType, routeParams) => {
     if (pageType === 'schedule') return '/anime/season/schedule';

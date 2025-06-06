@@ -21,15 +21,8 @@ export function SeasonFilterTabs({
     ];
 
     return (
-      <Tabs value={dayFilter || "all"} className="mb-4">
+      <Tabs value={dayFilter || "monday"} className="mb-4">
         <TabsList className="hidden md:flex h-auto md:h-10 gap-1 md:gap-0 px-1.5 py-1 mx-auto w-fit">
-          <TabsTrigger
-            value="all"
-            asChild
-            className="w-full px-6 py-2.5 text-sm justify-center"
-          >
-            <Link href="/anime/season/schedule">All</Link>
-          </TabsTrigger>
           {days.map((day) => (
             <TabsTrigger
               key={day}
@@ -37,7 +30,13 @@ export function SeasonFilterTabs({
               asChild
               className="w-full px-6 py-2.5 text-sm justify-center"
             >
-              <Link href={`/anime/season/schedule?day=${day}`}>
+              <Link
+                href={
+                  day === "monday"
+                    ? "/anime/season/schedule"
+                    : `/anime/season/schedule?day=${day}`
+                }
+              >
                 {day.charAt(0).toUpperCase() + day.slice(1)}
               </Link>
             </TabsTrigger>
@@ -46,22 +45,16 @@ export function SeasonFilterTabs({
 
         <div className="md:hidden overflow-x-auto">
           <div className="flex gap-2 pb-2 min-w-max px-1">
-            <Link
-              href="/anime/season/schedule"
-              className={`flex-shrink-0 px-4 py-2 rounded-md text-sm font-medium whitespace-nowrap transition-colors ${
-                !dayFilter || dayFilter === "all"
-                  ? "bg-primary text-primary-foreground"
-                  : "bg-muted text-muted-foreground hover:bg-muted/80"
-              }`}
-            >
-              All
-            </Link>
             {days.map((day) => (
               <Link
                 key={day}
-                href={`/anime/season/schedule?day=${day}`}
+                href={
+                  day === "monday"
+                    ? "/anime/season/schedule"
+                    : `/anime/season/schedule?day=${day}`
+                }
                 className={`flex-shrink-0 px-4 py-2 rounded-md text-sm font-medium whitespace-nowrap transition-colors ${
-                  dayFilter === day
+                  dayFilter === day || (!dayFilter && day === "monday")
                     ? "bg-primary text-primary-foreground"
                     : "bg-muted text-muted-foreground hover:bg-muted/80"
                 }`}

@@ -29,7 +29,6 @@ export function AnimeHeroSection({ animeData }) {
       <div className="container mx-auto h-full relative z-10 px-4">
         <div className="flex h-full items-end pb-8 md:pb-10 pt-20 sm:pt-24">
           <div className="flex flex-col sm:flex-row w-full gap-5 sm:gap-8 items-center sm:items-start md:items-end">
-            {/* Poster */}
             <div className="flex flex-col items-center gap-2">
               <div
                 className="h-[180px] w-[130px] sm:h-[210px] sm:w-[150px] lg:h-[250px] lg:w-[180px] 
@@ -57,7 +56,6 @@ export function AnimeHeroSection({ animeData }) {
               </div>
             </div>
 
-            {/* Title section */}
             <div className="flex-1 text-center sm:text-left max-w-full">
               <div className="flex items-center justify-center sm:justify-start flex-wrap gap-2 mb-2 sm:mb-3">
                 <Badge
@@ -100,7 +98,6 @@ export function AnimeHeroSection({ animeData }) {
                   </p>
                 )}
 
-              {/* Quick stats badges */}
               <div className="flex flex-wrap justify-center sm:justify-start gap-y-2 gap-x-3 mt-3 mb-4">
                 {animeData.score && (
                   <div
@@ -136,9 +133,8 @@ export function AnimeHeroSection({ animeData }) {
                   ))}
               </div>
 
-              {/* Detailed stats display */}
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6">
-                {animeData.score && (
+                {animeData.score ? (
                   <div className="bg-card/40 backdrop-blur-sm rounded-lg p-3 border border-border/20 flex flex-col items-center">
                     <div className="text-xs uppercase tracking-wider text-muted-foreground/80 mb-1">
                       Score
@@ -155,9 +151,8 @@ export function AnimeHeroSection({ animeData }) {
                         }).format(animeData.scored_by)} users`}
                     </div>
                   </div>
-                )}
-                {/* ...existing stats cards... */}
-                {animeData.rank && (
+                ) : null}
+                {animeData.rank ? (
                   <div className="bg-card/40 backdrop-blur-sm rounded-lg p-3 border border-border/20 flex flex-col items-center justify-center">
                     <div className="text-xs uppercase tracking-wider text-muted-foreground/80 mb-1">
                       Ranked
@@ -166,8 +161,8 @@ export function AnimeHeroSection({ animeData }) {
                       #{animeData.rank}
                     </div>
                   </div>
-                )}
-                {animeData.popularity && (
+                ) : null}
+                {animeData.popularity ? (
                   <div className="bg-card/40 backdrop-blur-sm rounded-lg p-3 border border-border/20 flex flex-col items-center justify-center">
                     <div className="text-xs uppercase tracking-wider text-muted-foreground/80 mb-1">
                       Popularity
@@ -176,8 +171,8 @@ export function AnimeHeroSection({ animeData }) {
                       #{animeData.popularity}
                     </div>
                   </div>
-                )}
-                {animeData.members && (
+                ) : null}
+                {animeData.members ? (
                   <div className="bg-card/40 backdrop-blur-sm rounded-lg p-3 border border-border/20 flex flex-col items-center justify-center">
                     <div className="text-xs uppercase tracking-wider text-muted-foreground/80 mb-1">
                       Members
@@ -189,7 +184,7 @@ export function AnimeHeroSection({ animeData }) {
                       }).format(animeData.members)}
                     </div>
                   </div>
-                )}
+                ) : null}
               </div>
 
               <div className="mt-4 flex sm:hidden">

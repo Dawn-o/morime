@@ -1,11 +1,10 @@
-import { getSeason } from "@/hooks/season";
+import { getArchive, getSeason } from "@/hooks/season";
 import { getSchedules } from "@/hooks/schedule";
-import { AnimeCard } from "@/components/anime/anime-card";
-import { Separator } from "@/components/ui/separator";
-import { AnimePagination } from "@/components/anime/anime-pagination";
+import { SeasonNavigation } from "@/components/anime/season/season-navigation";
+import { SeasonFilterTabs } from "@/components/anime/season/season-filter-tabs";
+import { SeasonContent } from "@/components/anime/season/season-content";
+import { SeasonArchive } from "@/components/anime/season/season-archive";
 import { AnimeError } from "@/components/anime/season/anime-error";
-import { SeasonNavigation } from "@/components/anime/season/navigation";
-import { SeasonFilterTabs } from "@/components/anime/season/filter-tabs";
 import { getSeasonTitle, getSeasonBasePath } from "@/lib/season-utils";
 
 export async function generateMetadata({ params, searchParams }) {
@@ -13,12 +12,12 @@ export async function generateMetadata({ params, searchParams }) {
     const currentPage = parseInt((await searchParams)?.page) || 1;
 
     const pageType = getPageType(routeParams);
-    const baseTitle = getSeasonTitle(pageType, routeParams);
-    const title = currentPage > 1 ? `${baseTitle} - Page ${currentPage}` : baseTitle;
+    const titleData = getSeasonTitle(pageType, routeParams);
+    const title = currentPage > 1 ? `${titleData.title} - Page ${currentPage}` : titleData.title;
 
     return {
         title,
-        description: `Discover ${baseTitle.toLowerCase()} anime with comprehensive information and ratings.`,
+        description: titleData.description,
     };
 }
 
@@ -29,53 +28,49 @@ export default async function SeasonAnimePage({ params, searchParams }) {
         const dayFilter = (await searchParams)?.day || '';
         const currentPage = parseInt((await searchParams)?.page) || 1;
 
-        const { pageType, apiConfig } = buildApiConfig(routeParams, typeFilter, dayFilter);
-        const seasonData = await fetchSeasonData(pageType, currentPage, apiConfig, dayFilter);
+        const pageType = getPageType(routeParams);
+        const apiConfig = buildApiConfig(pageType, routeParams, typeFilter, dayFilter);
+        const seasonData = await fetchSeasonData(pageType, currentPage, apiConfig);
+        const archiveData = await getArchive();
 
-        if (!seasonData || seasonData.error) {
+        if (!archiveData && !seasonData || seasonData?.error) {
             throw new Error('Failed to fetch season data');
         }
 
-        const filteredData = filterSeasonData(seasonData.data, pageType, typeFilter, dayFilter);
+        const titleData = getSeasonTitle(pageType, routeParams);
 
         return (
             <section className="container mx-auto py-8 sm:py-10 px-4">
-                <h1 className="text-2xl font-bold mb-4">{getSeasonTitle(pageType, routeParams)}</h1>
+                    <div className="text-center space-y-2 mb-8">
+                        <h1 className="text-2xl font-bold text-foreground">{titleData.title}</h1>
+                        <p className="text-sm text-muted-foreground">{titleData.description}</p>
+                    </div>
 
                 <SeasonNavigation routeParams={routeParams} pageType={pageType} />
 
-                <SeasonFilterTabs
-                    pageType={pageType}
-                    typeFilter={typeFilter}
-                    dayFilter={dayFilter}
-                    routeParams={routeParams}
-                />
+                {seasonData ? (
+                    <>
+                        <SeasonFilterTabs
+                            pageType={pageType}
+                            typeFilter={typeFilter}
+                            dayFilter={dayFilter}
+                            routeParams={routeParams}
+                        />
 
-                {filteredData.length > 0 ? (
-                    <div>
-                        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
-                            {filteredData.map((anime, index) => (
-                                <AnimeCard key={anime.mal_id} anime={anime} priority={index < 3} />
-                            ))}
-                        </div>
-
-                        <Separator className="my-8" />
-
-                        <AnimePagination
+                        <SeasonContent
+                            seasonData={seasonData}
                             currentPage={currentPage}
-                            totalPages={seasonData.totalPages || 1}
                             basePath={getSeasonBasePath(pageType, routeParams)}
                             queryParams={{
                                 ...(typeFilter && { type: typeFilter }),
                                 ...(dayFilter && { day: dayFilter })
                             }}
+                            pageType={pageType}
+                            dayFilter={dayFilter}
                         />
-                    </div>
+                    </>
                 ) : (
-                    <AnimeError
-                        pageType={pageType}
-                        dayFilter={dayFilter}
-                    />
+                    <SeasonArchive archiveData={archiveData} />
                 )}
             </section>
         );
@@ -89,62 +84,47 @@ function getPageType(routeParams) {
     if (routeParams.length === 0) return 'current';
     if (routeParams[0] === 'later') return 'upcoming';
     if (routeParams[0] === 'schedule') return 'schedule';
+    if (routeParams[0] === 'archive') return 'archive';
     if (routeParams.length === 1) return 'year';
     if (routeParams.length === 2) return 'specific';
     return 'current';
 }
 
-function buildApiConfig(routeParams, typeFilter, dayFilter) {
-    let apiConfig = { limit: 24 };
-    const pageType = getPageType(routeParams);
+function buildApiConfig(pageType, routeParams, typeFilter, dayFilter) {
+    const apiConfig = { limit: 24 };
 
-    if (routeParams.length === 0) {
-        apiConfig.type = "seasons/now";
-    } else if (routeParams[0] === 'later') {
-        apiConfig.type = "seasons/upcoming";
-    } else if (routeParams[0] === 'schedule') {
-        apiConfig.filter = dayFilter || 'monday';
-    } else if (routeParams.length === 1) {
-        apiConfig.type = `seasons/${routeParams[0]}`;
-    } else if (routeParams.length === 2) {
-        apiConfig.type = `seasons/${routeParams[0]}/${routeParams[1]}`;
-    } else {
-        apiConfig.type = "seasons/now";
+    switch (pageType) {
+        case 'current':
+            apiConfig.type = "seasons/now";
+            break;
+        case 'upcoming':
+            apiConfig.type = "seasons/upcoming";
+            break;
+        case 'schedule':
+            apiConfig.filter = dayFilter || 'monday';
+            break;
+        case 'year':
+            apiConfig.type = `seasons/${routeParams[0]}`;
+            break;
+        case 'specific':
+            apiConfig.type = `seasons/${routeParams[0]}/${routeParams[1]}`;
+            break;
+        default:
+            apiConfig.type = "seasons/now";
     }
 
     if (typeFilter && pageType !== 'schedule') {
         apiConfig.filter = typeFilter;
     }
 
-    return { pageType, apiConfig };
+    return apiConfig;
 }
 
 async function fetchSeasonData(pageType, currentPage, apiConfig) {
     if (pageType === 'schedule') {
         return await getSchedules(currentPage, apiConfig);
+    } else if (pageType === 'archive') {
+        return false;
     }
     return await getSeason(currentPage, apiConfig);
-}
-
-function filterSeasonData(data, pageType, typeFilter, dayFilter) {
-    if (!data) return [];
-
-    return data.filter(anime => {
-        if (pageType === 'schedule' && dayFilter) {
-            const animeDay = anime.broadcast?.day?.toLowerCase();
-            const filterDay = dayFilter.toLowerCase();
-
-            if (filterDay === 'other') {
-                return animeDay && !['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'].includes(animeDay);
-            }
-            if (filterDay === 'unknown') {
-                return !animeDay || animeDay === 'unknown' || animeDay === '';
-            }
-
-            return animeDay === filterDay;
-        } else if (typeFilter && pageType !== 'schedule') {
-            return anime.type?.toLowerCase() === typeFilter.toLowerCase();
-        }
-        return true;
-    });
 }

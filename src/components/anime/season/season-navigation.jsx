@@ -32,7 +32,7 @@ export function SeasonNavigation({ routeParams, pageType }) {
 
   const totalVisible = 4;
   const mobileVisible = 2;
-  
+
   const startIndex = Math.max(
     0,
     Math.min(activeIndex - 1, seasonNavItems.length - totalVisible)
@@ -41,8 +41,14 @@ export function SeasonNavigation({ routeParams, pageType }) {
   const visibleItems = seasonNavItems.slice(startIndex, endIndex);
 
   const mobileStartIndex = Math.max(0, activeIndex - 1);
-  const mobileEndIndex = Math.min(seasonNavItems.length, mobileStartIndex + mobileVisible);
-  const mobileVisibleItems = seasonNavItems.slice(mobileStartIndex, mobileEndIndex);
+  const mobileEndIndex = Math.min(
+    seasonNavItems.length,
+    mobileStartIndex + mobileVisible
+  );
+  const mobileVisibleItems = seasonNavItems.slice(
+    mobileStartIndex,
+    mobileEndIndex
+  );
 
   return (
     <div className="mb-6">
@@ -110,7 +116,11 @@ export function SeasonNavigation({ routeParams, pageType }) {
           >
             <Link href="/anime/season/schedule">Schedule</Link>
           </Button>
-          <Button variant="ghost" size="sm" asChild>
+          <Button
+            variant={pageType === "archive" ? "default" : "ghost"}
+            size="sm"
+            asChild
+          >
             <Link href="/anime/season/archive">Archive</Link>
           </Button>
         </div>
@@ -120,7 +130,12 @@ export function SeasonNavigation({ routeParams, pageType }) {
         <div className="overflow-x-auto mb-4">
           <nav className="flex gap-2 pb-2 min-w-max px-1">
             {mobileStartIndex > 0 && (
-              <Button variant="ghost" size="sm" asChild className="flex-shrink-0">
+              <Button
+                variant="ghost"
+                size="sm"
+                asChild
+                className="flex-shrink-0"
+              >
                 <Link
                   href={seasonNavItems[Math.max(0, mobileStartIndex - 2)].href}
                   title="Earlier seasons"
@@ -133,7 +148,9 @@ export function SeasonNavigation({ routeParams, pageType }) {
             {mobileVisibleItems.map((item) => (
               <Button
                 key={`mobile-${item.year}-${item.season}`}
-                variant={item.isCurrent || item.isActive ? "default" : "outline"}
+                variant={
+                  item.isCurrent || item.isActive ? "default" : "outline"
+                }
                 size="sm"
                 asChild
                 className="flex-shrink-0 whitespace-nowrap text-xs px-3"
@@ -145,7 +162,12 @@ export function SeasonNavigation({ routeParams, pageType }) {
             ))}
 
             {mobileEndIndex < seasonNavItems.length && (
-              <Button variant="ghost" size="sm" asChild className="flex-shrink-0">
+              <Button
+                variant="ghost"
+                size="sm"
+                asChild
+                className="flex-shrink-0"
+              >
                 <Link
                   href={
                     seasonNavItems[
@@ -164,7 +186,12 @@ export function SeasonNavigation({ routeParams, pageType }) {
         <div className="grid grid-cols-2 gap-2 mb-2">
           <div className="flex gap-1">
             {pageType !== "current" && (
-              <Button variant="ghost" size="sm" asChild className="flex-1 text-xs">
+              <Button
+                variant="ghost"
+                size="sm"
+                asChild
+                className="flex-1 text-xs"
+              >
                 <Link href="/anime/season">Current</Link>
               </Button>
             )}
@@ -186,7 +213,12 @@ export function SeasonNavigation({ routeParams, pageType }) {
             >
               <Link href="/anime/season/schedule">Schedule</Link>
             </Button>
-            <Button variant="ghost" size="sm" asChild className="flex-1 text-xs">
+            <Button
+              variant="ghost"
+              size="sm"
+              asChild
+              className="flex-1 text-xs"
+            >
               <Link href="/anime/season/archive">Archive</Link>
             </Button>
           </div>

@@ -1,0 +1,98 @@
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import Link from "next/link";
+
+function getCurrentSeason() {
+  const currentDate = new Date();
+  const currentMonth = currentDate.getMonth() + 1;
+
+  if (currentMonth >= 1 && currentMonth <= 3) return "winter";
+  else if (currentMonth >= 4 && currentMonth <= 6) return "spring";
+  else if (currentMonth >= 7 && currentMonth <= 9) return "summer";
+  else return "fall";
+}
+
+function YearDisplay({ year }) {
+  return (
+    <div className="bg-gradient-to-b from-muted/30 to-muted/60 flex flex-col items-center justify-center min-w-[80px] border-r border-border/50 -my-6">
+      {year
+        .toString()
+        .split("")
+        .map((digit, index) => (
+          <span
+            key={index}
+            className="text-2xl font-bold text-foreground/90 leading-none tracking-tight"
+          >
+            {digit}
+          </span>
+        ))}
+    </div>
+  );
+}
+
+function SeasonButton({ season, year }) {
+  const currentDate = new Date();
+  const currentYear = currentDate.getFullYear();
+  const currentSeason = getCurrentSeason();
+
+  const isCurrentSeason = year === currentYear && season === currentSeason;
+  const href = isCurrentSeason
+    ? "/anime/season"
+    : `/anime/season/${year}/${season}`;
+
+  return (
+    <Link href={href} className="block">
+      <Button
+        variant={isCurrentSeason ? "default" : "outline"}
+        size="sm"
+        className="w-full capitalize font-medium relative transition-all duration-200 hover:scale-105"
+      >
+        {season}
+        {isCurrentSeason && (
+          <Badge
+            variant="destructive"
+            className="absolute -top-1 -right-1 text-xs px-1 py-0 h-4 min-w-[16px] flex items-center justify-center"
+          >
+            •
+          </Badge>
+        )}
+      </Button>
+    </Link>
+  );
+}
+
+function ArchiveCard({ archive }) {
+  return (
+    <Card className="overflow-hidden hover:shadow-md transition-shadow duration-200 border-border/50">
+      <CardContent className="p-0">
+        <div className="flex min-h-[120px]">
+          <YearDisplay year={archive.year} />
+          <div className="flex-1 p-4">
+            <div className="flex flex-col gap-2 justify-center h-full">
+              {archive.seasons.map((season) => (
+                <SeasonButton
+                  key={season}
+                  season={season}
+                  year={archive.year}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
+
+export function SeasonArchive({ archiveData }) {
+  return (
+    <div className="space-y-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+        {archiveData.map((archive) => (
+          <ArchiveCard key={archive.year} archive={archive} />
+        ))}
+      </div>
+    </div>
+  );
+}

@@ -1,5 +1,5 @@
 import { CACHE_CONFIG, DEFAULT_LIMITS } from '@/lib/anime/config';
-import { fetchWithSfw, deduplicateAnimeById } from '@/lib/anime/utils';
+import { fetchWithSfw, deduplicateAnimeById, fetchSingle } from '@/lib/anime/utils';
 
 export async function getSeason(page = 1, apiConfig = {}) {
     const { type = 'seasons/now', limit = DEFAULT_LIMITS.ANIME_LIST, filter, unapproved, continuing } = apiConfig;
@@ -44,4 +44,14 @@ export async function getSeason(page = 1, apiConfig = {}) {
             error: error.message
         };
     }
+}
+
+export async function getArchive() {
+  try {
+    const data = await fetchSingle('/seasons', {}, CACHE_CONFIG.MEDIUM);
+    return data.data || [];
+  } catch (error) {
+    console.error('Error fetching anime genres list:', error);
+    return [];
+  }
 }
