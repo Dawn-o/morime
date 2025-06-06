@@ -25,13 +25,14 @@ export async function getSeason(page = 1, apiConfig = {}) {
         }
 
         const totalItems = data.pagination?.items?.total || data.data.length;
-        const totalPages = data.pagination ? Math.ceil(totalItems / limit) : 1;
+        const totalPages = data.pagination?.last_visible_page || Math.ceil(totalItems / limit);
 
         return {
             data: deduplicateAnimeById(data.data),
             totalPages,
             currentPage: page,
-            totalItems
+            totalItems,
+            pagination: data.pagination
         };
     } catch (error) {
         console.error("Error fetching season data:", error);

@@ -76,7 +76,7 @@ export function Header() {
 
       <Separator className="my-2" />
 
-      <div className="overflow-x-auto scrollbar-hide">
+      <div className="overflow-x-auto">
         <div className="flex items-center justify-normal 2xl:justify-center gap-1 p-2 mx-auto whitespace-nowrap 2xl:flex">
           <Link href="/">
             <Button

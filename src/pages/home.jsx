@@ -11,7 +11,7 @@ import { HomeCarouselSkeleton } from "@/components/skeleton/home-carousel-skelet
 
 export default async function HomePage() {
   const [upcomings, animes, topAnimes, genresList] = await Promise.all([
-    getSeason(1, { type: "seasons/upcoming", limit: 8, filter: "tv" }),
+    getSeason(1, { type: "seasons/upcoming", limit: 6, filter: "tv" }),
     getSeason(1, { type: "seasons/now", limit: 20, filter: "tv" }),
     getTopAnime(1),
     getAnimeGenresList(),

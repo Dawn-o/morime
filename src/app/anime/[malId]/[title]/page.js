@@ -1,8 +1,8 @@
 import { getDetailAnime, getEpisodeAnime, getAnimeCharacters } from "@/hooks/anime";
 import { notFound } from "next/navigation";
-import { AnimeHeroSection } from "@/components/anime/anime-hero-section";
-import { AnimeSidebar } from "@/components/anime/anime-sidebar";
-import { AnimeContentSections } from "@/components/anime/anime-content-sections";
+import { AnimeHeroSection } from "@/components/anime/detail/hero-section";
+import { AnimeSidebar } from "@/components/anime/detail/sidebar";
+import { AnimeContentSections } from "@/components/anime/detail/content-sections";
 
 // Generate metadata for SEO
 export async function generateMetadata({ params }) {

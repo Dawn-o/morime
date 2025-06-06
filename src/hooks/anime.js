@@ -1,5 +1,5 @@
 import { CACHE_CONFIG, DEFAULT_LIMITS } from '@/lib/anime/config';
-import { fetchWithSfw, deduplicateAnimeById } from '@/lib/anime/utils';
+import { fetchWithSfw, fetchSingle, deduplicateAnimeById } from '@/lib/anime/utils';
 
 export async function getAnime(page = 1, apiConfig = {}) {
   const { type = 'anime', limit = DEFAULT_LIMITS.ANIME_LIST, filter } = apiConfig;
@@ -71,13 +71,14 @@ export async function getTopAnime(page = 1, options = {}) {
     }
 
     const totalItems = data.pagination?.items?.total || data.data.length;
-    const totalPages = data.pagination ? Math.ceil(totalItems / limit) : 1;
+    const totalPages = data.pagination?.last_visible_page || Math.ceil(totalItems / limit);
 
     return {
       data: deduplicateAnimeById(data.data),
       totalPages,
       currentPage: page,
-      totalItems
+      totalItems,
+      pagination: data.pagination
     };
   } catch (error) {
     console.error("Error fetching top anime:", error);
@@ -97,7 +98,7 @@ export async function getDetailAnime(malId) {
   }
 
   try {
-    const data = await fetchWithSfw(`/anime/${malId}/full`, {}, CACHE_CONFIG.MEDIUM);
+    const data = await fetchSingle(`/anime/${malId}/full`, {}, CACHE_CONFIG.MEDIUM);
     return data.data;
   } catch (error) {
     console.error(`Error fetching anime details for ID ${malId}:`, error);
@@ -111,7 +112,7 @@ export async function getEpisodeAnime(malId) {
   }
 
   try {
-    const data = await fetchWithSfw(`/anime/${malId}/episodes`, {}, CACHE_CONFIG.SHORT);
+    const data = await fetchSingle(`/anime/${malId}/episodes`, {}, CACHE_CONFIG.SHORT);
     return data.data || [];
   } catch (error) {
     console.error(`Error fetching episodes for ID ${malId}:`, error);
@@ -121,7 +122,7 @@ export async function getEpisodeAnime(malId) {
 
 export async function getAnimeGenresList() {
   try {
-    const data = await fetchWithSfw('/genres/anime', {}, CACHE_CONFIG.LONG);
+    const data = await fetchSingle('/genres/anime', {}, CACHE_CONFIG.LONG);
     return data.data || [];
   } catch (error) {
     console.error('Error fetching anime genres list:', error);
@@ -172,7 +173,7 @@ export async function getAnimeCharacters(malId) {
   }
 
   try {
-    const data = await fetchWithSfw(`/anime/${malId}/characters`, {}, CACHE_CONFIG.MEDIUM);
+    const data = await fetchSingle(`/anime/${malId}/characters`, {}, CACHE_CONFIG.MEDIUM);
     return data.data || [];
   } catch (error) {
     console.error(`Error fetching characters for anime ID ${malId}:`, error);

@@ -3,9 +3,9 @@ import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
-import { EpisodesSection } from "@/components/anime/episodes-section";
+import { EpisodesSection } from "@/components/anime/detail/episodes-section";
 import { toSnakeCase } from "@/lib/utils";
-import { CharactersSection } from "./characters-section";
+import { CharactersSection } from "@/components/anime/detail/characters-section";
 import { useState, useRef, useMemo, useCallback } from "react";
 import { Separator } from "@/components/ui/separator";
 
@@ -90,7 +90,7 @@ export function AnimeContentSections({
             <TabsList className="grid w-full grid-cols-1 md:grid-cols-3 h-auto md:h-10 gap-1 md:gap-0 p-1 md:p-0">
               <TabsTrigger
                 value="all"
-                className="w-full py-2.5 md:py-0 text-sm justify-center"
+                className="w-full py-2.5 md:py-0 text-sm justify-center cursor-pointer"
               >
                 All ({charactersData.length})
               </TabsTrigger>
@@ -101,7 +101,7 @@ export function AnimeContentSections({
 
               <TabsTrigger
                 value="main"
-                className="w-full py-2.5 md:py-0 text-sm justify-center"
+                className="w-full py-2.5 md:py-0 text-sm justify-center cursor-pointer"
               >
                 Main ({characterGroups.main.length})
               </TabsTrigger>
@@ -112,7 +112,7 @@ export function AnimeContentSections({
 
               <TabsTrigger
                 value="supporting"
-                className="w-full py-2.5 md:py-0 text-sm justify-center"
+                className="w-full py-2.5 md:py-0 text-sm justify-center cursor-pointer"
               >
                 Supporting ({characterGroups.supporting.length})
               </TabsTrigger>

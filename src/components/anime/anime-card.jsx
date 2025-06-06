@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Star, Calendar, Clock } from "lucide-react";
 import { toSnakeCase } from "@/lib/utils";
 
-export function AnimeCard({ anime }) {
+export function AnimeCard({ anime, priority = false }) {
   return (
     <Link
       href={`/anime/${anime.mal_id}/${toSnakeCase(anime.title)}`}
@@ -21,6 +21,7 @@ export function AnimeCard({ anime }) {
             fill
             className="object-cover transition-transform duration-500 group-hover:scale-110"
             sizes="1024px"
+            priority={priority}
           />
 
           {/* Score badge */}
@@ -41,7 +42,7 @@ export function AnimeCard({ anime }) {
         </div>
 
         <div className="pt-2">
-          <h3 className="text-sm font-medium leading-tight line-clamp-2 group-hover:text-primary transition-colors">
+          <h3 className="text-sm font-medium leading-tight truncate line-clamp-2 group-hover:text-primary transition-colors">
             {anime.title}
           </h3>
           <div className="flex items-center mt-1 text-xs text-muted-foreground">
