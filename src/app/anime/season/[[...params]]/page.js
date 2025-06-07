@@ -5,7 +5,10 @@ import { SeasonFilterTabs } from "@/components/anime/season/season-filter-tabs";
 import { SeasonContent } from "@/components/anime/season/season-content";
 import { SeasonArchive } from "@/components/anime/season/season-archive";
 import { AnimeError } from "@/components/anime/season/anime-error";
+import { SeasonAnimeSkeleton } from "@/components/skeleton/season-anime-skeleton";
+import { SeasonArchiveSkeleton } from "@/components/skeleton/season-archive-skeleton";
 import { getSeasonTitle, getSeasonBasePath } from "@/lib/season-utils";
+import { Suspense } from "react";
 
 export async function generateMetadata({ params, searchParams }) {
     const routeParams = (await params).params || [];
@@ -21,58 +24,68 @@ export async function generateMetadata({ params, searchParams }) {
     };
 }
 
+async function SeasonAnimeContent({ params, searchParams }) {
+    const routeParams = (await params).params || [];
+    const typeFilter = (await searchParams)?.type || '';
+    const dayFilter = (await searchParams)?.day || '';
+    const currentPage = parseInt((await searchParams)?.page) || 1;
+
+    const pageType = getPageType(routeParams);
+    const apiConfig = buildApiConfig(pageType, routeParams, typeFilter, dayFilter);
+    const seasonData = await fetchSeasonData(pageType, currentPage, apiConfig);
+    const archiveData = await getArchive();
+
+    if (!archiveData && !seasonData || seasonData?.error) {
+        throw new Error('Failed to fetch season data');
+    }
+
+    const titleData = getSeasonTitle(pageType, routeParams);
+
+    return (
+        <section className="container mx-auto py-8 sm:py-10 px-4">
+            <div className="text-center space-y-2 mb-8">
+                <h1 className="text-2xl font-bold text-foreground">{titleData.title}</h1>
+                <p className="text-sm text-muted-foreground">{titleData.description}</p>
+            </div>
+
+            <SeasonNavigation routeParams={routeParams} pageType={pageType} />
+
+            {seasonData ? (
+                <>
+                    <SeasonFilterTabs
+                        pageType={pageType}
+                        typeFilter={typeFilter}
+                        dayFilter={dayFilter}
+                        routeParams={routeParams}
+                    />
+
+                    <SeasonContent
+                        seasonData={seasonData}
+                        currentPage={currentPage}
+                        basePath={getSeasonBasePath(pageType, routeParams)}
+                        queryParams={{
+                            ...(typeFilter && { type: typeFilter }),
+                            ...(dayFilter && { day: dayFilter })
+                        }}
+                        pageType={pageType}
+                        dayFilter={dayFilter}
+                    />
+                </>
+            ) : (
+                <Suspense fallback={<SeasonArchiveSkeleton />}>
+                    <SeasonArchive archiveData={archiveData} />
+                </Suspense>
+            )}
+        </section>
+    );
+}
+
 export default async function SeasonAnimePage({ params, searchParams }) {
     try {
-        const routeParams = (await params).params || [];
-        const typeFilter = (await searchParams)?.type || '';
-        const dayFilter = (await searchParams)?.day || '';
-        const currentPage = parseInt((await searchParams)?.page) || 1;
-
-        const pageType = getPageType(routeParams);
-        const apiConfig = buildApiConfig(pageType, routeParams, typeFilter, dayFilter);
-        const seasonData = await fetchSeasonData(pageType, currentPage, apiConfig);
-        const archiveData = await getArchive();
-
-        if (!archiveData && !seasonData || seasonData?.error) {
-            throw new Error('Failed to fetch season data');
-        }
-
-        const titleData = getSeasonTitle(pageType, routeParams);
-
         return (
-            <section className="container mx-auto py-8 sm:py-10 px-4">
-                    <div className="text-center space-y-2 mb-8">
-                        <h1 className="text-2xl font-bold text-foreground">{titleData.title}</h1>
-                        <p className="text-sm text-muted-foreground">{titleData.description}</p>
-                    </div>
-
-                <SeasonNavigation routeParams={routeParams} pageType={pageType} />
-
-                {seasonData ? (
-                    <>
-                        <SeasonFilterTabs
-                            pageType={pageType}
-                            typeFilter={typeFilter}
-                            dayFilter={dayFilter}
-                            routeParams={routeParams}
-                        />
-
-                        <SeasonContent
-                            seasonData={seasonData}
-                            currentPage={currentPage}
-                            basePath={getSeasonBasePath(pageType, routeParams)}
-                            queryParams={{
-                                ...(typeFilter && { type: typeFilter }),
-                                ...(dayFilter && { day: dayFilter })
-                            }}
-                            pageType={pageType}
-                            dayFilter={dayFilter}
-                        />
-                    </>
-                ) : (
-                    <SeasonArchive archiveData={archiveData} />
-                )}
-            </section>
+            <Suspense fallback={<SeasonAnimeSkeleton />}>
+                <SeasonAnimeContent params={params} searchParams={searchParams} />
+            </Suspense>
         );
     } catch (error) {
         console.error('Error in SeasonAnimePage:', error);

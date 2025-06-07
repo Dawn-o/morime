@@ -106,7 +106,7 @@ export function SeasonFilterTabs({
       </TabsList>
 
       <div className="md:hidden overflow-x-auto">
-        <div className="flex gap-2 pb-2 min-w-max px-1">
+        <div className="flex justify-center gap-2 pb-2 min-w-max px-1">
           <Link
             href={`/anime/season${
               routeParams.length > 0 ? `/${routeParams.join("/")}` : ""

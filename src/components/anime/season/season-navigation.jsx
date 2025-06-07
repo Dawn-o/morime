@@ -52,7 +52,6 @@ export function SeasonNavigation({ routeParams, pageType }) {
 
   return (
     <div className="mb-6">
-      {/* Desktop Navigation */}
       <nav className="hidden md:flex items-center justify-center gap-2">
         {startIndex > 0 && (
           <Button variant="ghost" size="sm" asChild>
@@ -128,7 +127,7 @@ export function SeasonNavigation({ routeParams, pageType }) {
 
       <div className="md:hidden">
         <div className="overflow-x-auto mb-4">
-          <nav className="flex gap-2 pb-2 min-w-max px-1">
+          <nav className="flex justify-center gap-2 pb-2 min-w-max px-1">
             {mobileStartIndex > 0 && (
               <Button
                 variant="ghost"
@@ -140,7 +139,7 @@ export function SeasonNavigation({ routeParams, pageType }) {
                   href={seasonNavItems[Math.max(0, mobileStartIndex - 2)].href}
                   title="Earlier seasons"
                 >
-                  ⟨
+                  ←
                 </Link>
               </Button>
             )}
@@ -176,14 +175,14 @@ export function SeasonNavigation({ routeParams, pageType }) {
                   }
                   title="Later seasons"
                 >
-                  ⟩
+                  →
                 </Link>
               </Button>
             )}
           </nav>
         </div>
 
-        <div className="grid grid-cols-2 gap-2 mb-2">
+        {/* <div className="grid grid-cols-2 gap-2 mb-2">
           <div className="flex gap-1">
             {pageType !== "current" && (
               <Button
@@ -222,7 +221,7 @@ export function SeasonNavigation({ routeParams, pageType }) {
               <Link href="/anime/season/archive">Archive</Link>
             </Button>
           </div>
-        </div>
+        </div> */}
       </div>
 
       <Separator className="my-4" />

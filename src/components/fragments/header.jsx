@@ -7,25 +7,23 @@ import { Separator } from "@/components/ui/separator";
 import { SfwToggle } from "@/components/fragments/sfw-toggle";
 import { ModeToggle } from "@/components/elements/theme/mode-toggle";
 import Link from "next/link";
-import { toSnakeCase } from "@/lib/utils";
-import Image from "next/image";
 
 export function Header() {
   const [isSearchVisible, setIsSearchVisible] = useState(false);
 
   const navItems = [
-    { label: "ANIME LIST" },
-    { label: "PRODUCER LIST" },
-    { label: "DAILY SCHEDULE" },
-    { label: "SEASONAL SCHEDULE" },
-    { label: "TOP ANIME" },
-    { label: "POPULAR ANIME" },
-    { label: "ON-GOING ANIME" },
-    { label: "COMPLETED ANIME" },
-    { label: "POPULAR THIS SEASON" },
-    { label: "ANTICIPATED" },
-    { label: "RANDOM ANIME" },
-    { label: "GENRE LIST" },
+    { label: "ANIME LIST", link: "anime" },
+    { label: "PRODUCER LIST", link: "producer" },
+    { label: "DAILY SCHEDULE", link: "anime/season/schedule" },
+    { label: "SEASONAL SCHEDULE", link: "anime/season/archive" },
+    { label: "TOP ANIME", link: "anime/top" },
+    { label: "POPULAR ANIME", link: "anime/top/bypopularity" },
+    { label: "ON-GOING ANIME", link: "anime/season" },
+    { label: "COMPLETED ANIME", link: "anime/completed" },
+    { label: "POPULAR THIS SEASON", link: "anime/top/airing" },
+    { label: "ANTICIPATED", link: "anime/anticipated" },
+    { label: "RANDOM ANIME", link: "anime/random" },
+    { label: "GENRE LIST", link: "anime/genre" },
   ];
 
   return (
@@ -88,7 +86,7 @@ export function Header() {
             </Button>
           </Link>
           {navItems.map((item, index) => (
-            <Link key={index} href={`/${toSnakeCase(item.label)}`}>
+            <Link key={index} href={`/${item.link}`}>
               <Button
                 variant="secondary"
                 size="sm"
