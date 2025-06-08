@@ -46,7 +46,7 @@ export async function getSeason(page = 1, apiConfig = {}) {
     }
 }
 
-export async function getArchive() {
+export async function getSeasonList() {
   try {
     const data = await fetchSingle('/seasons', {}, CACHE_CONFIG.MEDIUM);
     return data.data || [];

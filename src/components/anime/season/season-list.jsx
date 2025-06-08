@@ -37,12 +37,9 @@ function SeasonButton({ season, year }) {
   const currentSeason = getCurrentSeason();
 
   const isCurrentSeason = year === currentYear && season === currentSeason;
-  const href = isCurrentSeason
-    ? "/anime/season"
-    : `/anime/season/${year}/${season}`;
 
   return (
-    <Link href={href} className="block">
+    <Link href={`/anime/season/${year}/${season}`} className="block">
       <Button
         variant={isCurrentSeason ? "default" : "outline"}
         size="sm"
@@ -62,20 +59,16 @@ function SeasonButton({ season, year }) {
   );
 }
 
-function ArchiveCard({ archive }) {
+function ListCard({ list }) {
   return (
     <Card className="overflow-hidden hover:shadow-md transition-shadow duration-200 border-border/50">
       <CardContent className="p-0">
         <div className="flex min-h-[120px]">
-          <YearDisplay year={archive.year} />
+          <YearDisplay year={list.year} />
           <div className="flex-1 p-4">
             <div className="flex flex-col gap-2 justify-center h-full">
-              {archive.seasons.map((season) => (
-                <SeasonButton
-                  key={season}
-                  season={season}
-                  year={archive.year}
-                />
+              {list.seasons.map((season) => (
+                <SeasonButton key={season} season={season} year={list.year} />
               ))}
             </div>
           </div>
@@ -85,12 +78,12 @@ function ArchiveCard({ archive }) {
   );
 }
 
-export function SeasonArchive({ archiveData }) {
+export function SeasonList({ listData }) {
   return (
     <div className="space-y-8">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-        {archiveData.map((archive) => (
-          <ArchiveCard key={archive.year} archive={archive} />
+        {listData.map((list) => (
+          <ListCard key={list.year} list={list} />
         ))}
       </div>
     </div>

@@ -14,14 +14,14 @@ export function Header() {
   const navItems = [
     { label: "ANIME LIST", link: "anime" },
     { label: "PRODUCER LIST", link: "producer" },
-    { label: "DAILY SCHEDULE", link: "anime/season/schedule" },
-    { label: "SEASONAL SCHEDULE", link: "anime/season/archive" },
+    { label: "DAILY SCHEDULE", link: "anime/schedule" },
+    { label: "SEASONAL SCHEDULE", link: "anime/season" },
     { label: "TOP ANIME", link: "anime/top" },
     { label: "POPULAR ANIME", link: "anime/top/bypopularity" },
     { label: "ON-GOING ANIME", link: "anime/season" },
     { label: "COMPLETED ANIME", link: "anime/completed" },
     { label: "POPULAR THIS SEASON", link: "anime/top/airing" },
-    { label: "ANTICIPATED", link: "anime/anticipated" },
+    { label: "UPCOMING ANIME", link: "anime/upcoming" },
     { label: "RANDOM ANIME", link: "anime/random" },
     { label: "GENRE LIST", link: "anime/genre" },
   ];
