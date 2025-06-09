@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { EpisodesSection } from "@/components/anime/detail/episodes-section";
-import { toSnakeCase } from "@/lib/utils";
+import { toSnakeCase } from "@/lib/formatter";
 import { CharactersSection } from "@/components/anime/detail/characters-section";
 import { useState, useRef, useMemo, useCallback } from "react";
 import { Separator } from "@/components/ui/separator";

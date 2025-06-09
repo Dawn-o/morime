@@ -1,8 +1,6 @@
 import { getSeason } from "@/hooks/season";
-import { TypeFilterTabs } from "@/components/anime/season/type-filter-tabs";
+import { TypeFilterTabs } from "@/components/anime/type-filter-tabs";
 import { AnimeGrid } from "@/components/anime/anime-grid";
-import { Suspense } from "react";
-import { UpcomingSkeleton } from "@/components/skeleton/upcoming-skeleton";
 
 export async function generateMetadata({ searchParams }) {
     const currentPage = parseInt((await searchParams)?.page) || 1;
@@ -27,7 +25,6 @@ export default async function UpcomingPage({ searchParams }) {
     const upcomingData = await getSeason(currentPage, apiConfig);
 
     return (
-        <Suspense fallback={<UpcomingSkeleton />}>
             <section className="container mx-auto py-8 sm:py-10 px-4">
                 <div className="text-center space-y-2 mb-8">
                     <h1 className="text-2xl font-bold text-foreground">Upcoming Anime</h1>
@@ -45,6 +42,5 @@ export default async function UpcomingPage({ searchParams }) {
                     }}
                 />
             </section>
-        </Suspense>
     );
 }

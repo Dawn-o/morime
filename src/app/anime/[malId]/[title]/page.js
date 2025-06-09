@@ -29,6 +29,10 @@ export async function generateMetadata({ params }) {
 export default async function AnimeDetailsPage({ params }) {
     const { malId } = await params;
 
+    if (isNaN(malId)) {
+        notFound();
+    }
+
     const [animeData, episodesData, charactersData] = await Promise.all([
         getDetailAnime(malId),
         getEpisodeAnime(malId),

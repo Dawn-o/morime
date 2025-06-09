@@ -1,7 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Star, Calendar, Clock } from "lucide-react";
-import { toSnakeCase } from "@/lib/utils";
+import { toSnakeCase } from "@/lib/formatter";
+import { getImageWithFallback } from "@/lib/image-fallback";
 
 export function AnimeCard({ anime, priority = false }) {
   return (
@@ -11,12 +12,10 @@ export function AnimeCard({ anime, priority = false }) {
     >
       <div className="w-full h-auto aspect-[2/3] flex flex-col">
         <div className="w-full h-full overflow-hidden rounded-lg shadow-lg group-hover:shadow-xl relative">
-          {/* Overlay gradient */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent z-10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
 
-          {/* Image */}
           <Image
-            src={anime.images.webp.large_image_url}
+            src={getImageWithFallback(anime.images?.webp?.large_image_url)}
             alt={anime.title}
             fill
             className="object-cover transition-transform duration-500 group-hover:scale-110"
@@ -24,7 +23,6 @@ export function AnimeCard({ anime, priority = false }) {
             priority={priority}
           />
 
-          {/* Score badge */}
           {anime.score && (
             <div className="absolute top-2 right-2 bg-amber-500/90 text-black text-xs font-bold px-2 py-1 rounded flex items-center z-10">
               <Star className="w-3 h-3 mr-1" />
@@ -32,7 +30,6 @@ export function AnimeCard({ anime, priority = false }) {
             </div>
           )}
 
-          {/* Episodes badge */}
           {anime.episodes && (
             <div className="absolute bottom-2 right-2 bg-black/60 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity z-10 flex items-center">
               <Clock className="w-3 h-3 mr-1" />

@@ -43,7 +43,7 @@ function SeasonButton({ season, year }) {
       <Button
         variant={isCurrentSeason ? "default" : "outline"}
         size="sm"
-        className="w-full capitalize font-medium relative transition-all duration-200 hover:scale-105"
+        className="w-full capitalize font-medium relative transition-all duration-200 hover:scale-105 cursor-pointer"
       >
         {season}
         {isCurrentSeason && (

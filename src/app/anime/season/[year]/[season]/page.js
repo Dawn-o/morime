@@ -1,9 +1,8 @@
 import { getSeason } from "@/hooks/season";
-import { TypeFilterTabs } from "@/components/anime/season/type-filter-tabs";
+import { TypeFilterTabs } from "@/components/anime/type-filter-tabs";
 import { AnimeGrid } from "@/components/anime/anime-grid";
 import { SeasonNavigation } from "@/components/anime/season/season-navigation";
-import { Suspense } from "react";
-import { SpecificSeasonSkeleton } from "@/components/skeleton/spesific-season-skeleton";
+import { notFound } from "next/navigation";
 
 export async function generateMetadata({ params, searchParams }) {
     const { year, season } = await params;
@@ -20,6 +19,18 @@ export async function generateMetadata({ params, searchParams }) {
 
 export default async function SpesificSeasonPage({ params, searchParams }) {
     const { year, season } = await params;
+
+    const yearNum = parseInt(year);
+    if (isNaN(yearNum) || yearNum < 1917 || yearNum > new Date().getFullYear() + 2) {
+        notFound();
+    }
+
+    const validSeasons = ['winter', 'spring', 'summer', 'fall'];
+    if (!validSeasons.includes(season.toLowerCase())) {
+        notFound();
+    }
+
+
     const typeFilter = (await searchParams)?.type || '';
     const currentPage = parseInt((await searchParams)?.page) || 1;
 
@@ -33,26 +44,24 @@ export default async function SpesificSeasonPage({ params, searchParams }) {
     const seasonTitle = `${season.charAt(0).toUpperCase() + season.slice(1)} ${year} Anime`;
 
     return (
-        <Suspense fallback={<SpecificSeasonSkeleton />}>
-            <section className="container mx-auto py-8 sm:py-10 px-4">
-                <div className="text-center space-y-2 mb-8">
-                    <h1 className="text-2xl font-bold text-foreground">{seasonTitle}</h1>
-                    <p className="text-sm text-muted-foreground">Anime from {season} {year} season</p>
-                </div>
+        <section className="container mx-auto py-8 sm:py-10 px-4">
+            <div className="text-center space-y-2 mb-8">
+                <h1 className="text-2xl font-bold text-foreground">{seasonTitle}</h1>
+                <p className="text-sm text-muted-foreground">Anime from {season} {year} season</p>
+            </div>
 
-                <SeasonNavigation routeParams={[year, season]} />
+            <SeasonNavigation routeParams={[year, season]} />
 
-                <TypeFilterTabs typeFilter={typeFilter} basePath={`/anime/season/${year}/${season}`} />
+            <TypeFilterTabs typeFilter={typeFilter} basePath={`/anime/season/${year}/${season}`} />
 
-                <AnimeGrid
-                    animeData={seasonData}
-                    currentPage={currentPage}
-                    basePath={`/anime/season/${year}/${season}`}
-                    queryParams={{
-                        ...(typeFilter && { type: typeFilter })
-                    }}
-                />
-            </section>
-        </Suspense>
+            <AnimeGrid
+                animeData={seasonData}
+                currentPage={currentPage}
+                basePath={`/anime/season/${year}/${season}`}
+                queryParams={{
+                    ...(typeFilter && { type: typeFilter })
+                }}
+            />
+        </section>
     );
 }

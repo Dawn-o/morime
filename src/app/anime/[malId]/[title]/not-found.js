@@ -9,7 +9,7 @@ export default function NotFound() {
         The anime you&apos;re looking for doesn&apos;t exist or has been removed.
       </p>
       <Link href="/anime">
-        <Button>Browse Anime</Button>
+        <Button className="cursor-pointer">Browse Anime</Button>
       </Link>
     </div>
   );

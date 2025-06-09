@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { toSnakeCase } from "@/lib/utils";
+import { toSnakeCase } from "@/lib/formatter";
 
 function SidebarSection({ title, children, condition = true }) {
   if (!condition) return null;

@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Github, Twitter, Instagram } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { getTopAnime } from "@/hooks/anime";
-import { toSnakeCase } from "@/lib/utils";
+import { toSnakeCase } from "@/lib/formatter";
 
 export async function Footer() {
   const [topAnimes, topAiringAnimes, mostPopularAnimes] = await Promise.all([

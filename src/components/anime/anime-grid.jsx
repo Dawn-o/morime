@@ -1,13 +1,13 @@
 import { AnimeCard } from "@/components/anime/anime-card";
 import { Separator } from "@/components/ui/separator";
 import { AnimePagination } from "@/components/anime/anime-pagination";
+import { EmptyState } from "@/components/anime/empty-state";
 
-export function AnimeGrid({
-  animeData,
-  currentPage,
-  basePath,
-  queryParams,
-}) {
+export function AnimeGrid({ animeData, currentPage, basePath, queryParams }) {
+  if (!animeData || !animeData.data || animeData.data.length === 0) {
+    return <EmptyState />;
+  }
+
   return (
     <div>
       <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">

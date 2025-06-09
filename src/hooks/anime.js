@@ -2,7 +2,7 @@ import { CACHE_CONFIG, DEFAULT_LIMITS } from '@/lib/anime/config';
 import { fetchWithSfw, fetchSingle, deduplicateAnimeById } from '@/lib/anime/utils';
 
 export async function getAnime(page = 1, apiConfig = {}) {
-  const { type = 'anime', limit = DEFAULT_LIMITS.ANIME_LIST, filter } = apiConfig;
+  const { type = 'anime', limit = DEFAULT_LIMITS.ANIME_LIST, filter, order_by, sort } = apiConfig;
 
   try {
     let endpoint = `/${type}`;
@@ -10,6 +10,14 @@ export async function getAnime(page = 1, apiConfig = {}) {
 
     if (filter) {
       params.filter = filter;
+    }
+
+    if (order_by) {
+      params.order_by = order_by;
+    }
+
+    if (sort) {
+      params.sort = sort;
     }
 
     const data = await fetchWithSfw(endpoint, params, CACHE_CONFIG.SHORT);
@@ -93,10 +101,6 @@ export async function getTopAnime(page = 1, options = {}) {
 }
 
 export async function getDetailAnime(malId) {
-  if (!malId || isNaN(malId)) {
-    throw new Error('Invalid anime ID');
-  }
-
   try {
     const data = await fetchSingle(`/anime/${malId}/full`, {}, CACHE_CONFIG.MEDIUM);
     return data.data;
@@ -107,10 +111,6 @@ export async function getDetailAnime(malId) {
 }
 
 export async function getEpisodeAnime(malId) {
-  if (!malId || isNaN(malId)) {
-    return [];
-  }
-
   try {
     const data = await fetchSingle(`/anime/${malId}/episodes`, {}, CACHE_CONFIG.SHORT);
     return data.data || [];
@@ -131,10 +131,6 @@ export async function getAnimeGenresList() {
 }
 
 export async function getAnimeByGenre(page = 1, genreId, limit = DEFAULT_LIMITS.ANIME_LIST) {
-  if (!genreId) {
-    throw new Error('Genre ID is required');
-  }
-
   try {
     const data = await fetchWithSfw('/anime', {
       genres: genreId,
@@ -168,10 +164,6 @@ export async function getAnimeByGenre(page = 1, genreId, limit = DEFAULT_LIMITS.
 }
 
 export async function getAnimeCharacters(malId) {
-  if (!malId || isNaN(malId)) {
-    return [];
-  }
-
   try {
     const data = await fetchSingle(`/anime/${malId}/characters`, {}, CACHE_CONFIG.MEDIUM);
     return data.data || [];
