@@ -2,6 +2,8 @@ import { getAnime } from "@/hooks/anime";
 import { getAnimeSearch } from "@/hooks/search";
 import { AnimeGrid } from "@/components/anime/anime-grid";
 import { SearchInput } from "@/components/anime/search-input";
+import { Suspense } from "react";
+import { AnimeListSkeleton } from "@/components/skeleton/anime-list-skeleton";
 
 export async function generateMetadata({ searchParams }) {
     const currentPage = parseInt((await searchParams)?.page) || 1;
@@ -50,33 +52,35 @@ export default async function AnimePage({ searchParams }) {
     }
 
     return (
-        <section className="container mx-auto py-8 sm:py-10 px-4">
-            <div className="text-center space-y-2 mb-8">
-                <h1 className="text-2xl font-bold text-foreground">
-                    {searchQuery ? `Search: ${searchQuery}` : 'Anime List'}
-                </h1>
-                <p className="text-sm text-muted-foreground">
-                    {searchQuery
-                        ? `Search results for "${searchQuery}"`
-                        : 'Browse all anime series, movies, and specials in our comprehensive database'
-                    }
-                </p>
-            </div>
+        <Suspense fallback={<AnimeListSkeleton showSearch={true} />}>
+            <section className="container mx-auto py-8 sm:py-10 px-4">
+                <div className="text-center space-y-2 mb-8">
+                    <h1 className="text-2xl font-bold text-foreground">
+                        {searchQuery ? `Search: ${searchQuery}` : 'Anime List'}
+                    </h1>
+                    <p className="text-sm text-muted-foreground">
+                        {searchQuery
+                            ? `Search results for "${searchQuery}"`
+                            : 'Browse all anime series, movies, and specials in our comprehensive database'
+                        }
+                    </p>
+                </div>
 
-            <SearchInput
-                defaultValue={searchQuery}
-                basePath="/anime"
-                placeholder="Search anime titles..."
-            />
+                <SearchInput
+                    defaultValue={searchQuery}
+                    basePath="/anime"
+                    placeholder="Search anime titles..."
+                />
 
-            <AnimeGrid
-                animeData={animeData}
-                currentPage={currentPage}
-                basePath="/anime"
-                queryParams={{
-                    ...(searchQuery && { q: searchQuery })
-                }}
-            />
-        </section>
+                <AnimeGrid
+                    animeData={animeData}
+                    currentPage={currentPage}
+                    basePath="/anime"
+                    queryParams={{
+                        ...(searchQuery && { q: searchQuery })
+                    }}
+                />
+            </section>
+        </Suspense>
     );
 }
