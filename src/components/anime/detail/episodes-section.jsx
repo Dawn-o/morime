@@ -2,18 +2,16 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { ChevronDownIcon, ChevronUpIcon } from "lucide-react";
+import { ChevronDownIcon } from "lucide-react";
+import { EmptyState } from "@/components/anime/detail/empty-state";
 
 export function EpisodesSection({ episodes }) {
-  const [visibleEpisodes, setVisibleEpisodes] = useState(12);
+  const initialLimit = 12;
+  const [visibleEpisodes, setVisibleEpisodes] = useState(initialLimit);
   const INCREMENT = 6;
 
   if (!episodes || episodes.length === 0) {
-    return (
-      <p className="text-muted-foreground">
-        No episodes information available.
-      </p>
-    );
+    return <EmptyState message="No episodes information available." />;
   }
 
   const displayEpisodes = episodes.slice(0, visibleEpisodes);
@@ -39,7 +37,7 @@ export function EpisodesSection({ episodes }) {
         ))}
       </div>
 
-      {episodes.length > 12 && (
+      {episodes.length > initialLimit && (
         <div className="mt-4 space-y-2">
           {hasMoreEpisodes && (
             <Button variant="outline" className="w-full" onClick={loadMore}>

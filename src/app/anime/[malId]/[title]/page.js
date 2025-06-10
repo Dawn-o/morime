@@ -4,12 +4,11 @@ import { AnimeHeroSection } from "@/components/anime/detail/hero-section";
 import { AnimeSidebar } from "@/components/anime/detail/sidebar";
 import { AnimeContentSections } from "@/components/anime/detail/content-sections";
 
-// Generate metadata for SEO
 export async function generateMetadata({ params }) {
     const { malId } = await params;
     const animeData = await getDetailAnime(malId);
 
-    if (!animeData) {
+    if (isNaN(malId) || !animeData) {
         return {
             title: "Anime Not Found | Morime"
         };
@@ -21,32 +20,27 @@ export async function generateMetadata({ params }) {
         openGraph: {
             title: animeData.title,
             description: animeData.synopsis?.slice(0, 160),
-            images: animeData.images?.jpg?.large_image_url ? [animeData.images.jpg.large_image_url] : [],
+            images: animeData.images?.webp?.image_url ? [animeData.images.webp.image_url] : [],
         }
     };
 }
 
 export default async function AnimeDetailsPage({ params }) {
     const { malId } = await params;
-
-    if (isNaN(malId)) {
-        notFound();
-    }
-
     const [animeData, episodesData, charactersData] = await Promise.all([
         getDetailAnime(malId),
         getEpisodeAnime(malId),
         getAnimeCharacters(malId)
     ]);
 
-    if (!animeData) {
+    if (isNaN(malId) || !animeData) {
         notFound();
     }
 
     return (
         <>
             <AnimeHeroSection animeData={animeData} />
-            <section className="container mx-auto py-8 sm:py-10 px-4">
+            <section className="container mx-auto pb-8 sm:pb-10 px-4 -mt-0 md:-mt-24 relative z-10">
                 <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 lg:gap-8">
                     <div className="lg:col-span-1">
                         <AnimeSidebar animeData={animeData} />
