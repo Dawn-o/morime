@@ -16,7 +16,7 @@ export async function generateMetadata({ searchParams }) {
 export default async function SchedulePage({ searchParams }) {
     const dayFilter = (await searchParams)?.day || 'monday';
 
-    if (!['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'].includes(dayFilter.toLowerCase())) {
+    if (!['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday', 'other', 'unknown'].includes(dayFilter.toLowerCase())) {
         notFound();
     }
 

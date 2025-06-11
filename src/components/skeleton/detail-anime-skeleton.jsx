@@ -26,8 +26,8 @@ export default function DetailAnimeSkeleton() {
 
               <div className="flex-1 text-center sm:text-left max-w-full">
                 <div className="flex items-center justify-center sm:justify-start flex-wrap gap-2 mb-2 sm:mb-3">
-                  <Skeleton className="h-5 w-16 rounded-full" />
-                  <Skeleton className="h-5 w-20 rounded-full" />
+                  <Skeleton className="h-6 w-12 rounded-full" />
+                  <Skeleton className="h-6 w-16 rounded-full" />
                 </div>
 
                 <Skeleton className="h-8 sm:h-9 md:h-10 lg:h-12 w-4/5 mx-auto sm:mx-0 mb-1 sm:mb-2" />
@@ -42,7 +42,13 @@ export default function DetailAnimeSkeleton() {
 
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6">
                   {[1, 2, 3, 4].map((i) => (
-                    <Skeleton key={i} className="h-20 rounded-lg" />
+                    <div
+                      key={i}
+                      className="bg-card/40 backdrop-blur-sm rounded-lg p-3 border border-border/20 flex flex-col items-center justify-center"
+                    >
+                      <Skeleton className="h-3 w-16 mb-1" />
+                      <Skeleton className="h-6 w-12" />
+                    </div>
                   ))}
                 </div>
 
@@ -55,10 +61,10 @@ export default function DetailAnimeSkeleton() {
         </div>
       </section>
 
-      <section className="container mx-auto pb-8 sm:pb-10 px-4 -mt-16 sm:-mt-20 md:-mt-24 relative z-10">
+      <section className="container mx-auto pb-8 sm:pb-10 px-4 -mt-0 md:-mt-24 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 lg:gap-8">
           <div className="lg:col-span-1">
-            <div className="shadow-lg border-border/40 rounded-xl bg-card">
+            <div className="py-0 shadow-lg border-border/40 rounded-xl bg-card">
               <div className="p-4 space-y-0 divide-y divide-border/60">
                 <div className="py-3">
                   <Skeleton className="h-4 w-32 mb-1.5" />
@@ -74,7 +80,7 @@ export default function DetailAnimeSkeleton() {
                 </div>
 
                 <div className="py-3">
-                  <Skeleton className="h-4 w-24 mb-1.5" />
+                  <Skeleton className="h-4 w-20 mb-1.5" />
                   <div className="space-y-2">
                     {[1, 2, 3, 4, 5, 6, 7].map((i) => (
                       <div key={i} className="flex justify-between text-sm">
@@ -85,19 +91,48 @@ export default function DetailAnimeSkeleton() {
                   </div>
                 </div>
 
-                {[1, 2, 3].map((section) => (
-                  <div key={section} className="py-3">
-                    <Skeleton className="h-4 w-16 mb-1.5" />
-                    <div className="space-y-2">
-                      {[1, 2, 3].map((i) => (
-                        <div key={i} className="flex justify-between text-sm">
-                          <Skeleton className="h-3 w-12" />
-                          <Skeleton className="h-3 w-16" />
+                <div className="py-3">
+                  <Skeleton className="h-4 w-16 mb-1.5" />
+                  <div className="space-y-2">
+                    {[1, 2, 3].map((i) => (
+                      <div key={i} className="flex justify-between text-sm">
+                        <Skeleton className="h-3 w-12" />
+                        <div className="flex flex-wrap gap-1.5 justify-end">
+                          <Skeleton className="h-5 w-16" />
+                          <Skeleton className="h-5 w-20" />
                         </div>
-                      ))}
-                    </div>
+                      </div>
+                    ))}
                   </div>
-                ))}
+                </div>
+
+                <div className="py-3">
+                  <Skeleton className="h-4 w-16 mb-1.5" />
+                  <div className="space-y-2">
+                    {[1, 2, 3, 4].map((i) => (
+                      <div key={i} className="flex justify-between text-sm">
+                        <Skeleton className="h-3 w-14" />
+                        <div className="flex flex-wrap gap-1.5 justify-end">
+                          {[1, 2].map((j) => (
+                            <Skeleton key={j} className="h-5 w-12" />
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="py-3">
+                  <Skeleton className="h-4 w-20 mb-1.5" />
+                  <div className="space-y-2">
+                    {[1, 2, 3, 4].map((i) => (
+                      <div key={i} className="flex justify-between text-sm">
+                        <Skeleton className="h-3 w-16" />
+                        <Skeleton className="h-3 w-16" />
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
             </div>
           </div>

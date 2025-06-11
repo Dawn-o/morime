@@ -35,21 +35,19 @@ export function SfwToggle() {
   const enableSfw = async () => {
     setIsSfw(true);
     await setSfwCookie("true");
-    router.refresh(); // Refresh the page to apply new content filtering
+    router.refresh();
   };
 
   const enableNsfw = async () => {
     setIsSfw(false);
     await setSfwCookie("false");
-    router.refresh(); // Refresh the page to apply new content filtering
+    router.refresh();
   };
 
-  // Don't render until we've loaded the cookie value
   if (!isLoaded) return null;
 
   return (
     <>
-      {/* For toggling back to SFW mode - no confirmation needed */}
       {!isSfw && (
         <Button
           variant="outline"
@@ -63,14 +61,13 @@ export function SfwToggle() {
         </Button>
       )}
 
-      {/* For toggling to NSFW mode - requires confirmation */}
       {isSfw && (
         <AlertDialog>
           <AlertDialogTrigger asChild>
             <Button
               variant="outline"
               size="icon"
-              className="relative"
+              className="relative cursor-pointer"
               title="Currently in SFW mode. Click to enable NSFW mode."
             >
               <ShieldCheck className="h-[1.2rem] w-[1.2rem] text-green-500" />

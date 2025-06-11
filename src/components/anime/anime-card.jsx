@@ -1,10 +1,46 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import { Star, Calendar, Clock } from "lucide-react";
 import { toSnakeCase } from "@/lib/formatter";
 import { getImageWithFallback } from "@/lib/image-fallback";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useState } from "react";
 
-export function AnimeCard({ anime, priority = false }) {
+function AnimeCardSkeleton() {
+  return (
+    <div className="w-full h-auto aspect-[2/3] flex flex-col">
+      <div className="w-full h-full overflow-hidden rounded-lg shadow-lg relative">
+        <Skeleton className="w-full h-full" />
+
+        <div className="absolute top-2 right-2 z-10">
+          <Skeleton className="h-6 w-12 rounded" />
+        </div>
+      </div>
+
+      <div className="pt-2">
+        <Skeleton className="h-4 w-full mb-1" />
+        <Skeleton className="h-4 w-3/4" />
+
+        <div className="flex items-center mt-1 space-x-1">
+          <Skeleton className="h-3 w-3 rounded-full" />
+          <Skeleton className="h-3 w-12" />
+          <Skeleton className="h-3 w-1 rounded-full" />
+          <Skeleton className="h-3 w-8" />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export function AnimeCard({ anime, priority = false, isLoading = false }) {
+  const [imageLoading, setImageLoading] = useState(true);
+  const [imageError, setImageError] = useState(false);
+
+  if (isLoading) {
+    return <AnimeCardSkeleton />;
+  }
+
   return (
     <Link
       href={`/anime/${anime.mal_id}/${toSnakeCase(anime.title)}`}
@@ -14,14 +50,35 @@ export function AnimeCard({ anime, priority = false }) {
         <div className="w-full h-full overflow-hidden rounded-lg shadow-lg group-hover:shadow-xl relative">
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent z-10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
 
+          {/* Show skeleton while image is loading */}
+          {imageLoading && (
+            <div className="absolute inset-0 z-5">
+              <div className="w-full h-full bg-muted animate-pulse" />
+            </div>
+          )}
+
           <Image
             src={getImageWithFallback(anime.images?.webp?.large_image_url)}
             alt={anime.title}
             fill
-            className="object-cover transition-transform duration-500 group-hover:scale-110"
-            sizes="1024px"
+            className={`object-cover transition-all duration-500 group-hover:scale-110 ${
+              imageLoading ? "opacity-0" : "opacity-100"
+            }`}
+            sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
             priority={priority}
+            onLoad={() => setImageLoading(false)}
+            onError={() => {
+              setImageLoading(false);
+              setImageError(true);
+            }}
           />
+
+          {/* Error state */}
+          {imageError && (
+            <div className="absolute inset-0 bg-muted flex items-center justify-center">
+              <span className="text-muted-foreground text-xs">No Image</span>
+            </div>
+          )}
 
           {anime.score && (
             <div className="absolute top-2 right-2 bg-amber-500/90 text-black text-xs font-bold px-2 py-1 rounded flex items-center z-10">
