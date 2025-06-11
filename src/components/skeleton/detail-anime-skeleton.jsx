@@ -12,7 +12,7 @@ export default function DetailAnimeSkeleton() {
         <div className="absolute inset-0 bg-gradient-to-r from-background/90 to-transparent" />
 
         <div className="container mx-auto h-full relative z-10 px-4">
-          <div className="flex h-full items-end pb-8 md:pb-10 pt-0 md:pt-24">
+          <div className="flex h-full items-end pb-8 md:pb-10 pt-20 sm:pt-24">
             <div className="flex flex-col sm:flex-row w-full gap-5 sm:gap-8 items-center sm:items-start md:items-end">
               <div className="flex flex-col items-center gap-2">
                 <div className="h-[180px] w-[130px] sm:h-[210px] sm:w-[150px] lg:h-[250px] lg:w-[180px] rounded-lg overflow-hidden shadow-[0_0_25px_rgba(0,0,0,0.3)] shrink-0 -mt-14 sm:-mt-18 md:-mt-24 sm:mb-0 ring-2 ring-white/10 bg-card">
