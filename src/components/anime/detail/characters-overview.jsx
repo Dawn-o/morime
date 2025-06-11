@@ -94,7 +94,7 @@ export function CharactersOverview({
             {characterTabs.map((tab, index) => (
               <>
                 <CharacterTab
-                  key={index}
+                  key={tab.value}
                   value={tab.value}
                   label={tab.label}
                   count={tab.count}
@@ -106,7 +106,7 @@ export function CharactersOverview({
 
           {characterTabs.map((tab, index) => (
             <CharacterTabContent
-              key={index}
+              key={tab.value}
               characters={tab.characters}
               type={tab.value}
               showAll={true}
