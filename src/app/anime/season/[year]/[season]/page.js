@@ -1,8 +1,8 @@
-import { getSeason } from "@/hooks/season";
 import { TypeFilterTabs } from "@/components/anime/type-filter-tabs";
 import { AnimeGrid } from "@/components/anime/anime-grid";
 import { SeasonNavigation } from "@/components/anime/season/season-navigation";
 import { notFound } from "next/navigation";
+import { getSeasonal } from "@/hooks/api";
 
 export async function generateMetadata({ params, searchParams }) {
     const { year, season } = await params;
@@ -31,16 +31,10 @@ export default async function SpesificSeasonPage({ params, searchParams }) {
     }
 
 
-    const typeFilter = (await searchParams)?.type || '';
+    const filter = (await searchParams)?.type || '';
     const currentPage = parseInt((await searchParams)?.page) || 1;
 
-    const apiConfig = {
-        limit: 24,
-        type: `seasons/${year}/${season}`,
-        ...(typeFilter && { filter: typeFilter })
-    };
-
-    const seasonData = await getSeason(currentPage, apiConfig);
+    const seasonData = await getSeasonal(year, season, currentPage, 24, filter);
     const seasonTitle = `${season.charAt(0).toUpperCase() + season.slice(1)} ${year} Anime`;
 
     return (
@@ -52,14 +46,14 @@ export default async function SpesificSeasonPage({ params, searchParams }) {
 
             <SeasonNavigation routeParams={[year, season]} />
 
-            <TypeFilterTabs typeFilter={typeFilter} basePath={`/anime/season/${year}/${season}`} />
+            <TypeFilterTabs typeFilter={filter} basePath={`/anime/season/${year}/${season}`} />
 
             <AnimeGrid
                 animeData={seasonData}
                 currentPage={currentPage}
                 basePath={`/anime/season/${year}/${season}`}
                 queryParams={{
-                    ...(typeFilter && { type: typeFilter })
+                    ...(filter && { type: filter })
                 }}
             />
         </section>

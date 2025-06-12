@@ -1,8 +1,8 @@
-import { getDetailAnime, getEpisodeAnime, getAnimeCharacters } from "@/hooks/anime";
 import { notFound } from "next/navigation";
 import { AnimeHeroSection } from "@/components/anime/detail/hero-section";
 import { AnimeSidebar } from "@/components/anime/detail/sidebar";
 import { AnimeContentSections } from "@/components/anime/detail/content-sections";
+import { getDetailAnime, getDetailAnimeThemes, getDetailAnimeRelations, getDetailAnimeCharacters, getDetailAnimeEpisodes } from "@/hooks/api";
 
 export async function generateMetadata({ params }) {
     const { malId } = await params;
@@ -27,10 +27,12 @@ export async function generateMetadata({ params }) {
 
 export default async function AnimeDetailsPage({ params }) {
     const { malId } = await params;
-    const [animeData, episodesData, charactersData] = await Promise.all([
+    const [animeData, animeThemesData, animeRelationsData, charactersData, episodesData] = await Promise.all([
         getDetailAnime(malId),
-        getEpisodeAnime(malId),
-        getAnimeCharacters(malId)
+        getDetailAnimeThemes(malId),
+        getDetailAnimeRelations(malId),
+        getDetailAnimeCharacters(malId),
+        getDetailAnimeEpisodes(malId, 1),
     ]);
 
     if (isNaN(malId) || !animeData) {
@@ -46,7 +48,13 @@ export default async function AnimeDetailsPage({ params }) {
                         <AnimeSidebar animeData={animeData} />
                     </div>
                     <div className="lg:col-span-3">
-                        <AnimeContentSections animeData={animeData} episodesData={episodesData} charactersData={charactersData} />
+                        <AnimeContentSections
+                            animeData={animeData}
+                            themesData={animeThemesData}
+                            relationsData={animeRelationsData}
+                            charactersData={charactersData}
+                            episodesData={episodesData.episodes}
+                        />
                     </div>
                 </div>
             </section>

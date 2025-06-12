@@ -94,7 +94,7 @@ export function CharactersOverview({
             {characterTabs.map((tab, index) => (
               <>
                 <CharacterTab
-                  key={tab.value}
+                  key={tab.malId}
                   value={tab.value}
                   label={tab.label}
                   count={tab.count}
@@ -104,9 +104,9 @@ export function CharactersOverview({
             ))}
           </TabsList>
 
-          {characterTabs.map((tab, index) => (
+          {characterTabs.map((tab) => (
             <CharacterTabContent
-              key={tab.value}
+              key={tab.malId}
               characters={tab.characters}
               type={tab.value}
               showAll={true}

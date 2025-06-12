@@ -1,7 +1,7 @@
-import { getSchedules } from "@/hooks/schedule";
 import { AnimeGrid } from "@/components/anime/anime-grid";
 import { DayFilterTabs } from "@/components/anime/day-filter-tabs";
 import { notFound } from "next/navigation";
+import { getAnimeSchedule } from "@/hooks/api";
 
 export async function generateMetadata({ searchParams }) {
     const currentPage = parseInt((await searchParams)?.page) || 1;
@@ -15,19 +15,13 @@ export async function generateMetadata({ searchParams }) {
 
 export default async function SchedulePage({ searchParams }) {
     const dayFilter = (await searchParams)?.day || 'monday';
+    const currentPage = parseInt((await searchParams)?.page) || 1;
 
     if (!['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday', 'other', 'unknown'].includes(dayFilter.toLowerCase())) {
         notFound();
     }
 
-    const currentPage = parseInt((await searchParams)?.page) || 1;
-
-    const apiConfig = {
-        limit: 24,
-        filter: dayFilter
-    };
-
-    const scheduleData = await getSchedules(currentPage, apiConfig);
+    const scheduleData = await getAnimeSchedule(dayFilter);
 
     return (
         <section className="container mx-auto py-8 sm:py-10 px-4">

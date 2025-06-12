@@ -2,14 +2,14 @@ import Link from "next/link";
 import { toSnakeCase } from "@/lib/formatter";
 import { EmptyState } from "@/components/anime/detail/empty-state";
 
-export function RelatedAnimeSection({ animeData }) {
-  if (!animeData.relations || animeData.relations.length === 0) {
+export function RelatedAnimeSection({ relations }) {
+  if (!relations || relations.length === 0) {
     return <EmptyState message="No related anime available." />;
   }
 
   return (
     <div className="space-y-1.5 sm:space-y-2">
-      {animeData.relations.map((relation, index) => (
+      {relations.map((relation, index) => (
         <div key={index} className="bg-muted/50 rounded-md p-2 sm:p-3">
           <div className="text-sm sm:text-base font-medium">
             {relation.relation}
