@@ -55,7 +55,7 @@ export function HomeCarousel({ items = [] }) {
         <CarouselContent>
           {items.map((item, index) => (
             <CarouselItem
-              key={item.mal_id + index} 
+              key={index}
               className="relative h-[25vh] md:h-[40vh] lg:h-[60vh]"
             >
               <Link
@@ -128,9 +128,9 @@ export function HomeCarousel({ items = [] }) {
 
                     {item.genres && (
                       <div className="flex flex-wrap gap-2 mt-3">
-                        {item.genres.slice(0, 3).map((genre, index) => (
+                        {item.genres.slice(0, 3).map((genre, idx) => (
                           <Badge
-                            key={item.mal_id + index}
+                            key={idx}
                             variant="outline"
                             className="text-xs border-border"
                           >

@@ -8,13 +8,12 @@ import {
 import { AnimeCard } from "@/components/anime/anime-card";
 
 export function AnimeCarousel({ animes }) {
-
   return (
     <Carousel opts={{ align: "start" }}>
       <CarouselContent>
-        {animes.map((anime, index) => (
+        {animes.map((anime) => (
           <CarouselItem
-            key={anime.mal_id + index}
+            key={anime.mal_id}
             className="basis-1/3 md:basis-1/4 lg:basis-1/6"
           >
             <AnimeCard anime={anime} />

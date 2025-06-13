@@ -1,4 +1,5 @@
-import { searchAnimeList, getTopAnimeList } from "@/hooks/api";
+import { getAnime } from "@/hooks/anime";
+import { getAnimeSearch } from "@/hooks/search";
 import { AnimeGrid } from "@/components/anime/anime-grid";
 import { SearchInput } from "@/components/anime/search-input";
 import { Suspense } from "react";
@@ -30,27 +31,24 @@ export default async function AnimePage({ searchParams }) {
 
     let animeData;
 
-    try {
-        if (searchQuery) {
-            animeData = await searchAnimeList(searchQuery, currentPage, 24);
-        } else {
-            animeData = await getTopAnimeList(currentPage, 24, "tv", 'bypopularity');
-        }
-    } catch (error) {
-        console.error('Error fetching anime data:', error);
-        animeData = {
-            anime: [],
-            pagination: {
-                current_page: currentPage,
-                has_next_page: false,
-                last_visible_page: 1,
-                items: {
-                    count: 0,
-                    total: 0,
-                    per_page: 24
-                }
-            }
+    if (searchQuery) {
+        // Use search API when there's a search query
+        const searchConfig = {
+            limit: 24,
+            q: searchQuery,
+            order_by: 'popularity',
+            sort: 'asc',
+            sfw: true
         };
+        animeData = await getAnimeSearch(currentPage, searchConfig);
+    } else {
+        // Use regular anime list when no search query
+        const apiConfig = {
+            limit: 24,
+            order_by: 'favorites',
+            sort: 'desc'
+        };
+        animeData = await getAnime(currentPage, apiConfig);
     }
 
     return (

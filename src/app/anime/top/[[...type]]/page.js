@@ -1,4 +1,4 @@
-import { getTopAnime } from "@/lib/anime/utils";
+import { getTopAnime } from "@/hooks/anime";
 import { TopAnimeNavigation } from "@/components/anime/top/navigation";
 import { getAnimeTitle } from "@/lib/anime-titles";
 import { AnimeGrid } from "@/components/anime/anime-grid";
@@ -22,17 +22,14 @@ export default async function TopAnimePage({ params, searchParams }) {
     const type = (await params).type?.[0] || 'all';
     const currentPage = parseInt((await searchParams)?.page) || 1;
     const titleData = getAnimeTitle(type);
-
-    let animeType;
-    let filter;
-    
+    const apiConfig = { limit: 24 };
     if (['tv', 'movie', 'ova', 'ona', 'special'].includes(type)) {
-        animeType = type;
+        apiConfig.type = type;
     } else if (['airing', 'upcoming', 'bypopularity', 'favorite'].includes(type)) {
-        filter = type;
+        apiConfig.filter = type;
     }
 
-    const animeData = await getTopAnime(currentPage, 24, animeType, filter);
+    const animeData = await getTopAnime(currentPage, apiConfig);
 
     return (
         <section className="container mx-auto py-8 sm:py-10 px-4">
@@ -48,7 +45,6 @@ export default async function TopAnimePage({ params, searchParams }) {
                 currentPage={currentPage}
                 basePath={type === 'all' ? '/anime/top' : `/anime/top/${type}`}
                 queryParams={{}}
-                type={type}
             />
         </section>
     );

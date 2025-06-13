@@ -1,7 +1,7 @@
+import { getSeasonList } from "@/hooks/season";
 import { SeasonList } from "@/components/anime/season/season-list";
 import { Suspense } from "react";
 import { SeasonListSkeleton } from "@/components/skeleton/season-list-skeleton";
-import { getSeasons } from "@/hooks/api";
 
 export async function generateMetadata() {
     return {
@@ -11,7 +11,7 @@ export async function generateMetadata() {
 }
 
 export default async function SeasonListPage() {
-    const listData = await getSeasons();
+    const listData = await getSeasonList();
 
     return (
         <Suspense fallback={<SeasonListSkeleton />}>

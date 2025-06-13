@@ -50,6 +50,7 @@ export function AnimeCard({ anime, priority = false, isLoading = false }) {
         <div className="w-full h-full overflow-hidden rounded-lg shadow-lg group-hover:shadow-xl relative">
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent z-10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
 
+          {/* Show skeleton while image is loading */}
           {imageLoading && (
             <div className="absolute inset-0 z-5">
               <div className="w-full h-full bg-muted animate-pulse" />
@@ -72,6 +73,7 @@ export function AnimeCard({ anime, priority = false, isLoading = false }) {
             }}
           />
 
+          {/* Error state */}
           {imageError && (
             <div className="absolute inset-0 bg-muted flex items-center justify-center">
               <span className="text-muted-foreground text-xs">No Image</span>

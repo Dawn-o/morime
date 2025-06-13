@@ -1,14 +1,14 @@
 import Link from "next/link";
 import { Github, Twitter, Instagram } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
-import { getTopAnimeList } from "@/hooks/api";
+import { getTopAnime } from "@/hooks/anime";
 import { toSnakeCase } from "@/lib/formatter";
 
 export async function Footer() {
   const [topAnimes, topAiringAnimes, mostPopularAnimes] = await Promise.all([
-    getTopAnimeList(1, 5, "tv"),
-    getTopAnimeList(1, 5, "tv", "airing"),
-    getTopAnimeList(1, 5, "tv", "bypopularity"),
+    getTopAnime(1, { limit: 5 }),
+    getTopAnime(1, { limit: 5, filter: "airing" }),
+    getTopAnime(1, { limit: 5, filter: "bypopularity" }),
   ]);
 
   return (
@@ -50,8 +50,8 @@ export async function Footer() {
             <div>
               <h3 className="font-bold text-lg mb-4">Top Anime</h3>
               <ul className="space-y-2">
-                {topAnimes.anime.map((anime, index) => (
-                  <li key={anime.mal_id + index}>
+                {topAnimes.data?.map((anime) => (
+                  <li key={anime.mal_id}>
                     <Link
                       href={`/anime/${anime.mal_id}/${toSnakeCase(
                         anime.title
@@ -68,8 +68,8 @@ export async function Footer() {
             <div>
               <h3 className="font-bold text-lg mb-4">Top Airing</h3>
               <ul className="space-y-2">
-                {topAiringAnimes.anime.map((anime, index) => (
-                  <li key={anime.mal_id + index}>
+                {topAiringAnimes.data?.map((anime) => (
+                  <li key={anime.mal_id}>
                     <Link
                       href={`/anime/${anime.mal_id}/${toSnakeCase(
                         anime.title
@@ -86,8 +86,8 @@ export async function Footer() {
             <div>
               <h3 className="font-bold text-lg mb-4">Most Popular</h3>
               <ul className="space-y-2">
-                {mostPopularAnimes.anime.map((anime, index) => (
-                  <li key={anime.mal_id + index}>
+                {mostPopularAnimes.data?.map((anime) => (
+                  <li key={anime.mal_id}>
                     <Link
                       href={`/anime/${anime.mal_id}/${toSnakeCase(
                         anime.title

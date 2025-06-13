@@ -11,10 +11,8 @@ import { RelatedAnimeSection } from "@/components/anime/detail/related-anime-sec
 
 export function AnimeContentSections({
   animeData,
-  themesData,
-  relationsData,
-  charactersData,
   episodesData,
+  charactersData,
 }) {
   const [showCharactersOnly, setShowCharactersOnly] = useState(false);
   const synopsisRef = useRef(null);
@@ -95,7 +93,7 @@ export function AnimeContentSections({
       </SectionCard>
 
       <SectionCard title="Theme Songs">
-        <ThemeSongsSection themes={themesData} />
+        <ThemeSongsSection animeData={animeData} />
       </SectionCard>
 
       <SectionCard title="Episodes">
@@ -103,7 +101,7 @@ export function AnimeContentSections({
       </SectionCard>
 
       <SectionCard title="Related Anime">
-        <RelatedAnimeSection relations={relationsData} />
+        <RelatedAnimeSection animeData={animeData} />
       </SectionCard>
     </div>
   );
