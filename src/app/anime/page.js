@@ -32,7 +32,6 @@ export default async function AnimePage({ searchParams }) {
     let animeData;
 
     if (searchQuery) {
-        // Use search API when there's a search query
         const searchConfig = {
             limit: 24,
             q: searchQuery,
@@ -42,7 +41,6 @@ export default async function AnimePage({ searchParams }) {
         };
         animeData = await getAnimeSearch(currentPage, searchConfig);
     } else {
-        // Use regular anime list when no search query
         const apiConfig = {
             limit: 24,
             order_by: 'favorites',

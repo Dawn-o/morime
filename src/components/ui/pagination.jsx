@@ -7,7 +7,7 @@ import {
 
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button";
-import Link from "next/link";
+import { Link } from "@/components/ui/link"; 
 
 function Pagination({
   className,

@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { SfwToggle } from "@/components/fragments/sfw-toggle";
 import { ModeToggle } from "@/components/elements/theme/mode-toggle";
-import Link from "next/link";
+import { Link } from "@/components/ui/link"; 
 
 export function Header() {
   const [isSearchVisible, setIsSearchVisible] = useState(false);
@@ -110,8 +110,8 @@ export function Header() {
               <House />
             </Button>
           </Link>
-          {navItems.map((item, index) => (
-            <Link key={index} href={`/${item.link}`}>
+          {navItems.map((item, i) => (
+            <Link key={i} href={`/${item.link}`}>
               <Button
                 variant="secondary"
                 size="sm"

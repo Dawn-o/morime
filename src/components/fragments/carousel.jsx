@@ -6,15 +6,15 @@ import Autoplay from "embla-carousel-autoplay";
 import {
   Carousel,
   CarouselContent,
-  CarouselItem
+  CarouselItem,
 } from "@/components/ui/carousel";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { toSnakeCase } from "@/lib/formatter";
-import Link from "next/link";
+import { Link } from "@/components/ui/link"; 
 
-export function HomeCarousel({ items = [] }) {
+export function HomeCarousel({ items }) {
   const [api, setApi] = useState(null);
   const [current, setCurrent] = useState(0);
   const [count, setCount] = useState(0);
@@ -34,8 +34,8 @@ export function HomeCarousel({ items = [] }) {
     });
   }, [api]);
 
-  const goToSlide = (index) => {
-    api?.scrollTo(index);
+  const goToSlide = (i) => {
+    api?.scrollTo(i);
   };
 
   if (!items.length) return null;
@@ -53,9 +53,9 @@ export function HomeCarousel({ items = [] }) {
         }}
       >
         <CarouselContent>
-          {items.map((item, index) => (
+          {items.map((item, i) => (
             <CarouselItem
-              key={index}
+              key={item.mal_id + i}
               className="relative h-[25vh] md:h-[40vh] lg:h-[60vh]"
             >
               <Link
@@ -74,7 +74,7 @@ export function HomeCarousel({ items = [] }) {
                       alt={`${item.title} background`}
                       fill
                       className="object-cover"
-                      priority={index === 0}
+                      priority={i === 0}
                       quality={85}
                       sizes="1024px"
                     />
@@ -149,19 +149,19 @@ export function HomeCarousel({ items = [] }) {
 
       {items.length > 1 && (
         <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-20">
-          {items.map((_, index) => (
+          {items.map((_, i) => (
             <Button
-              key={index}
-              onClick={() => goToSlide(index)}
+              key={i}
+              onClick={() => goToSlide(i)}
               variant="ghost"
               size="icon"
               className={cn(
                 "w-2 h-2 p-0 rounded-full transition-all",
-                index === current
+                i === current
                   ? "bg-primary w-6"
                   : "bg-primary/40 hover:bg-primary/30"
               )}
-              aria-label={`Go to slide ${index + 1}`}
+              aria-label={`Go to slide ${i + 1}`}
             />
           ))}
         </div>

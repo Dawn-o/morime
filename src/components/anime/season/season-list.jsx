@@ -1,7 +1,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import Link from "next/link";
+import { Link } from "@/components/ui/link"; 
 
 function getCurrentSeason() {
   const currentDate = new Date();
@@ -19,9 +19,9 @@ function YearDisplay({ year }) {
       {year
         .toString()
         .split("")
-        .map((digit, index) => (
+        .map((digit, i) => (
           <span
-            key={index}
+            key={i}
             className="text-2xl font-bold text-foreground/90 leading-none tracking-tight"
           >
             {digit}

@@ -1,5 +1,5 @@
 import { CACHE_CONFIG, DEFAULT_LIMITS } from '@/lib/anime/config';
-import { fetchWithSfw, fetchSingle, deduplicateAnimeById } from '@/lib/anime/utils';
+import { fetchWithSfw, fetchSingle } from '@/lib/anime/utils';
 
 export async function getAnime(page = 1, apiConfig = {}) {
   const { type = 'anime', limit = DEFAULT_LIMITS.ANIME_LIST, filter, order_by, sort } = apiConfig;
@@ -30,7 +30,7 @@ export async function getAnime(page = 1, apiConfig = {}) {
     const totalPages = data.pagination ? Math.ceil(totalItems / limit) : 1;
 
     return {
-      data: deduplicateAnimeById(data.data),
+      data: data.data,
       totalPages,
       currentPage: page,
       totalItems
@@ -82,7 +82,7 @@ export async function getTopAnime(page = 1, options = {}) {
     const totalPages = data.pagination?.last_visible_page || Math.ceil(totalItems / limit);
 
     return {
-      data: deduplicateAnimeById(data.data),
+      data: data.data,
       totalPages,
       currentPage: page,
       totalItems,
@@ -146,7 +146,7 @@ export async function getAnimeByGenre(page = 1, genreId, limit = DEFAULT_LIMITS.
     const totalPages = Math.ceil(totalItems / limit);
 
     return {
-      data: deduplicateAnimeById(data.data),
+      data: data.data,
       totalPages,
       currentPage: page,
       totalItems
@@ -186,7 +186,7 @@ export async function searchAnime(query, page = 1, limit = DEFAULT_LIMITS.SEARCH
     }, CACHE_CONFIG.SHORT);
 
     return {
-      data: deduplicateAnimeById(data.data || []),
+      data: data.data || [],
       total: data.pagination?.items?.total || 0,
       hasNextPage: data.pagination?.has_next_page || false,
       currentPage: page

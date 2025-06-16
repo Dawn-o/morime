@@ -1,5 +1,5 @@
 import { CACHE_CONFIG, DEFAULT_LIMITS } from '@/lib/anime/config';
-import { fetchWithSfw, deduplicateAnimeById } from '@/lib/anime/utils';
+import { fetchWithSfw } from '@/lib/anime/utils';
 
 export async function getAnimeSearch(page = 1, searchConfig = {}) {
     const {
@@ -55,12 +55,11 @@ export async function getAnimeSearch(page = 1, searchConfig = {}) {
             throw new Error("Invalid search response format");
         }
 
-        const deduplicatedData = deduplicateAnimeById(data.data);
-        const totalItems = data.pagination?.items?.total || deduplicatedData.length;
+        const totalItems = data.pagination?.items?.total || data.data.length;
         const totalPages = data.pagination ? Math.ceil(totalItems / limit) : 1;
 
         return {
-            data: deduplicatedData,
+            data: data.data,
             totalPages,
             currentPage: page,
             totalItems,

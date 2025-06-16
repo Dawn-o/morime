@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "@/components/ui/link"; 
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export function TypeFilterTabs({ typeFilter, basePath }) {

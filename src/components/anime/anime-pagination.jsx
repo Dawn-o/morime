@@ -47,8 +47,8 @@ export function AnimePagination({
             </PaginationItem>
           )}
 
-          {visiblePages.map((page, index) => (
-            <PaginationItem key={index}>
+          {visiblePages.map((page, i) => (
+            <PaginationItem key={i}>
               {page === "ellipsis" ? (
                 <PaginationEllipsis />
               ) : (
@@ -94,8 +94,8 @@ export function AnimePagination({
               </>
             )}
 
-            {mobileVisiblePages.map((page, index) => (
-              <div key={index}>
+            {mobileVisiblePages.map((page, i) => (
+              <div key={i}>
                 {page === "ellipsis" ? (
                   <PaginationEllipsis className="w-8 h-8 p-0 text-xs flex items-center justify-center" />
                 ) : (

@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "@/components/ui/link";
 import { Github, Twitter, Instagram } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { getTopAnime } from "@/hooks/anime";
@@ -50,8 +50,8 @@ export async function Footer() {
             <div>
               <h3 className="font-bold text-lg mb-4">Top Anime</h3>
               <ul className="space-y-2">
-                {topAnimes.data?.map((anime) => (
-                  <li key={anime.mal_id}>
+                {topAnimes.data?.map((anime, i) => (
+                  <li key={anime.mal_id + i}>
                     <Link
                       href={`/anime/${anime.mal_id}/${toSnakeCase(
                         anime.title
@@ -68,8 +68,8 @@ export async function Footer() {
             <div>
               <h3 className="font-bold text-lg mb-4">Top Airing</h3>
               <ul className="space-y-2">
-                {topAiringAnimes.data?.map((anime) => (
-                  <li key={anime.mal_id}>
+                {topAiringAnimes.data?.map((anime, i) => (
+                  <li key={anime.mal_id + i}>
                     <Link
                       href={`/anime/${anime.mal_id}/${toSnakeCase(
                         anime.title
@@ -86,8 +86,8 @@ export async function Footer() {
             <div>
               <h3 className="font-bold text-lg mb-4">Most Popular</h3>
               <ul className="space-y-2">
-                {mostPopularAnimes.data?.map((anime) => (
-                  <li key={anime.mal_id}>
+                {mostPopularAnimes.data?.map((anime, i) => (
+                  <li key={anime.mal_id + i}>
                     <Link
                       href={`/anime/${anime.mal_id}/${toSnakeCase(
                         anime.title

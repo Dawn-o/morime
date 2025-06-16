@@ -91,7 +91,7 @@ export function CharactersOverview({
       >
         <Tabs defaultValue="all" className="w-full">
           <TabsList className="grid w-full grid-cols-1 md:grid-cols-3 h-auto md:h-10 gap-1 md:gap-0 p-1 md:p-0">
-            {characterTabs.map((tab, index) => (
+            {characterTabs.map((tab, i) => (
               <>
                 <CharacterTab
                   key={tab.value}
@@ -99,12 +99,12 @@ export function CharactersOverview({
                   label={tab.label}
                   count={tab.count}
                 />
-                {index < characterTabs.length - 1 && <TabSeparator />}
+                {i < characterTabs.length - 1 && <TabSeparator />}
               </>
             ))}
           </TabsList>
 
-          {characterTabs.map((tab, index) => (
+          {characterTabs.map((tab, i) => (
             <CharacterTabContent
               key={tab.value}
               characters={tab.characters}

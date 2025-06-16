@@ -1,5 +1,5 @@
 import { CACHE_CONFIG, DEFAULT_LIMITS } from '@/lib/anime/config';
-import { fetchWithSfw, deduplicateAnimeById } from '@/lib/anime/utils';
+import { fetchWithSfw } from '@/lib/anime/utils';
 
 export async function getSchedules(page = 1, apiConfig = {}) {
     const { 
@@ -38,7 +38,7 @@ export async function getSchedules(page = 1, apiConfig = {}) {
         const totalPages = data.pagination ? Math.ceil(totalItems / limit) : 1;
 
         return {
-            data: deduplicateAnimeById(data.data),
+            data: data.data,
             totalPages,
             currentPage: page,
             totalItems

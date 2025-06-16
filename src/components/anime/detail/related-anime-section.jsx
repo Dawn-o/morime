@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "@/components/ui/link"; 
 import { toSnakeCase } from "@/lib/formatter";
 import { EmptyState } from "@/components/anime/detail/empty-state";
 
@@ -9,8 +9,8 @@ export function RelatedAnimeSection({ animeData }) {
 
   return (
     <div className="space-y-1.5 sm:space-y-2">
-      {animeData.relations.map((relation, index) => (
-        <div key={index} className="bg-muted/50 rounded-md p-2 sm:p-3">
+      {animeData.relations.map((relation, i) => (
+        <div key={i} className="bg-muted/50 rounded-md p-2 sm:p-3">
           <div className="text-sm sm:text-base font-medium">
             {relation.relation}
           </div>

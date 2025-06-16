@@ -41,7 +41,7 @@ export async function fetchWithSfw(endpoint, params = {}, cacheConfig = CACHE_CO
       originalPagination = data.pagination;
     }
 
-    allAnime = deduplicateAnimeById([...allAnime, ...newAnime]);
+    allAnime = [...allAnime, ...newAnime];
 
     if (allAnime.length < targetLimit && newAnime.length > 0 && data.pagination?.has_next_page) {
       page++;
@@ -64,22 +64,6 @@ export async function fetchWithSfw(endpoint, params = {}, cacheConfig = CACHE_CO
       }
     }
   };
-}
-
-export function deduplicateAnimeById(animeArray) {
-  if (!Array.isArray(animeArray)) return [];
-
-  const uniqueData = [];
-  const seenIds = new Set();
-
-  for (const item of animeArray) {
-    if (item?.mal_id && !seenIds.has(item.mal_id)) {
-      seenIds.add(item.mal_id);
-      uniqueData.push(item);
-    }
-  }
-
-  return uniqueData;
 }
 
 export async function revalidateAnimeCache(tag = 'anime-list') {
