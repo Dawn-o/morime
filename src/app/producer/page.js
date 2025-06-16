@@ -54,14 +54,14 @@ export default async function ProducersPage({ searchParams }) {
 
                 <SearchInput
                     defaultValue={searchQuery}
-                    basePath="/producers"
+                    basePath="/producer"
                     placeholder="Search producers..."
                 />
 
                 <ProducersGrid
                     producersData={producersData}
                     currentPage={currentPage}
-                    basePath="/producers"
+                    basePath="/producer"
                     queryParams={{
                         ...(searchQuery && { q: searchQuery }),
                         ...(orderBy !== 'favorites' && { order_by: orderBy }),

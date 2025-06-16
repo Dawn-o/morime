@@ -18,14 +18,14 @@ export function Header() {
     e.preventDefault();
     if (searchQuery.trim()) {
       router.push(`/anime?q=${encodeURIComponent(searchQuery.trim())}`);
-      setSearchQuery(""); // Clear search after submitting
-      setIsSearchVisible(false); // Hide mobile search
+      setSearchQuery("");
+      setIsSearchVisible(false);
     }
   };
 
   const navItems = [
     { label: "ANIME LIST", link: "anime" },
-    { label: "PRODUCER LIST", link: "producers" },
+    { label: "PRODUCER LIST", link: "producer" },
     { label: "DAILY SCHEDULE", link: "anime/schedule" },
     { label: "SEASONAL SCHEDULE", link: "anime/season" },
     { label: "TOP ANIME", link: "anime/top" },

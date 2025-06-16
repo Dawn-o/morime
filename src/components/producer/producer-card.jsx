@@ -4,60 +4,27 @@ import { Link } from "@/components/ui/link";
 import { Building2, Calendar, Heart, TrendingUp } from "lucide-react";
 import { getImageWithFallback } from "@/lib/image-fallback";
 import { useState, useEffect } from "react";
-import { toSnakeCase } from "@/lib/formatter";
-
-function formatEstablished(established, currentYear) {
-  if (!established) return null;
-
-  const date = new Date(established);
-
-  if (isNaN(date.getTime())) {
-    if (/^\d{4}$/.test(established)) {
-      return `Est. ${established}`;
-    }
-    return `Est. ${established}`;
-  }
-
-  const establishedYear = date.getFullYear();
-  const yearsDiff = currentYear - establishedYear;
-
-  if (yearsDiff === 0) {
-    return `Est. this year`;
-  }
-
-  if (yearsDiff === 1) {
-    return `Est. last year`;
-  } else if (yearsDiff > 1) {
-    return `Est. ${yearsDiff} years ago (${establishedYear})`;
-  }
-
-  return `Est. ${establishedYear}`;
-}
+import { toSnakeCase, formatEstablished } from "@/lib/formatter";
 
 export function ProducerCard({ producers, priority = false }) {
   const [imageError, setImageError] = useState(false);
-  const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
-  const [isClient, setIsClient] = useState(false);
-
-  useEffect(() => {
-    setIsClient(true);
-    setCurrentYear(new Date().getFullYear());
-  }, []);
 
   return (
     <Link
-      href={`/producers/${producers.mal_id}/${toSnakeCase(producers.titles?.[0]?.title)}`}
+      href={`/producer/${producers.mal_id}/${toSnakeCase(
+        producers.titles?.[0]?.title
+      )}`}
       className="group block p-4 border border-border rounded-lg hover:border-primary transition-all duration-300 hover:shadow-md"
     >
       <div className="flex items-start space-x-4">
-        <div className="flex-shrink-0 w-16 h-16 overflow-hidden rounded-lg bg-muted">
+        <div className="flex-shrink-0 w-16 h-16 overflow-hidden rounded-lg bg-muted relative">
           {producers.images?.jpg?.image_url && !imageError ? (
             <Image
               src={getImageWithFallback(producers.images.jpg.image_url)}
               alt={producers.titles?.[0]?.title || "Producers"}
-              width={64}
-              height={64}
-              className="w-full h-full object-cover"
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
               priority={priority}
               onError={() => setImageError(true)}
             />
@@ -86,10 +53,10 @@ export function ProducerCard({ producers, priority = false }) {
               </div>
             )}
 
-            {producers.established && isClient && (
+            {producers.established && (
               <div className="flex items-center text-xs text-muted-foreground">
                 <Calendar className="w-3 h-3 mr-1" />
-                <span>{formatEstablished(producers.established, currentYear)}</span>
+                <span>{formatEstablished(producers.established)}</span>
               </div>
             )}
           </div>

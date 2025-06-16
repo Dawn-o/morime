@@ -2,7 +2,7 @@ import { CACHE_CONFIG, DEFAULT_LIMITS } from '@/lib/anime/config';
 import { fetchWithSfw, fetchSingle } from '@/lib/anime/utils';
 
 export async function getAnime(page = 1, apiConfig = {}) {
-  const { type = 'anime', limit = DEFAULT_LIMITS.ANIME_LIST, filter, order_by, sort } = apiConfig;
+  const { type = 'anime', limit = DEFAULT_LIMITS.ANIME_LIST, filter, order_by, sort, producers } = apiConfig;
 
   try {
     let endpoint = `/${type}`;
@@ -18,6 +18,10 @@ export async function getAnime(page = 1, apiConfig = {}) {
 
     if (sort) {
       params.sort = sort;
+    }
+
+    if (producers) {
+      params.producers = producers;
     }
 
     const data = await fetchWithSfw(endpoint, params, CACHE_CONFIG.SHORT);
