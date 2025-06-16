@@ -3,6 +3,8 @@ import { TypeFilterTabs } from "@/components/anime/type-filter-tabs";
 import { AnimeGrid } from "@/components/anime/anime-grid";
 import { SeasonNavigation } from "@/components/anime/season/season-navigation";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
+import { SpecificSeasonSkeleton } from "@/components/skeleton/spesific-season-skeleton";
 
 export async function generateMetadata({ params, searchParams }) {
     const { year, season } = await params;
@@ -44,24 +46,26 @@ export default async function SpesificSeasonPage({ params, searchParams }) {
     const seasonTitle = `${season.charAt(0).toUpperCase() + season.slice(1)} ${year} Anime`;
 
     return (
-        <section className="container mx-auto py-8 sm:py-10 px-4">
-            <div className="text-center space-y-2 mb-8">
-                <h1 className="text-2xl font-bold text-foreground">{seasonTitle}</h1>
-                <p className="text-sm text-muted-foreground">Anime from {season} {year} season</p>
-            </div>
+        <Suspense fallback={<SpecificSeasonSkeleton />}>
+            <section className="container mx-auto py-8 sm:py-10 px-4">
+                <div className="text-center space-y-2 mb-8">
+                    <h1 className="text-2xl font-bold text-foreground">{seasonTitle}</h1>
+                    <p className="text-sm text-muted-foreground">Anime from {season} {year} season</p>
+                </div>
 
-            <SeasonNavigation routeParams={[year, season]} />
+                <SeasonNavigation routeParams={[year, season]} />
 
-            <TypeFilterTabs typeFilter={typeFilter} basePath={`/anime/season/${year}/${season}`} />
+                <TypeFilterTabs typeFilter={typeFilter} basePath={`/anime/season/${year}/${season}`} />
 
-            <AnimeGrid
-                animeData={seasonData}
-                currentPage={currentPage}
-                basePath={`/anime/season/${year}/${season}`}
-                queryParams={{
-                    ...(typeFilter && { type: typeFilter })
-                }}
-            />
-        </section>
+                <AnimeGrid
+                    animeData={seasonData}
+                    currentPage={currentPage}
+                    basePath={`/anime/season/${year}/${season}`}
+                    queryParams={{
+                        ...(typeFilter && { type: typeFilter })
+                    }}
+                />
+            </section>
+        </Suspense>
     );
 }

@@ -1,4 +1,5 @@
 import { Skeleton } from "@/components/ui/skeleton";
+import { Separator } from "@/components/ui/separator";
 
 function ProducerCardSkeleton() {
   return (
@@ -32,20 +33,19 @@ export function ProducersPageSkeleton() {
 
       {/* Grid skeleton */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        {[...Array(12)].map((_, i) => (
+        {[...Array(24)].map((_, i) => (
           <ProducerCardSkeleton key={i} />
         ))}
       </div>
 
-      {/* Pagination skeleton */}
-      <div className="mt-8 pt-8 border-t border-border">
-        <div className="flex justify-center items-center space-x-2">
-          <Skeleton className="h-10 w-10" />
-          <Skeleton className="h-10 w-8" />
-          <Skeleton className="h-10 w-8" />
-          <Skeleton className="h-10 w-8" />
-          <Skeleton className="h-10 w-10" />
-        </div>
+      <Separator className="my-8" />
+
+      <div className="flex justify-center items-center gap-2">
+        <Skeleton className="h-10 w-20" />
+        <Skeleton className="h-10 w-10" />
+        <Skeleton className="h-10 w-10" />
+        <Skeleton className="h-10 w-10" />
+        <Skeleton className="h-10 w-20" />
       </div>
     </section>
   );

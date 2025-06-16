@@ -16,8 +16,6 @@ export function SpecificSeasonSkeleton() {
             <Skeleton key={i} className="h-8 w-24" />
           ))}
           <Skeleton className="h-8 w-8" />
-          <Separator orientation="vertical" className="h-8 mx-4" />
-          <Skeleton className="h-8 w-20" />
         </div>
 
         <div className="md:hidden overflow-x-auto mb-4">

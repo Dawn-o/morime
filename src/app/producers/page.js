@@ -4,6 +4,14 @@ import { getProducers, searchProducers } from "@/hooks/producer";
 import { SearchInput } from "@/components/anime/search-input";
 import { ProducersGrid } from "@/components/producer/producers-grid";
 
+
+export async function generateMetadata() {
+    return {
+        title: "Anime Producers",
+        description: "Browse anime production studios and companies. Find your favorite anime producers and discover their works.",
+    };
+}
+
 export default async function ProducersPage({ searchParams }) {
     const currentPage = parseInt((await searchParams)?.page) || 1;
     const searchQuery = (await searchParams)?.q || '';
@@ -65,8 +73,3 @@ export default async function ProducersPage({ searchParams }) {
         </Suspense>
     );
 }
-
-export const metadata = {
-    title: "Anime Producers - Morime",
-    description: "Browse anime production studios and companies. Find your favorite anime producers and discover their works.",
-};
