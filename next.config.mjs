@@ -9,6 +9,11 @@ const nextConfig = {
             },
             {
                 protocol: 'https',
+                hostname: 'cdn.myanimelist.net',
+                pathname: '/s/common/company_logos/**',
+            },
+            {
+                protocol: 'https',
                 hostname: 'img.youtube.com',
                 pathname: '/vi/**',
             }
