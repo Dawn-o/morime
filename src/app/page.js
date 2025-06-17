@@ -1,6 +1,6 @@
 import { Suspense } from "react";
-import HomePage from "@/components/anime/home/homePage";
-import { HomePageSkeleton } from "@/components/skeleton/home-page-skeleton";
+import HomePage from "@/components/anime/home/home-page";
+import { HomePageSkeleton } from "@/components/loading/home-page-skeleton";
 import { getTopAnime, getAnimeGenresList } from "@/hooks/anime";
 import { getSeason } from "@/hooks/season";
 

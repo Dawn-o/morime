@@ -1,6 +1,6 @@
 import { getSchedules } from "@/hooks/schedule";
-import { AnimeGrid } from "@/components/anime/anime-grid";
-import { DayFilterTabs } from "@/components/anime/day-filter-tabs";
+import { AnimeGrid } from "@/components/display/anime-grid";
+import { DayFilterTabs } from "@/components/forms/day-filter-tabs";
 import { notFound } from "next/navigation";
 
 export async function generateMetadata({ searchParams }) {

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronDownIcon } from "lucide-react";
-import { EmptyState } from "@/components/anime/detail/empty-state";
+import { EmptyState } from "@/components/content/empty-state";
 
 export function CharactersSection({ characters }) {
   const initialLimit = 16;

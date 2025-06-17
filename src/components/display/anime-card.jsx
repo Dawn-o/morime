@@ -2,12 +2,11 @@
 import Image from "next/image";
 import { Link } from "@/components/ui/link";
 import { Star, Calendar, Clock } from "lucide-react";
-import { toSnakeCase } from "@/lib/formatter";
-import { getImageWithFallback } from "@/lib/image-fallback";
+import { toSnakeCase } from "@/lib/utils/formatter";
+import { getImageWithFallback } from "@/lib/utils/image-fallback";
 import { useState } from "react";
 
 export function AnimeCard({ anime, priority = false }) {
-  const [imageLoading, setImageLoading] = useState(true);
   const [imageError, setImageError] = useState(false);
 
   return (

@@ -1,7 +1,7 @@
 import { ProducerCard } from "@/components/producer/producer-card";
 import { Separator } from "@/components/ui/separator";
-import { AnimePagination } from "@/components/anime/anime-pagination";
-import { EmptyState } from "@/components/anime/empty-state";
+import { AnimePagination } from "@/components/navigation/pagination";
+import { EmptyState } from "@/components/content/empty-state";
 
 export function ProducersGrid({ producersData, currentPage, basePath, queryParams }) {
   if (!producersData || !producersData.data || producersData.data.length === 0) {

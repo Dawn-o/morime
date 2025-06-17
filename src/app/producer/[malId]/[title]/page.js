@@ -1,7 +1,7 @@
 import { getProducerById } from "@/hooks/producer";
 import { ProducerDetails } from "@/components/producer/producer-details";
 import { Suspense } from "react";
-import { ProducerDetailsSkeleton } from "@/components/skeleton/producer-details-skeleton";
+import { ProducerDetailsSkeleton } from "@/components/loading/producer-details-skeleton";
 import { notFound } from "next/navigation";
 import { getAnime } from "@/hooks/anime";
 

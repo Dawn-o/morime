@@ -63,7 +63,7 @@ function ListCard({ list }) {
   return (
     <Card className="overflow-hidden hover:shadow-md transition-shadow duration-200 border-border/50">
       <CardContent className="p-0">
-        <div className="flex min-h-[120px]">
+        <div className="flex min-h-[184px]">
           <YearDisplay year={list.year} />
           <div className="flex-1 p-4">
             <div className="flex flex-col gap-2 justify-center h-full">

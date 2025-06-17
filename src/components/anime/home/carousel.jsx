@@ -10,8 +10,8 @@ import {
 } from "@/components/ui/carousel";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
-import { toSnakeCase } from "@/lib/formatter";
+import { cn } from "@/lib/utils/cn";
+import { toSnakeCase } from "@/lib/utils/formatter";
 import { Link } from "@/components/ui/link"; 
 
 export function HomeCarousel({ items }) {

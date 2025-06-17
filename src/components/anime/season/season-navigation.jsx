@@ -1,7 +1,7 @@
 import { Link } from "@/components/ui/link"; 
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { generateSeasonNavigation } from "@/lib/season-utils";
+import { generateSeasonNavigation } from "@/lib/navigation/season-utils";
 
 export function SeasonNavigation({ routeParams }) {
   const seasonNavItems = generateSeasonNavigation(routeParams);

@@ -1,7 +1,7 @@
 import { getTopAnime } from "@/hooks/anime";
-import { TopAnimeNavigation } from "@/components/anime/top/navigation";
-import { getAnimeTitle } from "@/lib/anime-titles";
-import { AnimeGrid } from "@/components/anime/anime-grid";
+import { TopAnimeNavigation } from "@/components/navigation/top-navigation";
+import { getAnimeTitle } from "@/lib/content/anime-titles";
+import { AnimeGrid } from "@/components/display/anime-grid";
 
 export async function generateMetadata({ params, searchParams }) {
     const type = (await params).type?.[0] || 'all';

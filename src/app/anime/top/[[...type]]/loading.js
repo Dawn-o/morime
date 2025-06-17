@@ -1,4 +1,4 @@
-import { TopAnimeSkeleton } from "@/components/skeleton/top-anime-skeleton";
+import { TopAnimeSkeleton } from "@/components/loading/top-anime-skeleton";
 
 export default function loading() {
     return (

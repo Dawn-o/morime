@@ -1,7 +1,7 @@
-import { AnimeCard } from "@/components/anime/anime-card";
+import { AnimeCard } from "@/components/display/anime-card";
 import { Separator } from "@/components/ui/separator";
-import { AnimePagination } from "@/components/anime/anime-pagination";
-import { EmptyState } from "@/components/anime/empty-state";
+import { AnimePagination } from "@/components/navigation/pagination";
+import { EmptyState } from "@/components/content/empty-state";
 
 export function AnimeGrid({ animeData, currentPage, basePath, queryParams }) {
   if (!animeData || !animeData.data || animeData.data.length === 0) {

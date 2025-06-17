@@ -1,8 +1,8 @@
 import { getDetailAnime, getEpisodeAnime, getAnimeCharacters } from "@/hooks/anime";
 import { notFound } from "next/navigation";
-import { AnimeHeroSection } from "@/components/anime/detail/hero-section";
-import { AnimeSidebar } from "@/components/anime/detail/sidebar";
-import { AnimeContentSections } from "@/components/anime/detail/content-sections";
+import { AnimeHeroSection } from "@/components/anime/detail/sections/hero-section";
+import { AnimeSidebar } from "@/components/anime/detail/sections/sidebar";
+import { AnimeContentSections } from "@/components/anime/detail/sections/content-sections";
 
 export async function generateMetadata({ params }) {
     const { malId } = await params;

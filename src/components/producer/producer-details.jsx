@@ -1,22 +1,23 @@
 "use client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { formatEstablishedDate, toSnakeCase } from "@/lib/formatter";
+import { formatEstablishedDate, toSnakeCase } from "@/lib/utils/formatter";
 import { Building2, Calendar } from "lucide-react";
 import Image from "next/image";
-import { getImageWithFallback } from "@/lib/image-fallback";
+import { getImageWithFallback } from "@/lib/utils/image-fallback";
 import { useState } from "react";
-import { AnimeGrid } from "@/components/anime/anime-grid";
+import { AnimeGrid } from "@/components/display/anime-grid";
 
 export function ProducerDetails({ producer, animes, currentPage }) {
   const [imageError, setImageError] = useState(false);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       <Card>
-        <CardHeader>
-          <div className="flex items-start gap-6">
-            <div className="flex-shrink-0 w-32 h-32 overflow-hidden rounded-lg bg-muted border relative">
+        <CardHeader className="p-4 sm:p-6">
+          <div className="flex flex-col sm:flex-row items-start gap-4 sm:gap-6">
+            {/* Producer Image */}
+            <div className="flex-shrink-0 w-24 h-24 sm:w-32 sm:h-32 mx-auto sm:mx-0 overflow-hidden rounded-lg bg-muted border relative">
               {producer.images?.jpg?.image_url && !imageError ? (
                 <Image
                   src={getImageWithFallback(producer.images.jpg.image_url)}
@@ -25,37 +26,43 @@ export function ProducerDetails({ producer, animes, currentPage }) {
                   }
                   fill
                   className="object-cover"
-                  sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
+                  sizes="(max-width: 640px) 96px, 128px"
                   onError={() => setImageError(true)}
                 />
               ) : (
                 <div className="w-full h-full flex items-center justify-center">
-                  <Building2 className="w-12 h-12 text-muted-foreground" />
+                  <Building2 className="w-8 h-8 sm:w-12 sm:h-12 text-muted-foreground" />
                 </div>
               )}
             </div>
 
-            <div className="flex-1 min-w-0">
-              <CardTitle className="text-3xl mb-3">
+            {/* Producer Info */}
+            <div className="flex-1 min-w-0 text-center sm:text-left">
+              <CardTitle className="text-xl sm:text-2xl lg:text-3xl mb-2 sm:mb-3 break-words">
                 {producer.titles?.[0]?.title ||
                   producer.name ||
                   "Unknown Producer"}
               </CardTitle>
 
-              <div className="flex flex-wrap gap-2 mb-4">
+              <div className="flex flex-wrap justify-center sm:justify-start gap-2 mb-3 sm:mb-4">
                 {producer.established && (
                   <Badge
                     variant="secondary"
-                    className="flex items-center gap-1.5"
+                    className="flex items-center gap-1.5 text-xs sm:text-sm"
                   >
                     <Calendar className="w-3 h-3" />
-                    {formatEstablishedDate(producer.established)}
+                    <span className="hidden xs:inline">
+                      {formatEstablishedDate(producer.established)}
+                    </span>
+                    <span className="xs:hidden">
+                      {new Date(producer.established).getFullYear()}
+                    </span>
                   </Badge>
                 )}
               </div>
 
               {producer.about && (
-                <p className="text-muted-foreground leading-relaxed">
+                <p className="text-sm sm:text-base text-muted-foreground leading-relaxed text-left">
                   {producer.about}
                 </p>
               )}
@@ -64,46 +71,52 @@ export function ProducerDetails({ producer, animes, currentPage }) {
         </CardHeader>
       </Card>
 
+      {/* Statistics Card */}
       <Card>
-        <CardHeader>
-          <CardTitle className="text-xl">Statistics</CardTitle>
+        <CardHeader className="p-4 sm:p-6">
+          <CardTitle className="text-lg sm:text-xl">Statistics</CardTitle>
         </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="text-center p-4 border rounded-lg">
-              <div className="text-2xl font-bold text-primary">
+        <CardContent className="p-4 sm:p-6 pt-0 sm:pt-0">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
+            <div className="text-center p-3 sm:p-4 border rounded-lg">
+              <div className="text-xl sm:text-2xl font-bold text-primary">
                 {producer.count || 0}
               </div>
-              <div className="text-sm text-muted-foreground">
+              <div className="text-xs sm:text-sm text-muted-foreground">
                 Anime Produced
               </div>
             </div>
 
-            <div className="text-center p-4 border rounded-lg">
-              <div className="text-2xl font-bold text-primary">
+            <div className="text-center p-3 sm:p-4 border rounded-lg">
+              <div className="text-xl sm:text-2xl font-bold text-primary">
                 {producer.favorites ? producer.favorites.toLocaleString() : 0}
               </div>
-              <div className="text-sm text-muted-foreground">Favorites</div>
+              <div className="text-xs sm:text-sm text-muted-foreground">
+                Favorites
+              </div>
             </div>
 
-            <div className="text-center p-4 border rounded-lg">
-              <div className="text-2xl font-bold text-primary">
+            <div className="text-center p-3 sm:p-4 border rounded-lg sm:col-span-1 col-span-1">
+              <div className="text-xl sm:text-2xl font-bold text-primary">
                 {producer.established
                   ? new Date().getFullYear() -
                     new Date(producer.established).getFullYear()
                   : "N/A"}
               </div>
-              <div className="text-sm text-muted-foreground">Years Active</div>
+              <div className="text-xs sm:text-sm text-muted-foreground">
+                Years Active
+              </div>
             </div>
           </div>
         </CardContent>
       </Card>
 
+      {/* Produced Anime Card */}
       <Card>
-        <CardHeader>
-          <CardTitle className="text-xl">Produced Anime</CardTitle>
+        <CardHeader className="p-4 sm:p-6">
+          <CardTitle className="text-lg sm:text-xl">Produced Anime</CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent className="p-4 sm:p-6 pt-0 sm:pt-0">
           <AnimeGrid
             animeData={animes}
             currentPage={currentPage}

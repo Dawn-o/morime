@@ -1,7 +1,7 @@
 import { getSeasonList } from "@/hooks/season";
 import { SeasonList } from "@/components/anime/season/season-list";
 import { Suspense } from "react";
-import { SeasonListSkeleton } from "@/components/skeleton/season-list-skeleton";
+import { SeasonListSkeleton } from "@/components/loading/season-list-skeleton";
 
 export async function generateMetadata() {
     return {

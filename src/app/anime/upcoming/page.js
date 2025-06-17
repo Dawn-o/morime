@@ -1,6 +1,6 @@
 import { getSeason } from "@/hooks/season";
-import { TypeFilterTabs } from "@/components/anime/type-filter-tabs";
-import { AnimeGrid } from "@/components/anime/anime-grid";
+import { TypeFilterTabs } from "@/components/forms/type-filter-tabs";
+import { AnimeGrid } from "@/components/display/anime-grid";
 
 export async function generateMetadata({ searchParams }) {
     const currentPage = parseInt((await searchParams)?.page) || 1;

@@ -1,7 +1,7 @@
 import { Link } from "@/components/ui/link"; 
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { toSnakeCase } from "@/lib/formatter";
+import { toSnakeCase } from "@/lib/utils/formatter";
 
 const SidebarSection = ({ title, children, condition = true }) => {
   if (!condition) return null;

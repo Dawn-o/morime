@@ -11,7 +11,7 @@ import {
   getPageUrl,
   getVisiblePages,
   getAnimeTopPageUrl,
-} from "@/lib/pagination-utils";
+} from "@/lib/navigation/pagination-utils";
 
 export function AnimePagination({
   currentPage,

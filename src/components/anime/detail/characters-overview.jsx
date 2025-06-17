@@ -1,9 +1,9 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { CharactersSection } from "@/components/anime/detail/characters-section";
+import { CharactersSection } from "@/components/anime/detail/sections/characters-section";
 import { SectionCard } from "@/components/anime/detail/section-card";
-import { EmptyState } from "@/components/anime/detail/empty-state";
+import { EmptyState } from "@/components/content/empty-state";
 
 const TabSeparator = () => (
   <div className="-mx-1 md:hidden">
@@ -25,7 +25,9 @@ const CharacterTabContent = ({ characters, type, showAll = true }) => (
     {characters.length > 0 ? (
       <CharactersSection characters={characters} showAll={showAll} />
     ) : (
-      <EmptyState message={`No ${type} characters data available`} />
+      <EmptyState
+        message={`No ${type} characters data available`}
+      />
     )}
   </TabsContent>
 );
@@ -77,7 +79,9 @@ export function CharactersOverview({
           title="Characters & Voice Actors"
           headerActions={headerActions}
         >
-          <EmptyState message="No characters data available" />
+          <EmptyState
+            message="No characters data available"
+          />
         </SectionCard>
       </div>
     );
@@ -94,7 +98,7 @@ export function CharactersOverview({
             {characterTabs.map((tab, i) => (
               <>
                 <CharacterTab
-                  key={tab.value}
+                  key={tab.mal_id + i}
                   value={tab.value}
                   label={tab.label}
                   count={tab.count}

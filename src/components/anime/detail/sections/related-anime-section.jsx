@@ -1,6 +1,6 @@
 import { Link } from "@/components/ui/link"; 
-import { toSnakeCase } from "@/lib/formatter";
-import { EmptyState } from "@/components/anime/detail/empty-state";
+import { toSnakeCase } from "@/lib/utils/formatter";
+import { EmptyState } from "@/components/content/empty-state";
 
 export function RelatedAnimeSection({ animeData }) {
   if (!animeData.relations || animeData.relations.length === 0) {

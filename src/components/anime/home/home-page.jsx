@@ -1,5 +1,5 @@
-import { HomeCarousel } from "@/components/fragments/carousel";
-import { SectionHeader } from "@/components/fragments/section-header";
+import { HomeCarousel } from "@/components/anime/home/carousel";
+import { SectionHeader } from "@/components/headers/section-header";
 import { AnimeCarousel } from "@/components/anime/home/anime-carousel";
 import { GenreGrid } from "@/components/anime/home/genre-grid";
 

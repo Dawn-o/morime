@@ -5,8 +5,8 @@ import { House, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
-import { SfwToggle } from "@/components/fragments/sfw-toggle";
-import { ModeToggle } from "@/components/elements/theme/mode-toggle";
+import { SfwToggle } from "@/components/toggles/sfw-toggle";
+import { ModeToggle } from "@/components/toggles/mode-toggle";
 import { Link } from "@/components/ui/link"; 
 
 export function Header() {

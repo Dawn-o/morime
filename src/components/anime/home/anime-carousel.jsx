@@ -5,7 +5,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { AnimeCard } from "@/components/anime/anime-card";
+import { AnimeCard } from "@/components/display/anime-card";
 
 export function AnimeCarousel({ animes }) {
   return (

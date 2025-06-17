@@ -26,3 +26,9 @@ export const DEFAULT_LIMITS = {
     UPCOMING: parseInt(process.env.DEFAULT_UPCOMING_LIMIT) || 6,
     SEARCH: parseInt(process.env.DEFAULT_SEARCH_LIMIT) || 20
 };
+
+export const RATE_LIMIT = {
+  delay: 500, 
+  maxRetries: 3,
+  retryDelay: 1000,
+};

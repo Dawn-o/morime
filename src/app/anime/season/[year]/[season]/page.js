@@ -1,10 +1,10 @@
 import { getSeason } from "@/hooks/season";
-import { TypeFilterTabs } from "@/components/anime/type-filter-tabs";
-import { AnimeGrid } from "@/components/anime/anime-grid";
+import { TypeFilterTabs } from "@/components/forms/type-filter-tabs";
+import { AnimeGrid } from "@/components/display/anime-grid";
 import { SeasonNavigation } from "@/components/anime/season/season-navigation";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
-import { SpecificSeasonSkeleton } from "@/components/skeleton/spesific-season-skeleton";
+import { SpecificSeasonSkeleton } from "@/components/loading/spesific-season-skeleton";
 
 export async function generateMetadata({ params, searchParams }) {
     const { year, season } = await params;

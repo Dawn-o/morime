@@ -1,5 +1,5 @@
-import { CACHE_CONFIG, DEFAULT_LIMITS } from '@/lib/anime/config';
-import { fetchWithSfw } from '@/lib/anime/utils';
+import { CACHE_CONFIG, DEFAULT_LIMITS } from '@/lib/api/config';
+import { fetchWithSfw } from '@/lib/api/utils';
 
 export async function getAnimeSearch(page = 1, searchConfig = {}) {
     const {

@@ -1,8 +1,8 @@
 import "./globals.css";
 import { Poppins } from "next/font/google";
-import { Header } from "@/components/fragments/header";
-import { Footer } from "@/components/fragments/footer";
-import { ThemeProvider } from "@/components/elements/theme/theme-provider";
+import { Header } from "@/components/layout/header";
+import { Footer } from "@/components/layout/footer";
+import { ThemeProvider } from "@/components/layout/theme/theme-provider";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from '@vercel/speed-insights/next';
 

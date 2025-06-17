@@ -1,9 +1,9 @@
 import { getAnime } from "@/hooks/anime";
 import { getAnimeSearch } from "@/hooks/search";
-import { AnimeGrid } from "@/components/anime/anime-grid";
-import { SearchInput } from "@/components/anime/search-input";
+import { AnimeGrid } from "@/components/display/anime-grid";
+import { SearchInput } from "@/components/forms/search-input";
 import { Suspense } from "react";
-import { AnimeListSkeleton } from "@/components/skeleton/anime-list-skeleton";
+import { AnimeListSkeleton } from "@/components/loading/anime-list-skeleton";
 
 export async function generateMetadata({ searchParams }) {
     const currentPage = parseInt((await searchParams)?.page) || 1;

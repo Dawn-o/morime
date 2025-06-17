@@ -2,9 +2,9 @@
 import Image from "next/image";
 import { Link } from "@/components/ui/link";
 import { Building2, Calendar, Heart, TrendingUp } from "lucide-react";
-import { getImageWithFallback } from "@/lib/image-fallback";
+import { getImageWithFallback } from "@/lib/utils/image-fallback";
 import { useState, useEffect } from "react";
-import { toSnakeCase, formatEstablished } from "@/lib/formatter";
+import { toSnakeCase, formatEstablished } from "@/lib/utils/formatter";
 
 export function ProducerCard({ producers, priority = false }) {
   const [imageError, setImageError] = useState(false);

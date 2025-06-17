@@ -1,8 +1,8 @@
-import { EmptyState } from "@/components/anime/detail/empty-state";
+import { EmptyState } from "@/components/content/empty-state";
 
 export function TrailerSection({ animeData }) {
   if (!animeData.trailer?.youtube_id) {
-    return <EmptyState message="No trailer available." />;
+    return <EmptyState message="No trailer available." showIcon={false} className="py-4" />;
   }
 
   return (

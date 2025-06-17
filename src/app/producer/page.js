@@ -1,7 +1,7 @@
 import { Suspense } from "react";
-import { ProducersPageSkeleton } from "@/components/skeleton/producers-page-skeleton";
+import { ProducersPageSkeleton } from "@/components/loading/producers-page-skeleton";
 import { getProducers, searchProducers } from "@/hooks/producer";
-import { SearchInput } from "@/components/anime/search-input";
+import { SearchInput } from "@/components/forms/search-input";
 import { ProducersGrid } from "@/components/producer/producers-grid";
 
 

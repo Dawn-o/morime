@@ -2,12 +2,12 @@
 import { useState, useRef, useMemo, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { SectionCard } from "@/components/anime/detail/section-card";
-import { TrailerSection } from "@/components/anime/detail/trailer-section";
-import { CharactersSection } from "@/components/anime/detail/characters-section";
+import { TrailerSection } from "@/components/anime/detail/sections/trailer-section";
+import { CharactersSection } from "@/components/anime/detail/sections/characters-section";
 import { CharactersOverview } from "@/components/anime/detail/characters-overview";
-import { ThemeSongsSection } from "@/components/anime/detail/theme-songs-section";
-import { EpisodesSection } from "@/components/anime/detail/episodes-section";
-import { RelatedAnimeSection } from "@/components/anime/detail/related-anime-section";
+import { ThemeSongsSection } from "@/components/anime/detail/sections/theme-songs-section";
+import { EpisodesSection } from "@/components/anime/detail/sections/episodes-section";
+import { RelatedAnimeSection } from "@/components/anime/detail/sections/related-anime-section";
 
 export function AnimeContentSections({
   animeData,

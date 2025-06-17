@@ -1,5 +1,5 @@
-import { CACHE_CONFIG, DEFAULT_LIMITS } from '@/lib/anime/config';
-import { fetchWithSfw, fetchSingle } from '@/lib/anime/utils';
+import { CACHE_CONFIG, DEFAULT_LIMITS } from '@/lib/api/config';
+import { fetchWithSfw, fetchSingle } from '@/lib/api/utils';
 
 export async function getSeason(page = 1, apiConfig = {}) {
     const { type = 'seasons/now', limit = DEFAULT_LIMITS.ANIME_LIST, filter, unapproved, continuing } = apiConfig;
