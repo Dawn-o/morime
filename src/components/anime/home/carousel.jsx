@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
-import Autoplay from "embla-carousel-autoplay";
+import Fade from "embla-carousel-fade";
 import {
   Carousel,
   CarouselContent,
@@ -12,14 +12,14 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils/cn";
 import { toSnakeCase } from "@/lib/utils/formatter";
-import { Link } from "@/components/ui/link"; 
+import { Link } from "@/components/ui/link";
 
 export function HomeCarousel({ items }) {
   const [api, setApi] = useState(null);
   const [current, setCurrent] = useState(0);
   const [count, setCount] = useState(0);
 
-  const plugin = useRef(Autoplay({ delay: 2500, stopOnInteraction: true }));
+  const plugin = useRef(Fade({ delay: 2500, stopOnInteraction: true }));
 
   useEffect(() => {
     if (!api) {
@@ -41,7 +41,7 @@ export function HomeCarousel({ items }) {
   if (!items.length) return null;
 
   return (
-    <div className="relative overflow-hidden">
+    <div className="relative overflow-hidden rounded-lg">
       <Carousel
         setApi={setApi}
         plugins={[plugin.current]}
@@ -53,10 +53,10 @@ export function HomeCarousel({ items }) {
         }}
       >
         <CarouselContent>
-          {items.map((item, i) => (
+        {items.map((item, i) => (
             <CarouselItem
               key={item.mal_id + i}
-              className="relative h-[25vh] md:h-[40vh] lg:h-[60vh]"
+              className="relative h-[40vh] md:h-[45vh] lg:h-[58vh]"
             >
               <Link
                 href={`/anime/${item.mal_id}/${toSnakeCase(item.title)}`}
@@ -65,7 +65,7 @@ export function HomeCarousel({ items }) {
               />
 
               <div className="absolute inset-0 grid grid-cols-1 lg:grid-cols-3 z-0">
-                <div className="hidden lg:block bg-background"></div>
+                <div className="hidden lg:block bg-background lg:col-span-1"></div>
 
                 <div className="relative h-full lg:col-span-2">
                   {item.trailer?.images?.maximum_image_url ? (
@@ -73,7 +73,7 @@ export function HomeCarousel({ items }) {
                       src={item.trailer.images.maximum_image_url}
                       alt={`${item.title} background`}
                       fill
-                      className="object-cover"
+                      className="object-none"
                       priority={i === 0}
                       quality={85}
                       sizes="1024px"

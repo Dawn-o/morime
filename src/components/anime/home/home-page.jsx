@@ -11,8 +11,13 @@ export default async function HomePage({
 }) {
   return (
     <main className="container mx-auto min-h-screen pb-12">
+      <section className="px-3 md:px-0 mt-3 mb-6">
+        <HomeCarousel items={upcomings} />
+      </section>
       <section className="mb-12">
-          <HomeCarousel items={upcomings} />
+        <div className="container px-4 mx-auto">
+          <GenreGrid genres={genresList} />
+        </div>
       </section>
 
       <section className="mb-12">
@@ -22,7 +27,7 @@ export default async function HomePage({
             subtitle="Most popular among fans"
             viewAllLink="/anime/top"
           />
-            <AnimeCarousel animes={topAnimes} />
+          <AnimeCarousel animes={topAnimes} />
         </div>
       </section>
 
@@ -33,15 +38,7 @@ export default async function HomePage({
             subtitle="Currently airing this season"
             viewAllLink="/anime/season"
           />
-            <AnimeCarousel animes={animes} />
-        </div>
-      </section>
-
-      <section>
-        <div className="container px-4 mx-auto">
-            <div className="border border-primary-foreground p-4 rounded-lg">
-              <GenreGrid genres={genresList} />
-            </div>
+          <AnimeCarousel animes={animes} />
         </div>
       </section>
     </main>
