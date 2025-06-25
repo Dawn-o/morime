@@ -5,11 +5,9 @@ import { getTopAnime } from "@/hooks/anime";
 import { toSnakeCase } from "@/lib/utils/formatter";
 
 export async function Footer() {
-  const [topAnimes, topAiringAnimes, mostPopularAnimes] = await Promise.all([
-    getTopAnime(1, { limit: 5 }),
-    getTopAnime(1, { limit: 5, filter: "airing" }),
-    getTopAnime(1, { limit: 5, filter: "bypopularity" }),
-  ]);
+   const topAnimes = await getTopAnime(1, { limit: 5 });
+   const topAiringAnimes = await getTopAnime(1, { limit: 5, filter: "airing" });
+   const mostPopularAnimes = await getTopAnime(1, { limit: 5, filter: "bypopularity" });
 
   return (
     <footer className="bg-background border-t">
