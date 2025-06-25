@@ -73,7 +73,7 @@ export function HomeCarousel({ items }) {
                       src={item.trailer.images.maximum_image_url}
                       alt={`${item.title} background`}
                       fill
-                      className="object-none"
+                      className="object-cover"
                       priority={i === 0}
                       quality={85}
                       sizes="1024px"
