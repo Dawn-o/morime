@@ -28,7 +28,7 @@ export const DEFAULT_LIMITS = {
 };
 
 export const RATE_LIMIT = {
-  delay: 500, 
-  maxRetries: 3,
-  retryDelay: 1000,
+  delay: 800,
+  maxRetries: 5,
+  retryDelay: 1600,
 };
