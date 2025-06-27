@@ -58,11 +58,11 @@ function GenreGridSkeleton() {
 
         <div className="flex-1 relative overflow-hidden">
           <div className="flex gap-2">
-            {[...Array(12)].map((_, i) => (
-              <Skeleton key={i} className="h-7 w-16 rounded flex-shrink-0" />
+            {[...Array(16)].map((_, i) => (
+              <Skeleton key={i} className="h-7 w-20 rounded flex-shrink-0" />
             ))}
           </div>
-          
+
           <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-background to-transparent pointer-events-none z-10" />
           <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-background to-transparent pointer-events-none z-10" />
         </div>
@@ -122,7 +122,7 @@ function AnimeCarouselSkeleton() {
               </div>
             ))}
           </div>
-          
+
           <div className="absolute left-0 top-0 bottom-0 w-12 bg-gradient-to-r from-background to-transparent pointer-events-none z-10" />
           <div className="absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-background to-transparent pointer-events-none z-10" />
         </div>

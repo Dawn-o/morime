@@ -53,7 +53,7 @@ export function HomeCarousel({ items }) {
         }}
       >
         <CarouselContent>
-          {items.map((item, i) => (
+        {items.map((item, i) => (
             <CarouselItem
               key={item.mal_id + i}
               className="relative h-[40vh] md:h-[45vh] lg:h-[58vh]"
@@ -74,6 +74,7 @@ export function HomeCarousel({ items }) {
                       alt={`${item.title} background`}
                       fill
                       className="object-cover"
+                      priority={i === 0}
                       quality={85}
                       sizes="1024px"
                     />

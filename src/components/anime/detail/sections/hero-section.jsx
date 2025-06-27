@@ -35,6 +35,7 @@ const AnimePoster = ({ animeData }) => (
           alt={animeData.title}
           width={260}
           height={360}
+          priority={true}
           className="object-cover w-full h-full transition-transform duration-500 hover:scale-110"
           sizes="1024px"
         />
