@@ -6,7 +6,7 @@ import { getImageWithFallback } from "@/lib/utils/image-fallback";
 import { useState, useEffect } from "react";
 import { toSnakeCase, formatEstablished } from "@/lib/utils/formatter";
 
-export function ProducerCard({ producers, priority = false }) {
+export function ProducerCard({ producers }) {
   const [imageError, setImageError] = useState(false);
 
   return (
@@ -25,7 +25,6 @@ export function ProducerCard({ producers, priority = false }) {
               fill
               className="object-cover"
               sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
-              priority={priority}
               onError={() => setImageError(true)}
             />
           ) : (

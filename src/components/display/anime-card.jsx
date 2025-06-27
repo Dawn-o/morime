@@ -6,7 +6,7 @@ import { toSnakeCase } from "@/lib/utils/formatter";
 import { getImageWithFallback } from "@/lib/utils/image-fallback";
 import { useState } from "react";
 
-export function AnimeCard({ anime, priority = false }) {
+export function AnimeCard({ anime }) {
   const [imageError, setImageError] = useState(false);
 
   return (
@@ -24,7 +24,6 @@ export function AnimeCard({ anime, priority = false }) {
             fill
             className="object-cover transition-all duration-500 group-hover:scale-110"
             sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
-            priority={priority}
             onError={() => setImageError(true)}
           />
 

@@ -12,7 +12,7 @@ export function ProducersGrid({ producersData, currentPage, basePath, queryParam
     <div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {producersData.data.map((producer, i) => (
-          <ProducerCard key={producer.mal_id} producers={producer} priority={i < 8} />
+          <ProducerCard key={producer.mal_id} producers={producer} />
         ))}
       </div>
 
