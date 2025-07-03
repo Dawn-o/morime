@@ -1,8 +1,8 @@
-import { Suspense } from "react";
-import { notFound } from "next/navigation";
 import { getProducerById } from "@/hooks/producer";
 import { ProducerDetails } from "@/components/producer/producer-details";
+import { Suspense } from "react";
 import { ProducerDetailsSkeleton } from "@/components/loading/producer-details-skeleton";
+import { notFound } from "next/navigation";
 import { getAnime } from "@/hooks/anime";
 
 export async function generateMetadata({ params }) {
@@ -37,18 +37,19 @@ export default async function ProducerDetailsPage({ params, searchParams }) {
         notFound();
     }
 
-    const producer = await getProducerById(malId);
+    const [producer, animes] = await Promise.all([
+        getProducerById(malId),
+        getAnime(currentPage, {
+            limit: 24,
+            order_by: 'favorites',
+            sort: 'desc',
+            producers: malId,
+        })
+    ]);
 
     if (!producer) {
         notFound();
     }
-
-    const animes = await getAnime(currentPage, {
-        limit: 24,
-        order_by: 'favorites',
-        sort: 'desc',
-        producers: malId,
-    });
 
     return (
         <Suspense fallback={<ProducerDetailsSkeleton />}>

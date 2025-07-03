@@ -4,80 +4,33 @@ import { getSfwParam } from '@/lib/api/cookies';
 
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
-class RequestQueue {
-  constructor() {
-    this.queue = [];
-    this.processing = false;
-    this.lastRequestTime = 0;
-  }
-
-  async add(fetchFn) {
-    return new Promise((resolve, reject) => {
-      this.queue.push({ fetchFn, resolve, reject });
-      this.process();
-    });
-  }
-
-  async process() {
-    if (this.processing || this.queue.length === 0) {
-      return;
-    }
-
-    this.processing = true;
-
-    while (this.queue.length > 0) {
-      const { fetchFn, resolve, reject } = this.queue.shift();
-
-      try {
-        const timeSinceLastRequest = Date.now() - this.lastRequestTime;
-        const waitTime = Math.max(0, RATE_LIMIT.queueDelay - timeSinceLastRequest);
-
-        if (waitTime > 0) {
-          await delay(waitTime);
-        }
-
-        this.lastRequestTime = Date.now();
-        const result = await this.executeWithRetry(fetchFn);
-        resolve(result);
-      } catch (error) {
-        reject(error);
-      }
-    }
-
-    this.processing = false;
-  }
-
-  async executeWithRetry(fetchFn) {
-    let attempts = 0;
-
-    while (attempts < RATE_LIMIT.maxRetries) {
-      try {
-        const result = await fetchFn();
-        return result;
-      } catch (error) {
-        attempts++;
-
-        if (error.status === 429 || (error.message && error.message.includes('429'))) {
-          console.warn(`Rate limit hit, retrying... (${attempts}/${RATE_LIMIT.maxRetries})`);
-          if (attempts === RATE_LIMIT.maxRetries) {
-            throw new Error('Too many requests. Please try again later.');
-          }
-
-          const backoffDelay = RATE_LIMIT.retryDelay * Math.pow(2, attempts - 1);
-          await delay(backoffDelay);
-          continue;
-        }
-
-        throw error;
-      }
-    }
-  }
-}
-
-const requestQueue = new RequestQueue();
-
 async function withRateLimit(fetchFn) {
-  return requestQueue.add(fetchFn);
+  let attempts = 0;
+
+  while (attempts < RATE_LIMIT.maxRetries) {
+    try {
+      if (attempts > 0) {
+        await delay(RATE_LIMIT.retryDelay * attempts);
+      } else {
+        await delay(RATE_LIMIT.delay);
+      }
+
+      const result = await fetchFn();
+      return result;
+    } catch (error) {
+      attempts++;
+
+      if (error.status === 429 || !error.status) {
+        console.warn(`Rate limit hit, retrying... (${attempts}/${RATE_LIMIT.maxRetries})`);
+        if (attempts === RATE_LIMIT.maxRetries) {
+          throw new Error('Too many requests. Please try again later.');
+        }
+        continue;
+      }
+
+      throw error;
+    }
+  }
 }
 
 export function buildUrl(endpoint, params = {}) {

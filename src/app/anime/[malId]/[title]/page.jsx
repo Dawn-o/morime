@@ -1,5 +1,5 @@
-import { notFound } from "next/navigation";
 import { getDetailAnime, getEpisodeAnime, getAnimeCharacters } from "@/hooks/anime";
+import { notFound } from "next/navigation";
 import { AnimeHeroSection } from "@/components/anime/detail/sections/hero-section";
 import { AnimeSidebar } from "@/components/anime/detail/sections/sidebar";
 import { AnimeContentSections } from "@/components/anime/detail/sections/content-sections";
@@ -27,14 +27,15 @@ export async function generateMetadata({ params }) {
 
 export default async function AnimeDetailsPage({ params }) {
     const { malId } = await params;
-    const animeData = await getDetailAnime(malId);
+    const [animeData, episodesData, charactersData] = await Promise.all([
+        getDetailAnime(malId),
+        getEpisodeAnime(malId),
+        getAnimeCharacters(malId)
+    ]);
 
     if (isNaN(malId) || !animeData) {
         notFound();
     }
-
-    const episodesData = await getEpisodeAnime(malId);
-    const charactersData = await getAnimeCharacters(malId);
 
     return (
         <>
