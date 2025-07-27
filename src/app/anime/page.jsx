@@ -20,8 +20,8 @@ export async function generateMetadata({ searchParams }) {
     return {
         title,
         description: searchQuery
-            ? `Search results for "${searchQuery}" in our anime database`
-            : 'Browse all anime series, movies, and specials in our comprehensive database.',
+            ? `Search results for "${searchQuery}" from our anime collection`
+            : 'Browse all anime series, movies, and specials from our extensive collection.',
     };
 }
 
@@ -59,7 +59,7 @@ export default async function AnimePage({ searchParams }) {
                     <p className="text-sm text-muted-foreground">
                         {searchQuery
                             ? `Search results for "${searchQuery}"`
-                            : 'Browse all anime series, movies, and specials in our comprehensive database'
+                            : 'Browse all anime series, movies, and specials from our extensive collection'
                         }
                     </p>
                 </div>

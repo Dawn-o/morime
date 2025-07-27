@@ -10,8 +10,8 @@ export function Footer() {
           <div>
             <h3 className="font-bold text-lg mb-4">Morime</h3>
             <p className="text-muted-foreground text-sm">
-              Your ultimate anime & manga tracking platform with comprehensive
-              database and personalized recommendations.
+              Your ultimate anime tracking platform with comprehensive
+              content discovery and personalized recommendations.
             </p>
             <div className="flex mt-4 space-x-4">
               <Link
