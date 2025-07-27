@@ -18,9 +18,9 @@ export function ProducerCard({ producers }) {
     >
       <div className="flex items-start space-x-4">
         <div className="flex-shrink-0 w-16 h-16 overflow-hidden rounded-lg bg-muted relative">
-          {producers.images?.jpg?.image_url && !imageError ? (
+          {producers.images?.webp?.image_url && !imageError ? (
             <Image
-              src={getImageWithFallback(producers.images.jpg.image_url)}
+              src={getImageWithFallback(producers.images.webp.image_url)}
               alt={producers.titles?.[0]?.title || "Producers"}
               fill
               className="object-cover"

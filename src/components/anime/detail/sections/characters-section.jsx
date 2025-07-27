@@ -39,7 +39,7 @@ export function CharactersSection({ characters }) {
               <div className="flex-shrink-0">
                 <img
                   src={
-                    character.character?.images?.jpg?.image_url ||
+                    character.character?.images?.webp?.image_url ||
                     "/placeholder-character.png"
                   }
                   alt={character.character?.name || "Character"}

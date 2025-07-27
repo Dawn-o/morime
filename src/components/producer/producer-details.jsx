@@ -18,9 +18,9 @@ export function ProducerDetails({ producer, animes, currentPage }) {
           <div className="flex flex-col sm:flex-row items-start gap-4 sm:gap-6">
             {/* Producer Image */}
             <div className="flex-shrink-0 w-24 h-24 sm:w-32 sm:h-32 mx-auto sm:mx-0 overflow-hidden rounded-lg bg-muted border relative">
-              {producer.images?.jpg?.image_url && !imageError ? (
+              {producer.images?.webp?.image_url && !imageError ? (
                 <Image
-                  src={getImageWithFallback(producer.images.jpg.image_url)}
+                  src={getImageWithFallback(producer.images.webp.image_url)}
                   alt={
                     producer.titles?.[0]?.title || producer.name || "Producer"
                   }
