@@ -71,7 +71,7 @@ export function CharactersSection({ characters }) {
         <div className="mt-4 space-y-2">
           {hasMoreCharacters && (
             <Button variant="outline" className="w-full" onClick={loadMore}>
-              <ChevronDownIcon className="h-4 w-4 mr-2 cursor-pointer" />
+              <ChevronDownIcon className="h-4 w-4 mr-2" />
               Show More
             </Button>
           )}

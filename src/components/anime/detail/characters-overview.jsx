@@ -66,7 +66,7 @@ export function CharactersOverview({
       variant="ghost"
       size="sm"
       onClick={onBackToOverview}
-      className="text-xs cursor-pointer"
+      className="text-xs"
     >
       Back to Overview
     </Button>

@@ -44,7 +44,7 @@ const AnimePoster = ({ animeData }) => (
 
     <div className="hidden sm:block w-full">
       <Button variant="outline" size="sm" className="w-full text-xs">
-        <StarIcon className="h-3.5 w-3.5 mr-1.5 cursor-pointer" />
+        <StarIcon className="h-3.5 w-3.5 mr-1.5" />
         Add To List
       </Button>
     </div>
