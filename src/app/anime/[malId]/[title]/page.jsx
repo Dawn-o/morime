@@ -3,6 +3,8 @@ import { notFound } from "next/navigation";
 import { AnimeHeroSection } from "@/components/anime/detail/sections/hero-section";
 import { AnimeSidebar } from "@/components/anime/detail/sections/sidebar";
 import { AnimeContentSections } from "@/components/anime/detail/sections/content-sections";
+import { Suspense } from "react";
+import DetailAnimeSkeleton from "@/components/loading/detail-anime-skeleton";
 
 export async function generateMetadata({ params }) {
     const { malId } = await params;
@@ -38,7 +40,7 @@ export default async function AnimeDetailsPage({ params }) {
     }
 
     return (
-        <>
+        <Suspense fallback={ <DetailAnimeSkeleton /> }>
             <AnimeHeroSection animeData={animeData} />
             <section className="container mx-auto pb-8 sm:pb-10 px-4 -mt-0 md:-mt-24 relative z-10">
                 <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 lg:gap-8">
@@ -50,6 +52,6 @@ export default async function AnimeDetailsPage({ params }) {
                     </div>
                 </div>
             </section>
-        </>
+        </Suspense>
     );
 }
