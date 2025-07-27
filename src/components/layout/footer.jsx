@@ -1,14 +1,8 @@
 import { Link } from "@/components/ui/link";
 import { Github, Twitter, Instagram } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
-import { getTopAnime } from "@/hooks/anime";
-import { toSnakeCase } from "@/lib/utils/formatter";
 
-export async function Footer() {
-   const topAnimes = await getTopAnime(1, { limit: 5 });
-   const topAiringAnimes = await getTopAnime(1, { limit: 5, filter: "airing" });
-   const mostPopularAnimes = await getTopAnime(1, { limit: 5, filter: "bypopularity" });
-
+export function Footer() {
   return (
     <footer className="bg-background border-t">
       <div className="py-8 px-4">
@@ -46,56 +40,140 @@ export async function Footer() {
 
           <div className="flex flex-col md:flex-row items-normal md:items-center justify-normal md:justify-around colspan-1 md:col-span-3 gap-8">
             <div>
-              <h3 className="font-bold text-lg mb-4">Top Anime</h3>
+              <h3 className="font-bold text-lg mb-4">Quick Links</h3>
               <ul className="space-y-2">
-                {topAnimes.data?.map((anime, i) => (
-                  <li key={anime.mal_id + i}>
-                    <Link
-                      href={`/anime/${anime.mal_id}/${toSnakeCase(
-                        anime.title
-                      )}`}
-                      className="text-muted-foreground hover:text-foreground"
-                    >
-                      {anime.title}
-                    </Link>
-                  </li>
-                ))}
+                <li>
+                  <Link
+                    href="/anime/top"
+                    className="text-muted-foreground hover:text-foreground"
+                  >
+                    Top Anime
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/anime/season"
+                    className="text-muted-foreground hover:text-foreground"
+                  >
+                    Seasonal Anime
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/anime/schedule"
+                    className="text-muted-foreground hover:text-foreground"
+                  >
+                    Schedule
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/anime/upcoming"
+                    className="text-muted-foreground hover:text-foreground"
+                  >
+                    Upcoming
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/producer"
+                    className="text-muted-foreground hover:text-foreground"
+                  >
+                    Producers
+                  </Link>
+                </li>
               </ul>
             </div>
 
             <div>
-              <h3 className="font-bold text-lg mb-4">Top Airing</h3>
+              <h3 className="font-bold text-lg mb-4">Browse</h3>
               <ul className="space-y-2">
-                {topAiringAnimes.data?.map((anime, i) => (
-                  <li key={anime.mal_id + i}>
-                    <Link
-                      href={`/anime/${anime.mal_id}/${toSnakeCase(
-                        anime.title
-                      )}`}
-                      className="text-muted-foreground hover:text-foreground"
-                    >
-                      {anime.title}
-                    </Link>
-                  </li>
-                ))}
+                <li>
+                  <Link
+                    href="/anime/top/movie"
+                    className="text-muted-foreground hover:text-foreground"
+                  >
+                    Top Movies
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/anime/top/tv"
+                    className="text-muted-foreground hover:text-foreground"
+                  >
+                    Top TV Series
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/anime/top/airing"
+                    className="text-muted-foreground hover:text-foreground"
+                  >
+                    Currently Airing
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/anime/top/upcoming"
+                    className="text-muted-foreground hover:text-foreground"
+                  >
+                    Most Anticipated
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/anime/top/bypopularity"
+                    className="text-muted-foreground hover:text-foreground"
+                  >
+                    Most Popular
+                  </Link>
+                </li>
               </ul>
             </div>
 
             <div>
-              <h3 className="font-bold text-lg mb-4">Most Popular</h3>
+              <h3 className="font-bold text-lg mb-4">Community</h3>
               <ul className="space-y-2">
-                {mostPopularAnimes.data?.map((anime, i) => (
-                  <li key={anime.mal_id + i}>
-                    <Link
-                      href={`/anime/${anime.mal_id}/${toSnakeCase(
-                        anime.title
-                      )}`}
-                      className="text-muted-foreground hover:text-foreground"
-                    >
-                      {anime.title}
-                    </Link>
-                  </li>
-                ))}
+                <li>
+                  <Link
+                    href="#"
+                    className="text-muted-foreground hover:text-foreground"
+                  >
+                    About
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="#"
+                    className="text-muted-foreground hover:text-foreground"
+                  >
+                    Contact
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="#"
+                    className="text-muted-foreground hover:text-foreground"
+                  >
+                    Privacy Policy
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="#"
+                    className="text-muted-foreground hover:text-foreground"
+                  >
+                    Terms of Service
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="#"
+                    className="text-muted-foreground hover:text-foreground"
+                  >
+                    Help Center
+                  </Link>
+                </li>
               </ul>
             </div>
           </div>
