@@ -3,7 +3,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 function HomeCarouselSkeleton() {
   return (
     <div className="relative overflow-hidden">
-      <div className="relative h-[25vh] md:h-[40vh] lg:h-[60vh]">
+      <div className="relative h-[40vh] md:h-[45vh] lg:h-[58vh]">
         <div className="absolute inset-0 grid grid-cols-1 lg:grid-cols-12 z-0">
           <div className="hidden lg:block bg-background lg:col-span-2"></div>
           <div className="relative h-full lg:col-span-8">
