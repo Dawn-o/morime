@@ -5,7 +5,7 @@ import { getTopAnime, getAnimeGenresList } from "@/hooks/anime";
 import { getSeason } from "@/hooks/season";
 
 async function HomePageContent() {
-    const upcomings = await getSeason(3, { type: "seasons/upcoming", limit: 6 });
+    const upcomings = await getSeason(2, { type: "seasons/upcoming", limit: 6 });
     const topAnimes = await getTopAnime(1, { limit: 20 });
     const animes = await getSeason(1, { type: "seasons/now", limit: 20 });
     const genresList = await getAnimeGenresList();
