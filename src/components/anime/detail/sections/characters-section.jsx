@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronDownIcon } from "lucide-react";
 import { EmptyState } from "@/components/content/empty-state";
+import Image from "next/image";
 
 export function CharactersSection({ characters }) {
   const initialLimit = 16;
