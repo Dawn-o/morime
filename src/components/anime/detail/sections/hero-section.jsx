@@ -14,6 +14,7 @@ const AnimeImage = ({ imageUrl, title }) => {
             src={imageUrl}
             alt={title}
             fill
+            priority={true}
             className="object-cover opacity-25 blur-[10px]"
             sizes="1024px"
           />
