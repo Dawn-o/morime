@@ -37,13 +37,16 @@ export function CharactersSection({ characters }) {
               className="flex items-center gap-4 p-4 rounded-lg bg-card border border-border/50 hover:border-border transition-all duration-200 hover:shadow-sm"
             >
               <div className="flex-shrink-0">
-                <img
+                <Image
                   src={
                     character.character?.images?.webp?.image_url ||
                     "/placeholder-character.png"
                   }
                   alt={character.character?.name || "Character"}
-                  className="w-16 h-16 rounded-lg object-cover shadow-sm"
+                  width={64}
+                  height={64}
+                  className="rounded-lg object-cover shadow-sm"
+                  placeholder="empty"
                   loading="lazy"
                 />
               </div>
