@@ -4,7 +4,7 @@ import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { ThemeProvider } from "@/components/layout/theme/theme-provider";
 import { Analytics } from "@vercel/analytics/next";
-import { SpeedInsights } from '@vercel/speed-insights/next';
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -15,6 +15,11 @@ const poppins = Poppins({
 export const metadata = {
   title: "Morime - Anime Tracking",
   description: "An anime discovery and tracking platform, inspired by MyAnimeList",
+  openGraph: {
+    title: "Morime - Anime Tracking",
+    description: "An anime discovery and tracking platform, inspired by MyAnimeList",
+    images: "https://morime.vercel.app/morime.png",
+  },
 };
 
 export default function RootLayout({ children }) {
