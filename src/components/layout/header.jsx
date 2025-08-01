@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { SfwToggle } from "@/components/toggles/sfw-toggle";
 import { ModeToggle } from "@/components/toggles/mode-toggle";
-import { Link } from "@/components/ui/link"; 
+import { Link } from "@/components/ui/link";
 
 export function Header() {
   const [isSearchVisible, setIsSearchVisible] = useState(false);
@@ -25,6 +25,7 @@ export function Header() {
 
   const navItems = [
     { label: "ANIME LIST", link: "anime" },
+    { label: "MANGA LIST", link: "manga" },
     { label: "PRODUCER LIST", link: "producer" },
     { label: "DAILY SCHEDULE", link: "anime/schedule" },
     { label: "SEASONAL SCHEDULE", link: "anime/season" },
@@ -34,8 +35,6 @@ export function Header() {
     { label: "COMPLETED ANIME", link: "anime/completed" },
     { label: "POPULAR THIS SEASON", link: "anime/top/airing" },
     { label: "UPCOMING ANIME", link: "anime/upcoming" },
-    { label: "RANDOM ANIME", link: "anime/random" },
-    { label: "GENRE LIST", link: "anime/genre" },
   ];
 
   return (

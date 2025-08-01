@@ -29,7 +29,6 @@ export function SfwToggle() {
   const [alertType, setAlertType] = useState(null);
   const router = useRouter();
 
-  // Load the initial cookie value
   useEffect(() => {
     const loadCookieValue = async () => {
       const cookieValue = await getSfwCookie();
@@ -39,7 +38,6 @@ export function SfwToggle() {
     loadCookieValue();
   }, []);
 
-  // Auto-hide alert after 3 seconds
   useEffect(() => {
     if (showAlert) {
       const timer = setTimeout(() => {
@@ -81,7 +79,7 @@ export function SfwToggle() {
               </AlertDescription>
             </Alert>
           )}
-          
+
           {alertType === "nsfw" && (
             <Alert variant="destructive">
               <AlertCircle className="h-4 w-4" />
@@ -115,7 +113,7 @@ export function SfwToggle() {
               <Button
                 variant="outline"
                 size="icon"
-                className="relative cursor-pointer"
+                className="relative"
                 title="Currently in SFW mode. Click to enable NSFW mode."
               >
                 <ShieldCheck className="h-[1.2rem] w-[1.2rem] text-green-500" />

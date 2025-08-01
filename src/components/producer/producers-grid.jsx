@@ -1,10 +1,19 @@
 import { ProducerCard } from "@/components/producer/producer-card";
 import { Separator } from "@/components/ui/separator";
-import { AnimePagination } from "@/components/navigation/pagination";
+import { MorimePagination } from "@/components/navigation/pagination";
 import { EmptyState } from "@/components/content/empty-state";
 
-export function ProducersGrid({ producersData, currentPage, basePath, queryParams }) {
-  if (!producersData || !producersData.data || producersData.data.length === 0) {
+export function ProducersGrid({
+  producersData,
+  currentPage,
+  basePath,
+  queryParams,
+}) {
+  if (
+    !producersData ||
+    !producersData.data ||
+    producersData.data.length === 0
+  ) {
     return <EmptyState message="No producers found" />;
   }
 
@@ -18,7 +27,7 @@ export function ProducersGrid({ producersData, currentPage, basePath, queryParam
 
       <Separator className="my-8" />
 
-      <AnimePagination
+      <MorimePagination
         currentPage={currentPage}
         totalPages={producersData.totalPages || 1}
         basePath={basePath}

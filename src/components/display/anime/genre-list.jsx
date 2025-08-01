@@ -8,7 +8,7 @@ import {
 import { Link } from "@/components/ui/link";
 import { Button } from "@/components/ui/button";
 
-export function GenreGrid({ genres }) {
+export function GenreList({ genres }) {
   return (
     <div className="relative">
       <Carousel opts={{ align: "start" }}>

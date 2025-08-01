@@ -6,7 +6,7 @@ import { Building2, Calendar } from "lucide-react";
 import Image from "next/image";
 import { getImageWithFallback } from "@/lib/utils/image-fallback";
 import { useState } from "react";
-import { AnimeGrid } from "@/components/display/anime-grid";
+import { AnimeGrid } from "@/components/display/anime/anime-grid";
 
 export function ProducerDetails({ producer, animes, currentPage }) {
   const [imageError, setImageError] = useState(false);

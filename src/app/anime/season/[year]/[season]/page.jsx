@@ -1,6 +1,6 @@
 import { getSeason } from "@/hooks/season";
 import { TypeFilterTabs } from "@/components/forms/type-filter-tabs";
-import { AnimeGrid } from "@/components/display/anime-grid";
+import { AnimeGrid } from "@/components/display/anime/anime-grid";
 import { SeasonNavigation } from "@/components/anime/season/season-navigation";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";

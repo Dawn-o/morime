@@ -1,6 +1,6 @@
-import { AnimeCard } from "@/components/display/anime-card";
+import { AnimeCard } from "@/components/display/anime/anime-card";
 import { Separator } from "@/components/ui/separator";
-import { AnimePagination } from "@/components/navigation/pagination";
+import { MorimePagination } from "@/components/navigation/pagination";
 import { EmptyState } from "@/components/content/empty-state";
 
 export function AnimeGrid({ animeData, currentPage, basePath, queryParams }) {
@@ -18,7 +18,7 @@ export function AnimeGrid({ animeData, currentPage, basePath, queryParams }) {
 
       <Separator className="my-8" />
 
-      <AnimePagination
+      <MorimePagination
         currentPage={currentPage}
         totalPages={animeData.totalPages || 1}
         basePath={basePath}

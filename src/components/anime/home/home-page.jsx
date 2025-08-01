@@ -1,7 +1,7 @@
 import { HomeCarousel } from "@/components/anime/home/carousel";
 import { SectionHeader } from "@/components/headers/section-header";
 import { AnimeCarousel } from "@/components/anime/home/anime-carousel";
-import { GenreGrid } from "@/components/anime/home/genre-grid";
+import { GenreList } from "@/components/display/anime/genre-list";
 
 export default async function HomePage({
   upcomings = [],
@@ -16,7 +16,7 @@ export default async function HomePage({
       </section>
       <section className="mb-12">
         <div className="container px-4 mx-auto">
-          <GenreGrid genres={genresList} />
+          <GenreList genres={genresList} />
         </div>
       </section>
 

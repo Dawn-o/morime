@@ -1,5 +1,5 @@
 import { getSchedules } from "@/hooks/schedule";
-import { AnimeGrid } from "@/components/display/anime-grid";
+import { AnimeGrid } from "@/components/display/anime/anime-grid";
 import { DayFilterTabs } from "@/components/forms/day-filter-tabs";
 import { notFound } from "next/navigation";
 

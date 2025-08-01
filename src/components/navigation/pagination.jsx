@@ -13,7 +13,7 @@ import {
   getAnimeTopPageUrl,
 } from "@/lib/navigation/pagination-utils";
 
-export function AnimePagination({
+export function MorimePagination({
   currentPage,
   totalPages,
   type,

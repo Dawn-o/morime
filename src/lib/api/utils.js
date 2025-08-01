@@ -1,8 +1,8 @@
-import { notFound } from 'next/navigation';
-import { JIKAN_API, CACHE_CONFIG, RATE_LIMIT } from '@/lib/api/config';
-import { getSfwParam } from '@/lib/api/cookies';
+import { notFound } from "next/navigation";
+import { JIKAN_API, CACHE_CONFIG, RATE_LIMIT } from "@/lib/api/config";
+import { getSfwParam } from "@/lib/api/cookies";
 
-const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 async function withRateLimit(fetchFn) {
   let attempts = 0;
@@ -21,9 +21,11 @@ async function withRateLimit(fetchFn) {
       attempts++;
 
       if (error.status === 429 || !error.status) {
-        console.warn(`Rate limit hit, retrying... (${attempts}/${RATE_LIMIT.maxRetries})`);
+        console.warn(
+          `Rate limit hit, retrying... (${attempts}/${RATE_LIMIT.maxRetries})`
+        );
         if (attempts === RATE_LIMIT.maxRetries) {
-          throw new Error('Too many requests. Please try again later.');
+          throw new Error("Too many requests. Please try again later.");
         }
         continue;
       }
@@ -43,7 +45,11 @@ export function buildUrl(endpoint, params = {}) {
   return url.toString();
 }
 
-export async function fetchWithSfw(endpoint, params = {}, cacheConfig = CACHE_CONFIG.SHORT) {
+export async function fetchWithSfw(
+  endpoint,
+  params = {},
+  cacheConfig = CACHE_CONFIG.SHORT
+) {
   const sfw = await getSfwParam();
   const targetLimit = params.limit || 24;
   let allAnime = [];
@@ -60,8 +66,12 @@ export async function fetchWithSfw(endpoint, params = {}, cacheConfig = CACHE_CO
       const res = await fetch(url, {
         ...cacheConfig,
         headers: {
-          'Accept': 'application/json',
+          Accept: "application/json",
         },
+        signal:
+          typeof AbortController !== "undefined"
+            ? new AbortController().signal
+            : undefined,
       });
 
       if (!res.ok) {
@@ -84,7 +94,11 @@ export async function fetchWithSfw(endpoint, params = {}, cacheConfig = CACHE_CO
 
     allAnime = [...allAnime, ...newAnime];
 
-    if (allAnime.length < targetLimit && newAnime.length > 0 && response.pagination?.has_next_page) {
+    if (
+      allAnime.length < targetLimit &&
+      newAnime.length > 0 &&
+      response.pagination?.has_next_page
+    ) {
       page++;
       attempts++;
     } else {
@@ -101,18 +115,22 @@ export async function fetchWithSfw(endpoint, params = {}, cacheConfig = CACHE_CO
       items: {
         count: Math.min(allAnime.length, targetLimit),
         total: originalPagination?.items?.total || allAnime.length,
-        per_page: targetLimit
-      }
-    }
+        per_page: targetLimit,
+      },
+    },
   };
 }
 
-export async function revalidateAnimeCache(tag = 'anime-list') {
-  const { revalidateTag } = await import('next/cache');
+export async function revalidateAnimeCache(tag = "anime-list") {
+  const { revalidateTag } = await import("next/cache");
   revalidateTag(tag);
 }
 
-export async function fetchSingle(endpoint, params = {}, cacheConfig = CACHE_CONFIG.SHORT) {
+export async function fetchSingle(
+  endpoint,
+  params = {},
+  cacheConfig = CACHE_CONFIG.SHORT
+) {
   const sfw = await getSfwParam();
   const url = buildUrl(endpoint, { ...params, sfw });
 
@@ -120,15 +138,21 @@ export async function fetchSingle(endpoint, params = {}, cacheConfig = CACHE_CON
     const response = await fetch(url, {
       ...cacheConfig,
       headers: {
-        'Accept': 'application/json',
+        Accept: "application/json",
       },
+      signal:
+        typeof AbortController !== "undefined"
+          ? new AbortController().signal
+          : undefined,
     });
 
     if (!response.ok) {
       if (response.status === 404) {
         notFound();
       }
-      const error = new Error(`API error: ${response.status} - ${response.statusText}`);
+      const error = new Error(
+        `API error: ${response.status} - ${response.statusText}`
+      );
       error.status = response.status;
       throw error;
     }
