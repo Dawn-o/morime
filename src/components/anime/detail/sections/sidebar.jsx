@@ -1,4 +1,4 @@
-import { Link } from "@/components/ui/link"; 
+import { Link } from "@/components/ui/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { toSnakeCase } from "@/lib/utils/formatter";
@@ -31,31 +31,31 @@ const InfoValue = ({ children }) => (
   <span className="font-medium text-right">{children}</span>
 );
 
-const AlternativeTitlesSection = ({ animeData }) => {
+const AlternativeTitlesSection = ({ titleJapanese, titleSynonyms }) => {
   const hasAlternativeTitles =
-    animeData.title_japanese ||
-    (animeData.title_synonyms && animeData.title_synonyms.length > 0);
+    titleJapanese ||
+    (titleSynonyms && titleSynonyms.length > 0);
 
   return (
     <SidebarSection title="Alternative Titles" condition={hasAlternativeTitles}>
-      {animeData.title_japanese && (
+      {titleJapanese && (
         <div className="space-y-1">
           <span className="text-xs text-muted-foreground/80 font-medium block">
             Japanese
           </span>
           <div className="font-japanese text-sm">
-            {animeData.title_japanese}
+            {titleJapanese}
           </div>
         </div>
       )}
 
-      {animeData.title_synonyms?.length > 0 && (
+      {titleSynonyms?.length > 0 && (
         <div className="space-y-1">
           <span className="text-xs text-muted-foreground/80 font-medium block">
             Synonyms
           </span>
           <div className="space-y-0.5">
-            {animeData.title_synonyms.map((title, i) => (
+            {titleSynonyms.map((title, i) => (
               <div key={i} className="text-sm">
                 {title}
               </div>
@@ -67,7 +67,7 @@ const AlternativeTitlesSection = ({ animeData }) => {
   );
 };
 
-const BasicInfoSection = ({ animeData }) => {
+const BasicInfoSection = ({ status, episodes, rating, season, year, aired, duration, broadcast }) => {
   const formatSeason = (season, year) => {
     if (!season) return null;
     return `${season.charAt(0).toUpperCase() + season.slice(1)} ${year}`;
@@ -76,54 +76,54 @@ const BasicInfoSection = ({ animeData }) => {
   return (
     <SidebarSection title="Basic Info">
       <InfoRow label="Status">
-        <InfoValue>{animeData.status || "N/A"}</InfoValue>
+        <InfoValue>{status || "N/A"}</InfoValue>
       </InfoRow>
 
       <InfoRow label="Episodes">
-        <InfoValue>{animeData.episodes || "?"}</InfoValue>
+        <InfoValue>{episodes || "?"}</InfoValue>
       </InfoRow>
 
-      {animeData.rating && (
+      {rating && (
         <InfoRow label="Age Rating">
-          <InfoValue>{animeData.rating}</InfoValue>
+          <InfoValue>{rating}</InfoValue>
         </InfoRow>
       )}
 
-      {animeData.season && (
+      {season && (
         <InfoRow label="Season">
           <InfoValue>
-            {formatSeason(animeData.season, animeData.year)}
+            {formatSeason(season, year)}
           </InfoValue>
         </InfoRow>
       )}
 
-      {animeData.aired?.string && (
+      {aired?.string && (
         <InfoRow label="Aired">
-          <InfoValue>{animeData.aired.string}</InfoValue>
+          <InfoValue>{aired.string}</InfoValue>
         </InfoRow>
       )}
 
-      {animeData.duration && (
+      {duration && (
         <InfoRow label="Duration">
-          <InfoValue>{animeData.duration}</InfoValue>
+          <InfoValue>{duration}</InfoValue>
         </InfoRow>
       )}
 
-      {animeData.broadcast?.string && (
+      {broadcast?.string && (
         <InfoRow label="Broadcast">
-          <InfoValue>{animeData.broadcast.string}</InfoValue>
+          <InfoValue>{broadcast.string}</InfoValue>
         </InfoRow>
       )}
     </SidebarSection>
   );
 };
 
-const CreditsSection = ({ animeData }) => (
+const CreditsSection = ({ studios, producers, licensors }) => (
   <SidebarSection title="Credits">
-    {animeData.studios?.length > 0 && (
+    {studios?.length > 0 && (
       <InfoRow label="Studio">
         <BadgeList
-          items={animeData.studios}
+          items={studios}
           renderBadge={(studio) => (
             <span key={studio.mal_id} className="font-medium">
               {studio.name}
@@ -133,10 +133,10 @@ const CreditsSection = ({ animeData }) => (
       </InfoRow>
     )}
 
-    {animeData.producers?.length > 0 && (
+    {producers?.length > 0 && (
       <InfoRow label="Producers">
         <BadgeList
-          items={animeData.producers}
+          items={producers}
           renderBadge={(producer) => (
             <Link
               key={producer.mal_id}
@@ -156,10 +156,10 @@ const CreditsSection = ({ animeData }) => (
       </InfoRow>
     )}
 
-    {animeData.licensors?.length > 0 && (
+    {licensors?.length > 0 && (
       <InfoRow label="Licensors">
         <BadgeList
-          items={animeData.licensors}
+          items={licensors}
           renderBadge={(licensor) => (
             <span key={licensor.mal_id} className="font-medium">
               {licensor.name}
@@ -171,16 +171,16 @@ const CreditsSection = ({ animeData }) => (
   </SidebarSection>
 );
 
-const DetailsSection = ({ animeData }) => (
+const DetailsSection = ({ source, genres, themes, demographics }) => (
   <SidebarSection title="Details">
     <InfoRow label="Source">
-      <InfoValue>{animeData.source || "N/A"}</InfoValue>
+      <InfoValue>{source || "N/A"}</InfoValue>
     </InfoRow>
 
-    {animeData.genres?.length > 0 && (
+    {genres?.length > 0 && (
       <InfoRow label="Genres">
         <BadgeList
-          items={animeData.genres}
+          items={genres}
           renderBadge={(genre) => (
             <Link
               key={genre.mal_id}
@@ -198,10 +198,10 @@ const DetailsSection = ({ animeData }) => (
       </InfoRow>
     )}
 
-    {animeData.themes?.length > 0 && (
+    {themes?.length > 0 && (
       <InfoRow label="Themes">
         <BadgeList
-          items={animeData.themes}
+          items={themes}
           renderBadge={(theme) => (
             <Link
               key={theme.mal_id}
@@ -219,10 +219,10 @@ const DetailsSection = ({ animeData }) => (
       </InfoRow>
     )}
 
-    {animeData.demographics?.length > 0 && (
+    {demographics?.length > 0 && (
       <InfoRow label="Demographics">
         <BadgeList
-          items={animeData.demographics}
+          items={demographics}
           renderBadge={(demographic) => (
             <Badge
               key={demographic.mal_id}
@@ -238,7 +238,7 @@ const DetailsSection = ({ animeData }) => (
   </SidebarSection>
 );
 
-const StatisticsSection = ({ animeData }) => {
+const StatisticsSection = ({ rank, popularity, members, favorites }) => {
   const formatNumber = (num) => {
     return num ? num.toLocaleString() : "N/A";
   };
@@ -250,33 +250,83 @@ const StatisticsSection = ({ animeData }) => {
   return (
     <SidebarSection title="Statistics">
       <InfoRow label="Rank">
-        <InfoValue>{formatRank(animeData.rank)}</InfoValue>
+        <InfoValue>{formatRank(rank)}</InfoValue>
       </InfoRow>
 
       <InfoRow label="Popularity">
-        <InfoValue>{formatRank(animeData.popularity)}</InfoValue>
+        <InfoValue>{formatRank(popularity)}</InfoValue>
       </InfoRow>
 
       <InfoRow label="Members">
-        <InfoValue>{formatNumber(animeData.members)}</InfoValue>
+        <InfoValue>{formatNumber(members)}</InfoValue>
       </InfoRow>
 
       <InfoRow label="Favorites">
-        <InfoValue>{formatNumber(animeData.favorites)}</InfoValue>
+        <InfoValue>{formatNumber(favorites)}</InfoValue>
       </InfoRow>
     </SidebarSection>
   );
 };
 
-export function AnimeSidebar({ animeData }) {
+export function AnimeSidebar({ sidebarData }) {
+  const {
+    titleJapanese,
+    titleSynonyms,
+    status,
+    episodes,
+    rating,
+    season,
+    year,
+    aired,
+    duration,
+    broadcast,
+    studios,
+    producers,
+    licensors,
+    source,
+    genres,
+    themes,
+    demographics,
+    rank,
+    popularity,
+    members,
+    favorites
+  } = sidebarData;
+
   return (
     <Card className="py-0 shadow-lg border-border/40">
       <CardContent className="p-4 space-y-0 divide-y divide-border/60">
-        <AlternativeTitlesSection animeData={animeData} />
-        <BasicInfoSection animeData={animeData} />
-        <CreditsSection animeData={animeData} />
-        <DetailsSection animeData={animeData} />
-        <StatisticsSection animeData={animeData} />
+        <AlternativeTitlesSection
+          titleJapanese={titleJapanese}
+          titleSynonyms={titleSynonyms}
+        />
+        <BasicInfoSection
+          status={status}
+          episodes={episodes}
+          rating={rating}
+          season={season}
+          year={year}
+          aired={aired}
+          duration={duration}
+          broadcast={broadcast}
+        />
+        <CreditsSection
+          studios={studios}
+          producers={producers}
+          licensors={licensors}
+        />
+        <DetailsSection
+          source={source}
+          genres={genres}
+          themes={themes}
+          demographics={demographics}
+        />
+        <StatisticsSection
+          rank={rank}
+          popularity={popularity}
+          members={members}
+          favorites={favorites}
+        />
       </CardContent>
     </Card>
   );

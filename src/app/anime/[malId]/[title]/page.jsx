@@ -1,4 +1,8 @@
-import { getDetailAnime, getEpisodeAnime, getAnimeCharacters } from "@/hooks/anime";
+import {
+  getDetailAnime,
+  getEpisodeAnime,
+  getAnimeCharacters,
+} from "@/hooks/anime";
 import { notFound } from "next/navigation";
 import { AnimeHeroSection } from "@/components/anime/detail/sections/hero-section";
 import { AnimeSidebar } from "@/components/anime/detail/sections/sidebar";
@@ -7,51 +11,105 @@ import { Suspense } from "react";
 import DetailAnimeSkeleton from "@/components/loading/detail-anime-skeleton";
 
 export async function generateMetadata({ params }) {
-    const { malId } = await params;
-    const animeData = await getDetailAnime(malId);
+  const { malId } = await params;
+  const animeData = await getDetailAnime(malId);
 
-    if (isNaN(malId) || !animeData) {
-        return {
-            title: "Anime Not Found | Morime"
-        };
-    }
-
+  if (isNaN(malId) || !animeData) {
     return {
-        title: `${animeData.title} | Morime`,
-        description: animeData.synopsis?.slice(0, 160) || "View anime details on Morime",
-        openGraph: {
-            title: animeData.title,
-            description: animeData.synopsis?.slice(0, 160),
-            images: animeData.images?.webp?.image_url ? [animeData.images.webp.image_url] : [],
-        }
+      title: "Anime Not Found | Morime",
     };
+  }
+
+  return {
+    title: `${animeData.title} | Morime`,
+    description:
+      animeData.synopsis?.slice(0, 160) || "View anime details on Morime",
+    openGraph: {
+      title: animeData.title,
+      description: animeData.synopsis?.slice(0, 160),
+      images: animeData.images?.webp?.image_url
+        ? [animeData.images.webp.image_url]
+        : [],
+    },
+  };
 }
 
 export default async function AnimeDetailsPage({ params }) {
-    const { malId } = await params;
-    const [animeData, episodesData, charactersData] = await Promise.all([
-        getDetailAnime(malId),
-        getEpisodeAnime(malId),
-        getAnimeCharacters(malId)
-    ]);
+  const { malId } = await params;
+  const [animeData, episodesData, charactersData] = await Promise.all([
+    getDetailAnime(malId),
+    getEpisodeAnime(malId),
+    getAnimeCharacters(malId),
+  ]);
 
-    if (isNaN(malId) || !animeData) {
-        notFound();
-    }
+  if (isNaN(malId) || !animeData) {
+    notFound();
+  }
 
-    return (
-        <Suspense fallback={ <DetailAnimeSkeleton /> }>
-            <AnimeHeroSection animeData={animeData} />
-            <section className="container mx-auto pb-8 sm:pb-10 px-4 -mt-0 md:-mt-24 relative z-10">
-                <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 lg:gap-8">
-                    <div className="lg:col-span-1">
-                        <AnimeSidebar animeData={animeData} />
-                    </div>
-                    <div className="lg:col-span-3">
-                        <AnimeContentSections animeData={animeData} episodesData={episodesData} charactersData={charactersData} />
-                    </div>
-                </div>
-            </section>
-        </Suspense>
-    );
+  const heroData = {
+    imageUrl: animeData.images?.webp?.large_image_url,
+    title: animeData.title,
+    titleEnglish: animeData.title_english,
+    titleJapanese: animeData.title_japanese,
+    titleSynonyms: animeData.title_synonyms,
+    type: animeData.type,
+    status: animeData.status,
+    score: animeData.score,
+    scoredBy: animeData.scored_by,
+    rank: animeData.rank,
+    popularity: animeData.popularity,
+    members: animeData.members,
+    season: animeData.season,
+    year: animeData.year,
+    studios: animeData.studios,
+  };
+
+  const sidebarData = {
+    titleJapanese: animeData.title_japanese,
+    titleSynonyms: animeData.title_synonyms,
+    status: animeData.status,
+    episodes: animeData.episodes,
+    rating: animeData.rating,
+    season: animeData.season,
+    year: animeData.year,
+    aired: animeData.aired,
+    duration: animeData.duration,
+    broadcast: animeData.broadcast,
+    studios: animeData.studios,
+    producers: animeData.producers,
+    licensors: animeData.licensors,
+    source: animeData.source,
+    genres: animeData.genres,
+    themes: animeData.themes,
+    demographics: animeData.demographics,
+    rank: animeData.rank,
+    popularity: animeData.popularity,
+    members: animeData.members,
+    favorites: animeData.favorites,
+  };
+
+  const contentData = {
+    synopsis: animeData.synopsis,
+    trailersData: animeData.trailer,
+    charactersData: charactersData,
+    themesData: animeData.theme,
+    episodesData: episodesData,
+    relationsData: animeData.relations,
+  };
+
+  return (
+    <Suspense fallback={<DetailAnimeSkeleton />}>
+      <AnimeHeroSection heroData={heroData} />
+      <section className="container mx-auto pb-8 sm:pb-10 px-4 -mt-0 md:-mt-24 relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 lg:gap-8">
+          <div className="lg:col-span-1">
+            <AnimeSidebar sidebarData={sidebarData} />
+          </div>
+          <div className="lg:col-span-3">
+            <AnimeContentSections contentData={contentData} />
+          </div>
+        </div>
+      </section>
+    </Suspense>
+  );
 }

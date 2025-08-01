@@ -1,10 +1,10 @@
 import { EmptyState } from "@/components/content/empty-state";
 
-export function ThemeSongsSection({ animeData }) {
+export function ThemeSongsSection({ themesData }) {
   const hasOpenings =
-    animeData.theme?.openings && animeData.theme.openings.length > 0;
+    themesData?.openings && themesData.openings.length > 0;
   const hasEndings =
-    animeData.theme?.endings && animeData.theme.endings.length > 0;
+    themesData?.endings && themesData.endings.length > 0;
 
   if (!hasOpenings && !hasEndings) {
     return <EmptyState message="No theme songs available." />;
@@ -16,7 +16,7 @@ export function ThemeSongsSection({ animeData }) {
         <h3 className="text-base font-semibold mb-1">Opening Themes</h3>
         {hasOpenings ? (
           <ul className="space-y-1 text-sm text-muted-foreground">
-            {animeData.theme.openings.map((opening, i) => (
+            {themesData.openings.map((opening, i) => (
               <li key={i} className="pl-2 border-l-2 border-primary/30">
                 {opening}
               </li>
@@ -33,7 +33,7 @@ export function ThemeSongsSection({ animeData }) {
         <h3 className="text-base font-semibold mb-1">Ending Themes</h3>
         {hasEndings ? (
           <ul className="space-y-1 text-sm text-muted-foreground">
-            {animeData.theme.endings.map((ending, i) => (
+            {themesData.endings.map((ending, i) => (
               <li key={i} className="pl-2 border-l-2 border-primary/30">
                 {ending}
               </li>

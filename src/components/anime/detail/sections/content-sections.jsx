@@ -9,11 +9,15 @@ import { ThemeSongsSection } from "@/components/anime/detail/sections/theme-song
 import { EpisodesSection } from "@/components/anime/detail/sections/episodes-section";
 import { RelatedAnimeSection } from "@/components/anime/detail/sections/related-anime-section";
 
-export function AnimeContentSections({
-  animeData,
-  episodesData,
-  charactersData,
-}) {
+export function AnimeContentSections({ contentData }) {
+  const {
+    synopsis,
+    trailersData,
+    themesData,
+    charactersData,
+    episodesData,
+    relationsData,
+  } = contentData;
   const [showCharactersOnly, setShowCharactersOnly] = useState(false);
   const synopsisRef = useRef(null);
   const charactersRef = useRef(null);
@@ -60,7 +64,7 @@ export function AnimeContentSections({
     <div className="space-y-6 sm:space-y-8">
       <SectionCard title="Synopsis" cardRef={synopsisRef}>
         <p className="text-sm sm:text-base text-muted-foreground/90 whitespace-pre-line leading-relaxed">
-          {animeData.synopsis || "No synopsis available."}
+          {synopsis || "No synopsis available."}
         </p>
       </SectionCard>
 
@@ -69,7 +73,7 @@ export function AnimeContentSections({
         titleColor="bg-red-500"
         className="border-border/30 bg-card/80 backdrop-blur-sm"
       >
-        <TrailerSection animeData={animeData} />
+        <TrailerSection trailersData={trailersData} />
       </SectionCard>
 
       <SectionCard
@@ -93,7 +97,7 @@ export function AnimeContentSections({
       </SectionCard>
 
       <SectionCard title="Theme Songs">
-        <ThemeSongsSection animeData={animeData} />
+        <ThemeSongsSection themesData={themesData} />
       </SectionCard>
 
       <SectionCard title="Episodes">
@@ -101,7 +105,7 @@ export function AnimeContentSections({
       </SectionCard>
 
       <SectionCard title="Related Anime">
-        <RelatedAnimeSection animeData={animeData} />
+        <RelatedAnimeSection relationsData={relationsData} />
       </SectionCard>
     </div>
   );
