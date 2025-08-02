@@ -68,9 +68,9 @@ export function HomeCarousel({ items }) {
                 <div className="hidden lg:block bg-background lg:col-span-1"></div>
 
                 <div className="relative h-full lg:col-span-2">
-                  {item.trailer?.images?.maximum_image_url ? (
+                  {item.trailerImageUrl ? (
                     <Image
-                      src={item.trailer.images.maximum_image_url}
+                      src={item.trailerImageUrl}
                       alt={`${item.title} background`}
                       fill
                       className="object-cover"
@@ -89,9 +89,9 @@ export function HomeCarousel({ items }) {
                 <div className="flex flex-col lg:flex-row lg:items-end gap-6 p-0 lg:p-8 z-20 lg:col-span-2">
                   <div className="hidden lg:block w-48 h-72 flex-shrink-0">
                     <div className="w-full h-full overflow-hidden rounded-lg shadow-[0_0_20px_rgba(0,0,0,0.3)] relative">
-                      {item.images?.webp?.large_image_url && (
+                      {item.imageUrl && (
                         <Image
-                          src={item.images.webp.large_image_url}
+                          src={item.imageUrl}
                           alt={`${item.title} cover`}
                           fill
                           className="object-cover"
@@ -128,7 +128,7 @@ export function HomeCarousel({ items }) {
 
                     {item.genres && (
                       <div className="flex flex-wrap gap-2 mt-3">
-                        {item.genres.slice(0, 3).map((genre, idx) => (
+                        {item.genres.map((genre, idx) => (
                           <Badge
                             key={idx}
                             variant="outline"

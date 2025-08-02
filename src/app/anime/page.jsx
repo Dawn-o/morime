@@ -49,6 +49,19 @@ export default async function AnimePage({ searchParams }) {
     animeData = await getAnime(currentPage, apiConfig);
   }
 
+  const animeListData = animeData ? {
+    data: animeData.data?.map(anime => ({
+      mal_id: anime.mal_id,
+      title: anime.title,
+      imageUrl: anime.images?.webp?.large_image_url,
+      score: anime.score,
+      episodes: anime.episodes,
+      year: anime.year,
+      type: anime.type,
+    })) || [],
+    totalPages: animeData.totalPages,
+  } : null;
+
   return (
     <Suspense fallback={<AnimeListSkeleton showSearch={true} />}>
       <section className="container mx-auto py-8 sm:py-10 px-4">
@@ -70,7 +83,7 @@ export default async function AnimePage({ searchParams }) {
         />
 
         <AnimeGrid
-          animeData={animeData}
+          animeData={animeListData}
           currentPage={currentPage}
           basePath="/anime"
           queryParams={{

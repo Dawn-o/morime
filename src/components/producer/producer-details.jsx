@@ -16,11 +16,10 @@ export function ProducerDetails({ producer, animes, currentPage }) {
       <Card>
         <CardHeader className="p-4 sm:p-6">
           <div className="flex flex-col sm:flex-row items-start gap-4 sm:gap-6">
-            {/* Producer Image */}
             <div className="flex-shrink-0 w-24 h-24 sm:w-32 sm:h-32 mx-auto sm:mx-0 overflow-hidden rounded-lg bg-muted border relative">
-              {producer.images?.jpg?.image_url && !imageError ? (
+              {producer.imageUrl && !imageError ? (
                 <Image
-                  src={getImageWithFallback(producer.images.jpg.image_url)}
+                  src={getImageWithFallback(producer.imageUrl)}
                   alt={
                     producer.titles?.[0]?.title || producer.name || "Producer"
                   }
@@ -36,7 +35,6 @@ export function ProducerDetails({ producer, animes, currentPage }) {
               )}
             </div>
 
-            {/* Producer Info */}
             <div className="flex-1 min-w-0 text-center sm:text-left">
               <CardTitle className="text-xl sm:text-2xl lg:text-3xl mb-2 sm:mb-3 break-words">
                 {producer.titles?.[0]?.title ||
@@ -71,7 +69,6 @@ export function ProducerDetails({ producer, animes, currentPage }) {
         </CardHeader>
       </Card>
 
-      {/* Statistics Card */}
       <Card>
         <CardHeader className="p-4 sm:p-6">
           <CardTitle className="text-lg sm:text-xl">Statistics</CardTitle>
@@ -111,7 +108,6 @@ export function ProducerDetails({ producer, animes, currentPage }) {
         </CardContent>
       </Card>
 
-      {/* Produced Anime Card */}
       <Card>
         <CardHeader className="p-4 sm:p-6">
           <CardTitle className="text-lg sm:text-xl">Produced Anime</CardTitle>

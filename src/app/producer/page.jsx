@@ -37,6 +37,19 @@ export default async function ProducersPage({ searchParams }) {
         producersData = await getProducers(currentPage, apiConfig);
     }
 
+    const producerListData = producersData ? {
+        data: producersData.data?.map(producer => ({
+            mal_id: producer.mal_id,
+            titles: producer.titles,
+            imageUrl: producer.images?.jpg?.image_url,
+            count: producer.count,
+            favorites: producer.favorites,
+            established: producer.established,
+        })) || [],
+        totalPages: producersData.totalPages,
+        totalItems: producersData.totalItems,
+    } : null;
+
     return (
         <Suspense fallback={<ProducersPageSkeleton />}>
             <section className="container mx-auto py-8 sm:py-10 px-4">
@@ -47,7 +60,7 @@ export default async function ProducersPage({ searchParams }) {
                     <p className="text-sm text-muted-foreground">
                         {searchQuery
                             ? `Search results for "${searchQuery}"`
-                            : `Discover ${producersData.totalItems || 0} production studios and companies`
+                            : `Discover ${producerListData?.totalItems || 0} production studios and companies`
                         }
                     </p>
                 </div>
@@ -59,7 +72,7 @@ export default async function ProducersPage({ searchParams }) {
                 />
 
                 <ProducersGrid
-                    producersData={producersData}
+                    producersData={producerListData}
                     currentPage={currentPage}
                     basePath="/producer"
                     queryParams={{

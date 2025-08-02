@@ -47,6 +47,20 @@ export default async function MangaPage({ searchParams }) {
     mangaData = await getManga(currentPage, apiConfig);
   }
 
+  const mangaListData = mangaData ? {
+    data: mangaData.data?.map(manga => ({
+      mal_id: manga.mal_id,
+      title: manga.title,
+      imageUrl: manga.images?.webp?.large_image_url,
+      score: manga.score,
+      chapters: manga.chapters,
+      published: manga.published,
+      type: manga.type,
+      status: manga.status,
+    })) || [],
+    totalPages: mangaData.totalPages,
+  } : null;
+
   return (
     <Suspense fallback={<MangaListSkeleton showSearch={true} />}>
       <section className="container mx-auto py-8 sm:py-10 px-4">
@@ -68,7 +82,7 @@ export default async function MangaPage({ searchParams }) {
         />
 
         <MangaGrid
-          mangaData={mangaData}
+          mangaData={mangaListData}
           currentPage={currentPage}
           basePath="/manga"
           queryParams={{

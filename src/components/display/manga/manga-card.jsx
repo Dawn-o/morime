@@ -19,7 +19,7 @@ export function MangaCard({ manga, priority = false }) {
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent z-10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
 
           <Image
-            src={getImageWithFallback(manga.images?.webp?.large_image_url)}
+            src={getImageWithFallback(manga.imageUrl)}
             alt={manga.title}
             fill
             className="object-cover transition-all duration-500 group-hover:scale-110"
