@@ -1,6 +1,8 @@
 import HomePage from "@/components/anime/home/home-page";
 import { getTopAnime, getAnimeGenresList } from "@/hooks/anime";
 import { getSeason } from "@/hooks/season";
+import { Suspense } from "react";
+import { HomePageSkeleton } from "@/components/loading/home-page-skeleton";
 
 export default async function Home() {
   const upcomings = await getSeason(2, { type: "seasons/upcoming", limit: 6 });
@@ -42,11 +44,13 @@ export default async function Home() {
     })) || [];
 
   return (
-    <HomePage
-      upcomings={upcomingData}
-      topAnimes={topAnimeData}
-      animes={currentAnimeData}
-      genresList={genresList}
-    />
+    <Suspense fallback={<HomePageSkeleton />}>
+      <HomePage
+        upcomings={upcomingData}
+        topAnimes={topAnimeData}
+        animes={currentAnimeData}
+        genresList={genresList}
+      />
+    </Suspense>
   );
 }
