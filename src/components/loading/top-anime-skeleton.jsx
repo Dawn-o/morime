@@ -2,7 +2,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 
-export function TopAnimeSkeleton() {
+export default function TopAnimeSkeleton() {
   return (
     <section className="container mx-auto py-8 sm:py-10 px-4">
       {/* Header skeleton */}
@@ -48,3 +48,5 @@ export function TopAnimeSkeleton() {
     </section>
   );
 }
+
+export { TopAnimeSkeleton };

@@ -1,7 +1,7 @@
 import { Skeleton } from "@/components/ui/skeleton";
 import { Separator } from "@/components/ui/separator";
 
-export function AnimeListSkeleton({ showSearch = true }) {
+export default function AnimeListSkeleton({ showSearch = true }) {
   return (
     <section className="container mx-auto py-8 sm:py-10 px-4">
       <div className="text-center space-y-2 mb-8">
@@ -39,3 +39,5 @@ export function AnimeListSkeleton({ showSearch = true }) {
     </section>
   );
 }
+
+export { AnimeListSkeleton };

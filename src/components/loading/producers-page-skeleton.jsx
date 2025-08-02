@@ -17,7 +17,7 @@ function ProducerCardSkeleton() {
   );
 }
 
-export function ProducersPageSkeleton() {
+export default function ProducersPageSkeleton() {
   return (
     <section className="container mx-auto py-8 sm:py-10 px-4">
       {/* Header skeleton */}
@@ -50,3 +50,5 @@ export function ProducersPageSkeleton() {
     </section>
   );
 }
+
+export { ProducersPageSkeleton };
