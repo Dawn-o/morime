@@ -2,8 +2,6 @@ import { getManga } from "@/hooks/manga";
 import { getMangaSearch } from "@/hooks/search";
 import { MangaGrid } from "@/components/display/manga/manga-grid";
 import { SearchInput } from "@/components/forms/search-input";
-import { Suspense } from "react";
-import { MangaListSkeleton } from "@/components/loading/manga-list-skeleton";
 
 export async function generateMetadata({ searchParams }) {
   const currentPage = parseInt((await searchParams)?.page) || 1;
@@ -62,34 +60,32 @@ export default async function MangaPage({ searchParams }) {
   } : null;
 
   return (
-    <Suspense fallback={<MangaListSkeleton showSearch={true} />}>
-      <section className="container mx-auto py-8 sm:py-10 px-4">
-        <div className="text-center space-y-2 mb-8">
-          <h1 className="text-2xl font-bold text-foreground">
-            {searchQuery ? `Search: ${searchQuery}` : "Manga List"}
-          </h1>
-          <p className="text-sm text-muted-foreground">
-            {searchQuery
-              ? `Search results for "${searchQuery}"`
-              : "Browse all manga series, movies, and specials from our extensive collection"}
-          </p>
-        </div>
+    <section className="container mx-auto py-8 sm:py-10 px-4">
+      <div className="text-center space-y-2 mb-8">
+        <h1 className="text-2xl font-bold text-foreground">
+          {searchQuery ? `Search: ${searchQuery}` : "Manga List"}
+        </h1>
+        <p className="text-sm text-muted-foreground">
+          {searchQuery
+            ? `Search results for "${searchQuery}"`
+            : "Browse all manga series, movies, and specials from our extensive collection"}
+        </p>
+      </div>
 
-        <SearchInput
-          defaultValue={searchQuery}
-          basePath="/manga"
-          placeholder="Search manga titles..."
-        />
+      <SearchInput
+        defaultValue={searchQuery}
+        basePath="/manga"
+        placeholder="Search manga titles..."
+      />
 
-        <MangaGrid
-          mangaData={mangaListData}
-          currentPage={currentPage}
-          basePath="/manga"
-          queryParams={{
-            ...(searchQuery && { q: searchQuery }),
-          }}
-        />
-      </section>
-    </Suspense>
+      <MangaGrid
+        mangaData={mangaListData}
+        currentPage={currentPage}
+        basePath="/manga"
+        queryParams={{
+          ...(searchQuery && { q: searchQuery }),
+        }}
+      />
+    </section>
   );
 }

@@ -2,8 +2,6 @@ import { getAnime, getAnimeGenresList } from "@/hooks/anime";
 import { getAnimeSearch } from "@/hooks/search";
 import { AnimeGrid } from "@/components/display/anime/anime-grid";
 import { SearchInput } from "@/components/forms/search-input";
-import { Suspense } from "react";
-import { AnimeListSkeleton } from "@/components/loading/anime-list-skeleton";
 import { GenreGrid } from "@/components/display/anime/genre-grid";
 
 export async function generateMetadata({ searchParams }) {
@@ -63,7 +61,7 @@ export default async function AnimePage({ searchParams }) {
   } : null;
 
   return (
-    <Suspense fallback={<AnimeListSkeleton showSearch={true} />}>
+    <>
       <section className="container mx-auto py-8 sm:py-10 px-4">
         <div className="text-center space-y-2 mb-8">
           <h1 className="text-2xl font-bold text-foreground">
@@ -97,6 +95,6 @@ export default async function AnimePage({ searchParams }) {
           <GenreGrid genres={genresList} />
         </div>
       </section>
-    </Suspense>
+    </>
   );
 }

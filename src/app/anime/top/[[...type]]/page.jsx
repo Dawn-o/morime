@@ -2,8 +2,6 @@ import { getTopAnime } from "@/hooks/anime";
 import { TopAnimeNavigation } from "@/components/navigation/top-navigation";
 import { getAnimeTitle } from "@/lib/content/anime-titles";
 import { AnimeGrid } from "@/components/display/anime/anime-grid";
-import { Suspense } from "react";
-import { TopAnimeSkeleton } from "@/components/loading/top-anime-skeleton";
 
 export async function generateMetadata({ params, searchParams }) {
   const type = (await params).type?.[0] || "all";
@@ -53,26 +51,24 @@ export default async function TopAnimePage({ params, searchParams }) {
     : null;
 
   return (
-    <Suspense fallback={<TopAnimeSkeleton />}>
-      <section className="container mx-auto py-8 sm:py-10 px-4">
-        <div className="text-center space-y-2 mb-8">
-          <h1 className="text-2xl font-bold text-foreground">
-            {titleData.title}
-          </h1>
-          <p className="text-sm text-muted-foreground">
-            {titleData.description}
-          </p>
-        </div>
+    <section className="container mx-auto py-8 sm:py-10 px-4">
+      <div className="text-center space-y-2 mb-8">
+        <h1 className="text-2xl font-bold text-foreground">
+          {titleData.title}
+        </h1>
+        <p className="text-sm text-muted-foreground">
+          {titleData.description}
+        </p>
+      </div>
 
-        <TopAnimeNavigation currentType={type} />
+      <TopAnimeNavigation currentType={type} />
 
-        <AnimeGrid
-          animeData={topAnimeData}
-          currentPage={currentPage}
-          basePath={type === "all" ? "/anime/top" : `/anime/top/${type}`}
-          queryParams={{}}
-        />
-      </section>
-    </Suspense>
+      <AnimeGrid
+        animeData={topAnimeData}
+        currentPage={currentPage}
+        basePath={type === "all" ? "/anime/top" : `/anime/top/${type}`}
+        queryParams={{}}
+      />
+    </section>
   );
 }

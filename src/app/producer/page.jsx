@@ -1,5 +1,3 @@
-import { Suspense } from "react";
-import { ProducersPageSkeleton } from "@/components/loading/producers-page-skeleton";
 import { getProducers, searchProducers } from "@/hooks/producer";
 import { SearchInput } from "@/components/forms/search-input";
 import { ProducersGrid } from "@/components/producer/producers-grid";
@@ -51,38 +49,36 @@ export default async function ProducersPage({ searchParams }) {
     } : null;
 
     return (
-        <Suspense fallback={<ProducersPageSkeleton />}>
-            <section className="container mx-auto py-8 sm:py-10 px-4">
-                <div className="text-center space-y-2 mb-8">
-                    <h1 className="text-2xl font-bold text-foreground">
-                        {searchQuery ? `Search: ${searchQuery}` : 'Anime Producers'}
-                    </h1>
-                    <p className="text-sm text-muted-foreground">
-                        {searchQuery
-                            ? `Search results for "${searchQuery}"`
-                            : `Discover ${producerListData?.totalItems || 0} production studios and companies`
-                        }
-                    </p>
-                </div>
+        <section className="container mx-auto py-8 sm:py-10 px-4">
+            <div className="text-center space-y-2 mb-8">
+                <h1 className="text-2xl font-bold text-foreground">
+                    {searchQuery ? `Search: ${searchQuery}` : 'Anime Producers'}
+                </h1>
+                <p className="text-sm text-muted-foreground">
+                    {searchQuery
+                        ? `Search results for "${searchQuery}"`
+                        : `Discover ${producerListData?.totalItems || 0} production studios and companies`
+                    }
+                </p>
+            </div>
 
-                <SearchInput
-                    defaultValue={searchQuery}
-                    basePath="/producer"
-                    placeholder="Search producers..."
-                />
+            <SearchInput
+                defaultValue={searchQuery}
+                basePath="/producer"
+                placeholder="Search producers..."
+            />
 
-                <ProducersGrid
-                    producersData={producerListData}
-                    currentPage={currentPage}
-                    basePath="/producer"
-                    queryParams={{
-                        ...(searchQuery && { q: searchQuery }),
-                        ...(orderBy !== 'favorites' && { order_by: orderBy }),
-                        ...(sort !== 'desc' && { sort }),
-                        ...(letter && letter !== 'all' && { letter })
-                    }}
-                />
-            </section>
-        </Suspense>
+            <ProducersGrid
+                producersData={producerListData}
+                currentPage={currentPage}
+                basePath="/producer"
+                queryParams={{
+                    ...(searchQuery && { q: searchQuery }),
+                    ...(orderBy !== 'favorites' && { order_by: orderBy }),
+                    ...(sort !== 'desc' && { sort }),
+                    ...(letter && letter !== 'all' && { letter })
+                }}
+            />
+        </section>
     );
 }

@@ -1,7 +1,5 @@
 import { getProducerById } from "@/hooks/producer";
 import { ProducerDetails } from "@/components/producer/producer-details";
-import { Suspense } from "react";
-import { ProducerDetailsSkeleton } from "@/components/loading/producer-details-skeleton";
 import { notFound } from "next/navigation";
 import { getAnime } from "@/hooks/anime";
 
@@ -79,14 +77,12 @@ export default async function ProducerDetailsPage({ params, searchParams }) {
     : null;
 
   return (
-    <Suspense fallback={<ProducerDetailsSkeleton />}>
-      <section className="container mx-auto py-8 sm:py-10 px-4">
-        <ProducerDetails
-          producer={producerDetailsData}
-          animes={producedAnimesData}
-          currentPage={currentPage}
-        />
-      </section>
-    </Suspense>
+    <section className="container mx-auto py-8 sm:py-10 px-4">
+      <ProducerDetails
+        producer={producerDetailsData}
+        animes={producedAnimesData}
+        currentPage={currentPage}
+      />
+    </section>
   );
 }

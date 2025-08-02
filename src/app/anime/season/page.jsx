@@ -1,7 +1,5 @@
 import { getSeasonList } from "@/hooks/season";
 import { SeasonList } from "@/components/anime/season/season-list";
-import { Suspense } from "react";
-import { SeasonListSkeleton } from "@/components/loading/season-list-skeleton";
 
 export async function generateMetadata() {
     return {
@@ -14,15 +12,13 @@ export default async function SeasonListPage() {
     const listData = await getSeasonList();
 
     return (
-        <Suspense fallback={<SeasonListSkeleton />}>
-            <section className="container mx-auto py-8 sm:py-10 px-4">
-                <div className="text-center space-y-2 mb-8">
-                    <h1 className="text-2xl font-bold text-foreground">Anime Season List</h1>
-                    <p className="text-sm text-muted-foreground">Browse anime seasons by year and season</p>
-                </div>
+        <section className="container mx-auto py-8 sm:py-10 px-4">
+            <div className="text-center space-y-2 mb-8">
+                <h1 className="text-2xl font-bold text-foreground">Anime Season List</h1>
+                <p className="text-sm text-muted-foreground">Browse anime seasons by year and season</p>
+            </div>
 
-                <SeasonList listData={listData} />
-            </section>
-        </Suspense>
+            <SeasonList listData={listData} />
+        </section>
     );
 }

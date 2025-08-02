@@ -1,8 +1,6 @@
 import { getSeason } from "@/hooks/season";
 import { TypeFilterTabs } from "@/components/forms/type-filter-tabs";
 import { AnimeGrid } from "@/components/display/anime/anime-grid";
-import { Suspense } from "react";
-import { UpcomingSkeleton } from "@/components/loading/upcoming-skeleton";
 
 export async function generateMetadata({ searchParams }) {
   const currentPage = parseInt((await searchParams)?.page) || 1;
@@ -44,26 +42,24 @@ export default async function UpcomingPage({ searchParams }) {
     : null;
 
   return (
-    <Suspense fallback={<UpcomingSkeleton />}>
-      <section className="container mx-auto py-8 sm:py-10 px-4">
-        <div className="text-center space-y-2 mb-8">
-          <h1 className="text-2xl font-bold text-foreground">Upcoming Anime</h1>
-          <p className="text-sm text-muted-foreground">
-            Discover upcoming anime releases and new seasons
-          </p>
-        </div>
+    <section className="container mx-auto py-8 sm:py-10 px-4">
+      <div className="text-center space-y-2 mb-8">
+        <h1 className="text-2xl font-bold text-foreground">Upcoming Anime</h1>
+        <p className="text-sm text-muted-foreground">
+          Discover upcoming anime releases and new seasons
+        </p>
+      </div>
 
-        <TypeFilterTabs typeFilter={typeFilter} basePath="/anime/upcoming" />
+      <TypeFilterTabs typeFilter={typeFilter} basePath="/anime/upcoming" />
 
-        <AnimeGrid
-          animeData={animeData}
-          currentPage={currentPage}
-          basePath="/anime/upcoming"
-          queryParams={{
-            ...(typeFilter && { type: typeFilter }),
-          }}
-        />
-      </section>
-    </Suspense>
+      <AnimeGrid
+        animeData={animeData}
+        currentPage={currentPage}
+        basePath="/anime/upcoming"
+        queryParams={{
+          ...(typeFilter && { type: typeFilter }),
+        }}
+      />
+    </section>
   );
 }
