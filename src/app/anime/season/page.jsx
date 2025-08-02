@@ -1,24 +1,21 @@
-import { getSeasonList } from "@/hooks/season";
-import { SeasonList } from "@/components/anime/season/season-list";
+import { Suspense } from "react";
+import dynamic from "next/dynamic";
+import { SeasonListSkeleton } from "@/components/loading/season-list-skeleton";
 
-export async function generateMetadata() {
-    return {
-        title: 'Anime Season List',
-        description: 'Browse anime seasons by year and season',
-    };
-}
+export const metadata = {
+  title: "Anime Season List",
+  description: "Browse anime seasons by year and season",
+};
 
-export default async function SeasonListPage() {
-    const listData = await getSeasonList();
+const SeasonListContent = dynamic(
+  () => import("@/components/anime/season/season-list-content"),
+  { suspense: true }
+);
 
-    return (
-        <section className="container mx-auto py-8 sm:py-10 px-4">
-            <div className="text-center space-y-2 mb-8">
-                <h1 className="text-2xl font-bold text-foreground">Anime Season List</h1>
-                <p className="text-sm text-muted-foreground">Browse anime seasons by year and season</p>
-            </div>
-
-            <SeasonList listData={listData} />
-        </section>
-    );
+export default function SeasonListPage() {
+  return (
+    <Suspense fallback={<SeasonListSkeleton />}>
+      <SeasonListContent />
+    </Suspense>
+  );
 }
