@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/carousel";
 import { Link } from "@/components/ui/link";
 import { Button } from "@/components/ui/button";
+import { toSnakeCase } from "@/lib/utils/formatter";
 
 export function GenreList({ genres }) {
   return (
@@ -21,7 +22,7 @@ export function GenreList({ genres }) {
             <CarouselContent>
               {genres.map((genre) => (
                 <CarouselItem key={genre.mal_id} className="basis-auto pl-2">
-                  <Link href={`/anime/genre/${genre.mal_id}`}>
+                  <Link href={`/anime/genre/${genre.mal_id}/${toSnakeCase(genre.name)}`}>
                     <Button
                       variant="secondary"
                       size="sm"
