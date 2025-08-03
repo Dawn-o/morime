@@ -9,8 +9,8 @@ export function AnimeGrid({ animeData, currentPage, basePath, queryParams }) {
   }
 
   return (
-    <div>
-      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+    <>
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
         {animeData.data.map((anime, i) => (
           <AnimeCard key={anime.mal_id + i} anime={anime} priority={i < 24} />
         ))}
@@ -24,6 +24,6 @@ export function AnimeGrid({ animeData, currentPage, basePath, queryParams }) {
         basePath={basePath}
         queryParams={queryParams}
       />
-    </div>
+    </>
   );
 }
