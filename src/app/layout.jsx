@@ -15,11 +15,6 @@ const poppins = Poppins({
 export const metadata = {
   title: "Morime - Anime Tracking",
   description: "An anime discovery and tracking platform, inspired by MyAnimeList",
-  openGraph: {
-    title: "Morime - Anime Tracking",
-    description: "An anime discovery and tracking platform, inspired by MyAnimeList",
-    images: "https://morime.vercel.app/morime.png",
-  },
 };
 
 export default function RootLayout({ children }) {

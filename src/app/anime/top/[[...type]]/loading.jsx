@@ -1,5 +1,5 @@
-import TopAnimeSkeleton from "@/components/loading/top-anime-skeleton";
+import AnimeGridSkeleton from "@/components/loading/anime-grid-skeleton";
 
 export default function Loading() {
-  return <TopAnimeSkeleton />;
+  return <AnimeGridSkeleton />;
 }

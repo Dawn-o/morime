@@ -1,5 +1,5 @@
-import { SpecificSeasonSkeleton } from "@/components/loading/spesific-season-skeleton";
+import AnimeGridSkeleton from "@/components/loading/anime-grid-skeleton";
 
 export default function Loading() {
-  return <SpecificSeasonSkeleton />;
+  return <AnimeGridSkeleton showSeasonNavigation={true} />;
 }

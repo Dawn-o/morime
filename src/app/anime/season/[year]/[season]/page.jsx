@@ -1,8 +1,6 @@
 import { getSeason } from "@/hooks/season";
 import { TypeFilterTabs } from "@/components/forms/type-filter-tabs";
 import { AnimeGrid } from "@/components/display/anime/anime-grid";
-import { SeasonNavigation } from "@/components/anime/season/season-navigation";
-import { notFound } from "next/navigation";
 
 export async function generateMetadata({ params, searchParams }) {
     const { year, season } = await params;
@@ -19,17 +17,6 @@ export async function generateMetadata({ params, searchParams }) {
 
 export default async function SpesificSeasonPage({ params, searchParams }) {
     const { year, season } = await params;
-
-    const yearNum = parseInt(year);
-    if (isNaN(yearNum) || yearNum < 1917 || yearNum > new Date().getFullYear() + 2) {
-        notFound();
-    }
-
-    const validSeasons = ['winter', 'spring', 'summer', 'fall'];
-    if (!validSeasons.includes(season.toLowerCase())) {
-        notFound();
-    }
-
     const typeFilter = (await searchParams)?.type || '';
     const currentPage = parseInt((await searchParams)?.page) || 1;
 
@@ -40,7 +27,6 @@ export default async function SpesificSeasonPage({ params, searchParams }) {
     };
 
     const animeSeasonalData = await getSeason(currentPage, apiConfig);
-    const seasonTitle = `${season.charAt(0).toUpperCase() + season.slice(1)} ${year} Anime`;
 
     const animeData = animeSeasonalData ? {
         data: animeSeasonalData.data?.map(anime => ({
@@ -56,14 +42,7 @@ export default async function SpesificSeasonPage({ params, searchParams }) {
     } : null;
 
     return (
-        <section className="container mx-auto py-8 sm:py-10 px-4">
-            <div className="text-center space-y-2 mb-8">
-                <h1 className="text-2xl font-bold text-foreground">{seasonTitle}</h1>
-                <p className="text-sm text-muted-foreground">Anime from {season} {year} season</p>
-            </div>
-
-            <SeasonNavigation routeParams={[year, season]} />
-
+        <>
             <TypeFilterTabs typeFilter={typeFilter} basePath={`/anime/season/${year}/${season}`} />
 
             <AnimeGrid
@@ -74,6 +53,6 @@ export default async function SpesificSeasonPage({ params, searchParams }) {
                     ...(typeFilter && { type: typeFilter })
                 }}
             />
-        </section>
+        </>
     );
 }
