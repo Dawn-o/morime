@@ -3,7 +3,7 @@ import { Separator } from "@/components/ui/separator";
 
 export default function AnimeGridSkeleton({ showSeasonNavigation = false }) {
   return (
-    <section className="container mx-auto py-8 sm:py-10 px-4">
+    <>
       {showSeasonNavigation && (
         <div className="mb-6">
           <div className="hidden md:flex items-center justify-center gap-2 mb-4">
@@ -47,7 +47,7 @@ export default function AnimeGridSkeleton({ showSeasonNavigation = false }) {
         <Skeleton className="h-10 w-10" />
         <Skeleton className="h-10 w-20" />
       </div>
-    </section>
+    </>
   );
 }
 
