@@ -1,7 +1,6 @@
-import { SeasonNavigation } from "@/components/anime/season/season-navigation";
-import { Suspense } from "react";
-import AnimeGridSkeleton from "@/components/loading/anime-grid-skeleton";
 import { notFound } from "next/navigation";
+import { PageHeader } from "@/components/headers/page-header";
+import { SeasonNavigation } from "@/components/navigation/season-navigation";
 
 export default async function SeasonLayout({ children, params }) {
   const { year, season } = await params;
@@ -26,12 +25,10 @@ export default async function SeasonLayout({ children, params }) {
 
   return (
     <section className="container mx-auto py-8 sm:py-10 px-4">
-      <div className="text-center space-y-2 mb-8">
-        <h1 className="text-2xl font-bold text-foreground">{seasonTitle}</h1>
-        <p className="text-sm text-muted-foreground">
-          Anime from {season} {year} season
-        </p>
-      </div>
+      <PageHeader
+        title={seasonTitle}
+        description={`Anime from ${season} ${year} season`}
+      />
 
       <SeasonNavigation routeParams={[year, season]} />
 
