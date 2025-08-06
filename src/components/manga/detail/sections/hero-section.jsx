@@ -45,7 +45,7 @@ const MangaPoster = ({ imageUrl, title }) => {
             width={260}
             height={360}
             priority={true}
-            className="object-cover w-full h-full"
+            className="object-cover w-full h-full transition-transform duration-500 hover:scale-110"
             onError={() => setImageError(true)}
           />
         ) : (
@@ -53,6 +53,13 @@ const MangaPoster = ({ imageUrl, title }) => {
             <BookOpen className="w-12 h-12 sm:w-16 sm:h-16 text-muted-foreground" />
           </div>
         )}
+      </div>
+
+      <div className="hidden sm:block w-full">
+        <Button variant="outline" size="sm" className="w-full text-xs">
+          <StarIcon className="h-3.5 w-3.5 mr-1.5" />
+          Add To List
+        </Button>
       </div>
     </div>
   );
@@ -65,7 +72,7 @@ const StatusBadge = ({ status }) => {
         return "bg-green-500/20 text-green-700 border-green-500/30";
       case "publishing":
         return "bg-blue-500/20 text-blue-700 border-blue-500/30";
-      case "on_hiatus":
+      case "on hiatus":
         return "bg-yellow-500/20 text-yellow-700 border-yellow-500/30";
       case "discontinued":
         return "bg-red-500/20 text-red-700 border-red-500/30";
@@ -79,7 +86,7 @@ const StatusBadge = ({ status }) => {
   return (
     <Badge
       variant="outline"
-      className={`text-xs sm:text-sm px-2.5 py-0.5 border ${getStatusColor(status)}`}
+      className={`text-xs sm:text-sm px-2.5 py-0.5 font-medium border ${getStatusColor(status)}`}
     >
       {displayStatus}
     </Badge>
@@ -130,45 +137,82 @@ const InfoTags = ({ score, published, authors }) => {
         </div>
       )}
 
-      {authors && authors.length > 0 && (
-        <div className="flex items-center bg-card/60 backdrop-blur-md border border-white/5 rounded-full px-3 py-1 text-xs">
+      {authors?.map((author) => (
+        <div
+          key={author.mal_id}
+          className="flex items-center bg-card/60 backdrop-blur-md border border-white/5 rounded-full px-3 py-1 text-xs"
+        >
           <BookOpen className="h-3.5 w-3.5 mr-1.5 text-green-500" />
-          <span className="font-medium">{authors[0]?.name}</span>
+          <span className="font-medium">{author.name}</span>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+const ScoreCard = ({ score, scoredBy }) => {
+  if (!score) return null;
+
+  const formatUserCount = (count) => {
+    return new Intl.NumberFormat("en-US", {
+      notation: "compact",
+      maximumFractionDigits: 1,
+    }).format(count);
+  };
+
+  return (
+    <div className="bg-card/40 backdrop-blur-sm rounded-lg p-3 border border-border/20 flex flex-col items-center">
+      <div className="text-xs uppercase tracking-wider text-muted-foreground/80 mb-1">
+        Score
+      </div>
+      <div className="font-bold text-lg sm:text-xl flex items-center gap-1">
+        {score}
+        <StarIcon className="h-4 w-4 text-yellow-500" />
+      </div>
+      {scoredBy && (
+        <div className="text-xs text-muted-foreground/60 mt-0.5 text-center">
+          {formatUserCount(scoredBy)} users
         </div>
       )}
     </div>
   );
 };
 
+const StatCard = ({ label, value, icon }) => (
+  <div className="bg-card/40 backdrop-blur-sm rounded-lg p-3 border border-border/20 flex flex-col items-center justify-center">
+    <div className="text-xs uppercase tracking-wider text-muted-foreground/80 mb-1">
+      {label}
+    </div>
+    <div className="font-bold text-lg sm:text-xl flex items-center gap-1">
+      {value}
+      {icon}
+    </div>
+  </div>
+);
+
 const StatsGrid = ({ score, scoredBy, rank, popularity, members }) => {
   const formatNumber = (num) => {
-    if (!num) return "N/A";
-    return num.toLocaleString();
-  };
-
-  const formatRank = (rank) => {
-    if (!rank) return "N/A";
-    return `#${rank.toLocaleString()}`;
+    return new Intl.NumberFormat("en-US", {
+      notation: "compact",
+      maximumFractionDigits: 1,
+    }).format(num);
   };
 
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mt-4 mb-4">
-      <div className="bg-card/60 backdrop-blur-md border border-white/5 rounded-lg p-3 text-center">
-        <div className="text-lg sm:text-xl font-bold">{score || "N/A"}</div>
-        <div className="text-xs text-muted-foreground">Score</div>
-      </div>
-      <div className="bg-card/60 backdrop-blur-md border border-white/5 rounded-lg p-3 text-center">
-        <div className="text-lg sm:text-xl font-bold">{formatRank(rank)}</div>
-        <div className="text-xs text-muted-foreground">Rank</div>
-      </div>
-      <div className="bg-card/60 backdrop-blur-md border border-white/5 rounded-lg p-3 text-center">
-        <div className="text-lg sm:text-xl font-bold">{formatRank(popularity)}</div>
-        <div className="text-xs text-muted-foreground">Popularity</div>
-      </div>
-      <div className="bg-card/60 backdrop-blur-md border border-white/5 rounded-lg p-3 text-center">
-        <div className="text-lg sm:text-xl font-bold">{formatNumber(members)}</div>
-        <div className="text-xs text-muted-foreground">Members</div>
-      </div>
+    <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6">
+      <ScoreCard score={score} scoredBy={scoredBy} />
+
+      {rank && (
+        <StatCard label="Ranked" value={`#${rank}`} />
+      )}
+
+      {popularity && (
+        <StatCard label="Popularity" value={`#${popularity}`} />
+      )}
+
+      {members && (
+        <StatCard label="Members" value={formatNumber(members)} />
+      )}
     </div>
   );
 };
@@ -239,13 +283,6 @@ export function MangaHeroSection({ heroData }) {
                   Add To List
                 </Button>
               </div>
-            </div>
-
-            <div className="hidden sm:flex flex-col gap-2 shrink-0">
-              <Button className="w-full">
-                <StarIcon className="h-4 w-4 mr-2" />
-                Add To List
-              </Button>
             </div>
           </div>
         </div>
