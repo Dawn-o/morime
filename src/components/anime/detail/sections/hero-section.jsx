@@ -55,21 +55,29 @@ const AnimePoster = ({ imageUrl, title }) => (
 );
 
 const StatusBadge = ({ status }) => {
-  if (!status) return null;
-
-  const getVariant = (status) => {
-    const statusLower = status.toLowerCase();
-    if (statusLower.includes("airing")) return "default";
-    if (statusLower.includes("not yet aired")) return "secondary";
-    return "outline";
+  const getStatusColor = (status) => {
+    switch (status?.toLowerCase()) {
+      case "finished airing":
+        return "bg-green-500/20 text-green-700 border-green-500/30";
+      case "currently airing":
+        return "bg-blue-500/20 text-blue-700 border-blue-500/30";
+      case "not yet aired":
+        return "bg-yellow-500/20 text-yellow-700 border-yellow-500/30";
+      default:
+        return "bg-muted/20 text-muted-foreground border-muted/30";
+    }
   };
+
+  if (!status) return null;
 
   const displayStatus = status.includes("Currently") ? "Airing" : status;
 
   return (
     <Badge
-      variant={getVariant(status)}
-      className="text-xs sm:text-sm px-2.5 py-0.5 font-medium"
+      variant="outline"
+      className={`text-xs sm:text-sm px-2.5 py-0.5 font-medium border ${getStatusColor(
+        status
+      )}`}
     >
       {displayStatus}
     </Badge>
@@ -117,9 +125,7 @@ const InfoTags = ({ score, season, year, studios }) => {
           href={`/anime/season/${year}/${season}`}
           className="flex items-center bg-card/60 backdrop-blur-md border border-white/5 rounded-full px-3 py-1 text-xs"
         >
-          <span className="font-medium">
-            {formatSeason(season, year)}
-          </span>
+          <span className="font-medium">{formatSeason(season, year)}</span>
         </Link>
       )}
 
@@ -188,17 +194,11 @@ const StatsGrid = ({ score, scoredBy, rank, popularity, members }) => {
     <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6">
       <ScoreCard score={score} scoredBy={scoredBy} />
 
-      {rank && (
-        <StatCard label="Ranked" value={`#${rank}`} />
-      )}
+      {rank && <StatCard label="Ranked" value={`#${rank}`} />}
 
-      {popularity && (
-        <StatCard label="Popularity" value={`#${popularity}`} />
-      )}
+      {popularity && <StatCard label="Popularity" value={`#${popularity}`} />}
 
-      {members && (
-        <StatCard label="Members" value={formatNumber(members)} />
-      )}
+      {members && <StatCard label="Members" value={formatNumber(members)} />}
     </div>
   );
 };
@@ -219,15 +219,12 @@ export function AnimeHeroSection({ heroData }) {
     members,
     season,
     year,
-    studios
+    studios,
   } = heroData;
 
   return (
     <section className="w-full min-h-[45vh] md:min-h-[55vh] relative overflow-hidden bg-gradient-to-b from-background/60 via-background/80 to-background">
-      <AnimeImage
-        imageUrl={imageUrl}
-        title={title}
-      />
+      <AnimeImage imageUrl={imageUrl} title={title} />
 
       <div className="container mx-auto h-full relative z-10 px-4">
         <div className="flex h-full items-end pb-8 md:pb-10 pt-20 sm:pt-24">
