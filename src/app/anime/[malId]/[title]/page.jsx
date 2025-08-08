@@ -60,6 +60,7 @@ export default async function AnimeDetailsPage({ params }) {
     season: animeData.season,
     year: animeData.year,
     studios: animeData.studios,
+    schedules: animeData.broadcast.day,
   };
 
   const sidebarData = {

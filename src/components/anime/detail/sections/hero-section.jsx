@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { StarIcon } from "lucide-react";
+import { StarIcon, Calendar } from "lucide-react";
 import { Link } from "@/components/ui/link";
 import { toSnakeCase } from "@/lib/utils/formatter";
 
@@ -80,6 +80,31 @@ const StatusBadge = ({ status }) => {
       )}`}
     >
       {displayStatus}
+    </Badge>
+  );
+};
+
+const ScheduleBadge = ({ status, schedules }) => {
+  if (
+    !status ||
+    !status.toLowerCase().includes("currently airing") ||
+    !schedules
+  ) {
+    return null;
+  }
+
+  const formatBroadcastDay = (day) => {
+    if (!day) return null;
+    return day.charAt(0).toUpperCase() + day.slice(1).toLowerCase();
+  };
+
+  return (
+    <Badge
+      variant="outline"
+      className="text-xs sm:text-sm px-2.5 py-0.5 font-medium border bg-purple-500/20 text-purple-700 border-purple-500/30"
+    >
+      <Calendar className="h-3 w-3 mr-1" />
+      {formatBroadcastDay(schedules)}
     </Badge>
   );
 };
@@ -220,6 +245,7 @@ export function AnimeHeroSection({ heroData }) {
     season,
     year,
     studios,
+    schedules,
   } = heroData;
 
   return (
@@ -240,6 +266,7 @@ export function AnimeHeroSection({ heroData }) {
                   {type || "TV"}
                 </Badge>
                 <StatusBadge status={status} />
+                <ScheduleBadge status={status} schedules={schedules} />
               </div>
 
               <AnimeTitle
