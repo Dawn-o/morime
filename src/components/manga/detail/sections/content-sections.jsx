@@ -2,8 +2,8 @@
 import { useState, useRef, useMemo, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { SectionCard } from "@/components/anime/detail/section-card";
-import { CharactersSection } from "@/components/anime/detail/sections/characters-section";
-import { CharactersOverview } from "@/components/anime/detail/characters-overview";
+import { MangaCharactersSection } from "@/components/manga/detail/sections/characters-section";
+import { MangaCharactersOverview } from "@/components/manga/detail/characters-overview";
 import { RelatedMangaSection } from "@/components/manga/detail/sections/related-manga-section";
 import { EmptyState } from "@/components/content/empty-state";
 
@@ -60,7 +60,7 @@ export function MangaContentSections({ contentData }) {
 
   if (showCharactersOnly) {
     return (
-      <CharactersOverview
+      <MangaCharactersOverview
         charactersData={charactersData}
         characterGroups={characterGroups}
         onBackToOverview={handleBackToOverview}
@@ -91,7 +91,7 @@ export function MangaContentSections({ contentData }) {
           )
         }
       >
-        <CharactersSection characters={characterGroups.limited} />
+        <MangaCharactersSection characters={characterGroups.limited} />
       </SectionCard>
 
       <SectionCard title="Related Manga">
