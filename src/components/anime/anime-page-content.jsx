@@ -1,8 +1,11 @@
 import { getAnime, getAnimeGenresList } from "@/hooks/anime";
 import { getAnimeSearch } from "@/hooks/search";
 import { AnimeGrid } from "@/components/display/anime/anime-grid";
+import { AnimeList } from "@/components/display/anime/anime-list";
 import { SearchInput } from "@/components/forms/search-input";
 import { GenreGrid } from "@/components/display/anime/genre-grid";
+import { Separator } from "@/components/ui/separator";
+import { MorimePagination } from "@/components/navigation/pagination";
 
 export default async function AnimePageContent({ searchParams }) {
   const currentPage = parseInt(searchParams?.page) || 1;
@@ -38,6 +41,7 @@ export default async function AnimePageContent({ searchParams }) {
             episodes: anime.episodes,
             year: anime.year,
             type: anime.type,
+            members: anime.members,
           })) || [],
         totalPages: animeData.totalPages,
       }
@@ -63,14 +67,45 @@ export default async function AnimePageContent({ searchParams }) {
           placeholder="Search anime titles..."
         />
 
-        <AnimeGrid
-          animeData={animeListData}
-          currentPage={currentPage}
-          basePath="/anime"
-          queryParams={{
-            ...(searchQuery && { q: searchQuery }),
-          }}
-        />
+        {searchQuery ? (
+          // List view for search results
+          <>
+            <AnimeList
+              animeData={animeListData}
+              currentPage={currentPage}
+              basePath="/anime"
+              queryParams={{
+                ...(searchQuery && { q: searchQuery }),
+              }}
+            />
+
+            {animeListData &&
+              animeListData.data &&
+              animeListData.data.length > 0 && (
+                <>
+                  <Separator className="my-8" />
+                  <MorimePagination
+                    currentPage={currentPage}
+                    totalPages={animeListData.totalPages || 1}
+                    basePath="/anime"
+                    queryParams={{
+                      ...(searchQuery && { q: searchQuery }),
+                    }}
+                  />
+                </>
+              )}
+          </>
+        ) : (
+          // Grid view for browse
+          <AnimeGrid
+            animeData={animeListData}
+            currentPage={currentPage}
+            basePath="/anime"
+            queryParams={{
+              ...(searchQuery && { q: searchQuery }),
+            }}
+          />
+        )}
       </section>
 
       <section className="container mx-auto pb-8 sm:pb-10 px-4">
