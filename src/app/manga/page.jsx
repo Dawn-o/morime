@@ -82,6 +82,7 @@ export default async function MangaPage({ searchParams }) {
           defaultValue={searchQuery}
           basePath="/manga"
           placeholder="Search manga titles..."
+          autoFocus={true}
         />
 
         <MangaGrid

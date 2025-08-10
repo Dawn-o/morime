@@ -9,6 +9,7 @@ export function SearchInput({
   defaultValue = "",
   basePath = "/anime",
   placeholder = "Search anime...",
+  autoFocus = false,
 }) {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -61,6 +62,7 @@ export function SearchInput({
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="pl-10"
+            autoFocus={autoFocus}
           />
         </div>
       </form>

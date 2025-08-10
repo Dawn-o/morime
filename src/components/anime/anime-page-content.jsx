@@ -65,6 +65,7 @@ export default async function AnimePageContent({ searchParams }) {
           defaultValue={searchQuery}
           basePath="/anime"
           placeholder="Search anime titles..."
+          autoFocus={true}
         />
 
         {searchQuery ? (
