@@ -69,7 +69,6 @@ export default async function AnimePageContent({ searchParams }) {
         />
 
         {searchQuery ? (
-          // List view for search results
           <>
             <AnimeList
               animeData={animeListData}
@@ -97,7 +96,6 @@ export default async function AnimePageContent({ searchParams }) {
               )}
           </>
         ) : (
-          // Grid view for browse
           <AnimeGrid
             animeData={animeListData}
             currentPage={currentPage}

@@ -1,8 +1,11 @@
 import { getManga, getMangaGenresList } from "@/hooks/manga";
 import { getMangaSearch } from "@/hooks/search";
 import { MangaGrid } from "@/components/display/manga/manga-grid";
+import { MangaList } from "@/components/display/manga/manga-list";
 import { SearchInput } from "@/components/forms/search-input";
 import { GenreGrid } from "@/components/display/anime/genre-grid";
+import { Separator } from "@/components/ui/separator";
+import { MorimePagination } from "@/components/navigation/pagination";
 
 export async function generateMetadata({ searchParams }) {
   const currentPage = parseInt((await searchParams)?.page) || 1;
@@ -59,6 +62,7 @@ export default async function MangaPage({ searchParams }) {
             published: manga.published,
             type: manga.type,
             status: manga.status,
+            members: manga.members,
           })) || [],
         totalPages: mangaData.totalPages,
       }
@@ -85,14 +89,43 @@ export default async function MangaPage({ searchParams }) {
           autoFocus={true}
         />
 
-        <MangaGrid
-          mangaData={mangaListData}
-          currentPage={currentPage}
-          basePath="/manga"
-          queryParams={{
-            ...(searchQuery && { q: searchQuery }),
-          }}
-        />
+        {searchQuery ? (
+          <>
+            <MangaList
+              mangaData={mangaListData}
+              currentPage={currentPage}
+              basePath="/manga"
+              queryParams={{
+                ...(searchQuery && { q: searchQuery }),
+              }}
+            />
+
+            {mangaListData &&
+              mangaListData.data &&
+              mangaListData.data.length > 0 && (
+                <>
+                  <Separator className="my-8" />
+                  <MorimePagination
+                    currentPage={currentPage}
+                    totalPages={mangaListData.totalPages || 1}
+                    basePath="/manga"
+                    queryParams={{
+                      ...(searchQuery && { q: searchQuery }),
+                    }}
+                  />
+                </>
+              )}
+          </>
+        ) : (
+          <MangaGrid
+            mangaData={mangaListData}
+            currentPage={currentPage}
+            basePath="/manga"
+            queryParams={{
+              ...(searchQuery && { q: searchQuery }),
+            }}
+          />
+        )}
       </section>
 
       <section className="container mx-auto pb-8 sm:pb-10 px-4">
