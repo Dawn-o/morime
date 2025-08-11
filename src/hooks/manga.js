@@ -1,12 +1,24 @@
-import { CACHE_CONFIG, DEFAULT_LIMITS } from '@/lib/api/config';
-import { fetchWithSfw, fetchSingle } from '@/lib/api/utils';
+import { CACHE_CONFIG, DEFAULT_LIMITS } from "@/lib/api/config";
+import { fetchWithSfw, fetchSingle } from "@/lib/api/utils";
 
 export async function getManga(page = 1, apiConfig = {}) {
-  const { type = 'manga', limit = DEFAULT_LIMITS.MANGA_LIST, filter, order_by, sort, magazines } = apiConfig;
+  const {
+    type = "manga",
+    limit = DEFAULT_LIMITS.MANGA_LIST,
+    genres,
+    filter,
+    order_by,
+    sort,
+    magazines,
+  } = apiConfig;
 
   try {
     let endpoint = `/${type}`;
     const params = { limit, page };
+
+    if (genres) {
+      params.genres = genres;
+    }
 
     if (filter) {
       params.filter = filter;
@@ -37,7 +49,7 @@ export async function getManga(page = 1, apiConfig = {}) {
       data: data.data,
       totalPages,
       currentPage: page,
-      totalItems
+      totalItems,
     };
   } catch (error) {
     console.error("Error fetching manga list:", error);
@@ -46,7 +58,7 @@ export async function getManga(page = 1, apiConfig = {}) {
       totalPages: 0,
       currentPage: page,
       totalItems: 0,
-      error: error.message
+      error: error.message,
     };
   }
 }
@@ -57,7 +69,7 @@ export async function getTopManga(page = 1, options = {}) {
     filter,
     rating,
     sfw,
-    limit = DEFAULT_LIMITS.MANGA_LIST
+    limit = DEFAULT_LIMITS.MANGA_LIST,
   } = options;
 
   try {
@@ -73,24 +85,25 @@ export async function getTopManga(page = 1, options = {}) {
       params.rating = rating;
     }
     if (sfw) {
-      params.sfw = '';
+      params.sfw = "";
     }
 
-    const data = await fetchWithSfw('/top/manga', params, CACHE_CONFIG.SHORT);
+    const data = await fetchWithSfw("/top/manga", params, CACHE_CONFIG.SHORT);
 
     if (!data?.data) {
       throw new Error("Invalid API response format");
     }
 
     const totalItems = data.pagination?.items?.total || data.data.length;
-    const totalPages = data.pagination?.last_visible_page || Math.ceil(totalItems / limit);
+    const totalPages =
+      data.pagination?.last_visible_page || Math.ceil(totalItems / limit);
 
     return {
       data: data.data,
       totalPages,
       currentPage: page,
       totalItems,
-      pagination: data.pagination
+      pagination: data.pagination,
     };
   } catch (error) {
     console.error("Error fetching top manga:", error);
@@ -99,14 +112,18 @@ export async function getTopManga(page = 1, options = {}) {
       totalPages: 0,
       currentPage: page,
       totalItems: 0,
-      error: error.message
+      error: error.message,
     };
   }
 }
 
 export async function getDetailManga(malId) {
   try {
-    const data = await fetchSingle(`/manga/${malId}/full`, {}, CACHE_CONFIG.MEDIUM);
+    const data = await fetchSingle(
+      `/manga/${malId}/full`,
+      {},
+      CACHE_CONFIG.MEDIUM
+    );
     return data.data;
   } catch (error) {
     console.error(`Error fetching manga details for ID ${malId}:`, error);
@@ -116,7 +133,11 @@ export async function getDetailManga(malId) {
 
 export async function getEpisodeManga(malId) {
   try {
-    const data = await fetchSingle(`/manga/${malId}/episodes`, {}, CACHE_CONFIG.SHORT);
+    const data = await fetchSingle(
+      `/manga/${malId}/episodes`,
+      {},
+      CACHE_CONFIG.SHORT
+    );
     return data.data || [];
   } catch (error) {
     console.error(`Error fetching episodes for ID ${malId}:`, error);
@@ -126,50 +147,21 @@ export async function getEpisodeManga(malId) {
 
 export async function getMangaGenresList() {
   try {
-    const data = await fetchSingle('/genres/manga', {}, CACHE_CONFIG.LONG);
+    const data = await fetchSingle("/genres/manga", {}, CACHE_CONFIG.LONG);
     return data.data || [];
   } catch (error) {
-    console.error('Error fetching manga genres list:', error);
+    console.error("Error fetching manga genres list:", error);
     return [];
-  }
-}
-
-export async function getMangaByGenre(page = 1, genreId, limit = DEFAULT_LIMITS.MANGA_LIST) {
-  try {
-    const data = await fetchWithSfw('/manga', {
-      genres: genreId,
-      page,
-      limit
-    }, CACHE_CONFIG.SHORT);
-
-    if (!data?.data) {
-      throw new Error("Invalid API response format");
-    }
-
-    const totalItems = data.pagination?.items?.total || 0;
-    const totalPages = Math.ceil(totalItems / limit);
-
-    return {
-      data: data.data,
-      totalPages,
-      currentPage: page,
-      totalItems
-    };
-  } catch (error) {
-    console.error(`Error fetching manga for genre ${genreId}:`, error);
-    return {
-      data: [],
-      totalPages: 0,
-      currentPage: page,
-      totalItems: 0,
-      error: error.message
-    };
   }
 }
 
 export async function getMangaCharacters(malId) {
   try {
-    const data = await fetchSingle(`/manga/${malId}/characters`, {}, CACHE_CONFIG.MEDIUM);
+    const data = await fetchSingle(
+      `/manga/${malId}/characters`,
+      {},
+      CACHE_CONFIG.MEDIUM
+    );
     return data.data || [];
   } catch (error) {
     console.error(`Error fetching characters for manga ID ${malId}:`, error);
@@ -177,32 +169,40 @@ export async function getMangaCharacters(malId) {
   }
 }
 
-export async function searchManga(query, page = 1, limit = DEFAULT_LIMITS.SEARCH) {
+export async function searchManga(
+  query,
+  page = 1,
+  limit = DEFAULT_LIMITS.SEARCH
+) {
   if (!query?.trim()) {
     return { data: [], total: 0, hasNextPage: false };
   }
 
   try {
-    const data = await fetchWithSfw('/manga', {
-      q: query.trim(),
-      page,
-      limit
-    }, CACHE_CONFIG.SHORT);
+    const data = await fetchWithSfw(
+      "/manga",
+      {
+        q: query.trim(),
+        page,
+        limit,
+      },
+      CACHE_CONFIG.SHORT
+    );
 
     return {
       data: data.data || [],
       total: data.pagination?.items?.total || 0,
       hasNextPage: data.pagination?.has_next_page || false,
-      currentPage: page
+      currentPage: page,
     };
   } catch (error) {
-    console.error('Error searching manga:', error);
+    console.error("Error searching manga:", error);
     return {
       data: [],
       total: 0,
       hasNextPage: false,
       currentPage: page,
-      error: error.message
+      error: error.message,
     };
   }
 }

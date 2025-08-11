@@ -1,18 +1,18 @@
-import { getAnime, getAnimeGenresList } from "@/hooks/anime";
-import { getAnimeSearch } from "@/hooks/search";
-import { AnimeList } from "@/components/display/anime/anime-list";
+import { getManga, getMangaGenresList } from "@/hooks/manga";
+import { getMangaSearch } from "@/hooks/search";
+import { MangaList } from "@/components/display/manga/manga-list";
 import { SearchInput } from "@/components/forms/search-input";
-import { GenreGrid } from "@/components/display/anime/genre-grid";
+import { GenreGrid } from "@/components/display/manga/genre-grid";
 import { Separator } from "@/components/ui/separator";
 import { MorimePagination } from "@/components/navigation/pagination";
-import { GenreCategories } from "../display/anime/genre-categories";
+import { GenreCategories } from "@/components/display/manga/genre-categories";
 
-export default async function AnimePageContent({ searchParams }) {
-  const currentPage = parseInt(searchParams?.page) || 1;
-  const searchQuery = searchParams?.q || "";
-  const genresList = await getAnimeGenresList();
+export default async function MangaPageContent({ searchParams }) {
+  const currentPage = parseInt((await searchParams)?.page) || 1;
+  const searchQuery = (await searchParams)?.q || "";
+  const genresList = await getMangaGenresList();
 
-  let animeData;
+  let mangaData;
 
   if (searchQuery) {
     const searchConfig = {
@@ -20,30 +20,31 @@ export default async function AnimePageContent({ searchParams }) {
       q: searchQuery,
       sfw: true,
     };
-    animeData = await getAnimeSearch(currentPage, searchConfig);
+    mangaData = await getMangaSearch(currentPage, searchConfig);
   } else {
     const apiConfig = {
       limit: 24,
       order_by: "favorites",
       sort: "desc",
     };
-    animeData = await getAnime(currentPage, apiConfig);
+    mangaData = await getManga(currentPage, apiConfig);
   }
 
-  const animeListData = animeData
+  const mangaListData = mangaData
     ? {
         data:
-          animeData.data?.map((anime) => ({
-            mal_id: anime.mal_id,
-            title: anime.title,
-            imageUrl: anime.images?.webp?.large_image_url,
-            score: anime.score,
-            episodes: anime.episodes,
-            year: anime.year,
-            type: anime.type,
-            members: anime.members,
+          mangaData.data?.map((manga) => ({
+            mal_id: manga.mal_id,
+            title: manga.title,
+            imageUrl: manga.images?.webp?.large_image_url,
+            score: manga.score,
+            chapters: manga.chapters,
+            published: manga.published,
+            type: manga.type,
+            status: manga.status,
+            members: manga.members,
           })) || [],
-        totalPages: animeData.totalPages,
+        totalPages: mangaData.totalPages,
       }
     : null;
 
@@ -52,42 +53,42 @@ export default async function AnimePageContent({ searchParams }) {
       <section className="container mx-auto py-8 sm:py-10 px-4">
         <div className="text-center space-y-2 mb-8">
           <h1 className="text-2xl font-bold text-foreground">
-            {searchQuery ? `Search: ${searchQuery}` : "Anime List"}
+            {searchQuery ? `Search: ${searchQuery}` : "Manga List"}
           </h1>
           <p className="text-sm text-muted-foreground">
             {searchQuery
               ? `Search results for "${searchQuery}"`
-              : "Browse all anime series, movies, and specials from extensive collection"}
+              : "Browse all manga series, movies, and specials from our extensive collection"}
           </p>
         </div>
 
         <SearchInput
           defaultValue={searchQuery}
-          basePath="/anime"
-          placeholder="Search anime titles..."
+          basePath="/manga"
+          placeholder="Search manga titles..."
           autoFocus={true}
         />
 
         {searchQuery ? (
           <>
-            <AnimeList
-              animeData={animeListData}
+            <MangaList
+              mangaData={mangaListData}
               currentPage={currentPage}
-              basePath="/anime"
+              basePath="/manga"
               queryParams={{
                 ...(searchQuery && { q: searchQuery }),
               }}
             />
 
-            {animeListData &&
-              animeListData.data &&
-              animeListData.data.length > 0 && (
+            {mangaListData &&
+              mangaListData.data &&
+              mangaListData.data.length > 0 && (
                 <>
                   <Separator className="my-8" />
                   <MorimePagination
                     currentPage={currentPage}
-                    totalPages={animeListData.totalPages || 1}
-                    basePath="/anime"
+                    totalPages={mangaListData.totalPages || 1}
+                    basePath="/manga"
                     queryParams={{
                       ...(searchQuery && { q: searchQuery }),
                     }}
