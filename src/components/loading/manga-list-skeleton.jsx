@@ -1,7 +1,7 @@
 import { Skeleton } from "@/components/ui/skeleton";
 import { Separator } from "@/components/ui/separator";
 
-export default function MangaListSkeleton({ showSearch = true }) {
+export default function MangaListSkeleton({ showSearch = true, isSearching = false }) {
   return (
     <>
       <section className="container mx-auto py-8 sm:py-10 px-4">
@@ -18,36 +18,61 @@ export default function MangaListSkeleton({ showSearch = true }) {
           </div>
         )}
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-          {Array.from({ length: 24 }).map((_, i) => (
-            <div key={i} className="space-y-2">
-              <Skeleton className="aspect-[3/4] w-full rounded-md" />
-              <Skeleton className="h-4 w-full" />
-              <Skeleton className="h-3 w-3/4" />
+        {isSearching ? (
+          // List view skeleton for search results
+          <>
+            <div className="space-y-3">
+              {Array.from({ length: 12 }).map((_, i) => (
+                <div key={i} className="p-4 border border-border rounded-lg">
+                  <div className="flex items-start space-x-4">
+                    <Skeleton className="flex-shrink-0 w-16 h-24 rounded-lg" />
+                    <div className="flex-1 min-w-0 space-y-2">
+                      <Skeleton className="h-5 w-3/4" />
+                      <Skeleton className="h-3 w-1/2" />
+                      <Skeleton className="h-3 w-1/3" />
+                      <Skeleton className="h-3 w-1/4" />
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
 
-        <Separator className="my-8" />
+            <Separator className="my-8" />
 
-        <div className="flex justify-center items-center gap-2">
-          <Skeleton className="h-10 w-20" />
-          <Skeleton className="h-10 w-10" />
-          <Skeleton className="h-10 w-10" />
-          <Skeleton className="h-10 w-10" />
-          <Skeleton className="h-10 w-20" />
-        </div>
+            <div className="flex justify-center items-center gap-2">
+              <Skeleton className="h-10 w-20" />
+              <Skeleton className="h-10 w-10" />
+              <Skeleton className="h-10 w-10" />
+              <Skeleton className="h-10 w-10" />
+              <Skeleton className="h-10 w-20" />
+            </div>
+          </>
+        ) : (
+          // Genre categories skeleton for browse view
+          <div className="p-4 space-y-6">
+            {Array.from({ length: 4 }).map((_, sectionIndex) => (
+              <div key={sectionIndex} className="border border-primary-foreground p-4 rounded-lg">
+                <Skeleton className="h-4 w-24 mb-3" />
+                <div className="flex items-center justify-start flex-wrap gap-2">
+                  {Array.from({ length: sectionIndex === 0 ? 18 : sectionIndex === 1 ? 3 : sectionIndex === 2 ? 51 : 5 }).map((_, i) => (
+                    <Skeleton key={i} className="h-7 w-20 rounded" />
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </section>
 
-      <section className="container mx-auto pb-8 sm:pb-10 px-4">
-        <div className="border border-primary-foreground p-4 rounded-lg">
+      {isSearching && (
+        <section className="container mx-auto pb-8 sm:pb-10 px-4">
           <div className="flex items-center justify-center flex-wrap gap-2">
             {Array.from({ length: 20 }).map((_, i) => (
               <Skeleton key={i} className="h-7 w-16 rounded" />
             ))}
           </div>
-        </div>
-      </section>
+        </section>
+      )}
     </>
   );
 }

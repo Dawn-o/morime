@@ -6,6 +6,7 @@ import { SearchInput } from "@/components/forms/search-input";
 import { GenreGrid } from "@/components/display/anime/genre-grid";
 import { Separator } from "@/components/ui/separator";
 import { MorimePagination } from "@/components/navigation/pagination";
+import { GenreCategories } from "@/components/display/anime/genre-categories";
 
 export async function generateMetadata({ searchParams }) {
   const currentPage = parseInt((await searchParams)?.page) || 1;
@@ -117,22 +118,15 @@ export default async function MangaPage({ searchParams }) {
               )}
           </>
         ) : (
-          <MangaGrid
-            mangaData={mangaListData}
-            currentPage={currentPage}
-            basePath="/manga"
-            queryParams={{
-              ...(searchQuery && { q: searchQuery }),
-            }}
-          />
+          <GenreCategories genres={genresList} />
         )}
       </section>
 
-      <section className="container mx-auto pb-8 sm:pb-10 px-4">
-        <div className="border border-primary-foreground p-4 rounded-lg">
+      {searchQuery && (
+        <section className="container mx-auto pb-8 sm:pb-10 px-4">
           <GenreGrid genres={genresList} />
-        </div>
-      </section>
+        </section>
+      )}
     </>
   );
 }

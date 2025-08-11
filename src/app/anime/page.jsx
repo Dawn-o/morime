@@ -10,7 +10,7 @@ const AnimePageContent = dynamic(
 export const metadata = {
   title: "Anime List",
   description:
-    "Browse all anime series, movies, and specials from our extensive collection.",
+    "Browse all anime series, movies, and specials from extensive collection.",
 };
 
 export default function Page(props) {

@@ -6,6 +6,7 @@ import { SearchInput } from "@/components/forms/search-input";
 import { GenreGrid } from "@/components/display/anime/genre-grid";
 import { Separator } from "@/components/ui/separator";
 import { MorimePagination } from "@/components/navigation/pagination";
+import { GenreCategories } from "../display/anime/genre-categories";
 
 export default async function AnimePageContent({ searchParams }) {
   const currentPage = parseInt(searchParams?.page) || 1;
@@ -57,7 +58,7 @@ export default async function AnimePageContent({ searchParams }) {
           <p className="text-sm text-muted-foreground">
             {searchQuery
               ? `Search results for "${searchQuery}"`
-              : "Browse all anime series, movies, and specials from our extensive collection"}
+              : "Browse all anime series, movies, and specials from extensive collection"}
           </p>
         </div>
 
@@ -96,22 +97,15 @@ export default async function AnimePageContent({ searchParams }) {
               )}
           </>
         ) : (
-          <AnimeGrid
-            animeData={animeListData}
-            currentPage={currentPage}
-            basePath="/anime"
-            queryParams={{
-              ...(searchQuery && { q: searchQuery }),
-            }}
-          />
+          <GenreCategories genres={genresList} />
         )}
       </section>
 
-      <section className="container mx-auto pb-8 sm:pb-10 px-4">
-        <div className="border border-primary-foreground p-4 rounded-lg">
+      {searchQuery && (
+        <section className="container mx-auto pb-8 sm:pb-10 px-4">
           <GenreGrid genres={genresList} />
-        </div>
-      </section>
+        </section>
+      )}
     </>
   );
 }
