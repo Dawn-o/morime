@@ -91,7 +91,7 @@ export default async function MangaDetailsPage({ params }) {
   return (
     <>
       <MangaHeroSection heroData={heroData} />
-      <section className="container mx-auto pb-8 sm:pb-10 px-4 -mt-0 md:-mt-24 relative z-10">
+      <section className="container mx-auto pb-8 sm:pb-10 px-4 -mt-0 md:-mt-24 lg:-mt-48 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 lg:gap-8">
           <div className="lg:col-span-1">
             <MangaSidebar sidebarData={sidebarData} />

@@ -249,7 +249,7 @@ export function AnimeHeroSection({ heroData }) {
   } = heroData;
 
   return (
-    <section className="w-full min-h-[45vh] md:min-h-[55vh] relative overflow-hidden bg-gradient-to-b from-background/60 via-background/80 to-background">
+    <section className="w-full min-h-[400px] md:min-h-[500px] lg:min-h-[600px] relative overflow-hidden bg-gradient-to-b from-background/60 via-background/80 to-background">
       <AnimeImage imageUrl={imageUrl} title={title} />
 
       <div className="container mx-auto h-full relative z-10 px-4">

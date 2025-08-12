@@ -10,7 +10,7 @@ export default async function HomePage({
   genresList = []
 }) {
   return (
-    <main className="container mx-auto min-h-screen pb-12">
+    <main className="container mx-auto pb-12">
       <section className="px-3 md:px-0 mt-3 mb-6">
         <HomeCarousel items={upcomings} />
       </section>

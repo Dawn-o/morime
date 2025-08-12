@@ -3,7 +3,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 function HomeCarouselSkeleton() {
   return (
     <div className="relative overflow-hidden">
-      <div className="relative h-[40vh] md:h-[45vh] lg:h-[58vh]">
+      <div className="relative h-[350px] md:h-[400px] lg:h-[550px]">
         <div className="absolute inset-0 grid grid-cols-1 lg:grid-cols-12 z-0">
           <div className="hidden lg:block bg-background lg:col-span-2"></div>
           <div className="relative h-full lg:col-span-8">
@@ -137,7 +137,7 @@ function AnimeCarouselSkeleton() {
 
 export function HomePageSkeleton() {
   return (
-    <main className="container mx-auto min-h-screen pb-12">
+    <main className="container mx-auto pb-12">
       <section className="px-3 md:px-0 mt-3 mb-6">
         <HomeCarouselSkeleton />
       </section>

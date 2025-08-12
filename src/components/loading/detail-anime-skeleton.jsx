@@ -3,7 +3,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 export default function DetailAnimeSkeleton() {
   return (
     <>
-      <section className="w-full min-h-[45vh] md:min-h-[55vh] relative overflow-hidden bg-gradient-to-b from-background/60 via-background/80 to-background">
+      <section className="w-full min-h-[400px] md:min-h-[500px] lg:min-h-[600px] relative overflow-hidden bg-gradient-to-b from-background/60 via-background/80 to-background">
         <div className="absolute inset-0">
           <Skeleton className="h-full w-full opacity-25" />
         </div>
@@ -15,28 +15,31 @@ export default function DetailAnimeSkeleton() {
           <div className="flex h-full items-end pb-8 md:pb-10 pt-20 sm:pt-24">
             <div className="flex flex-col sm:flex-row w-full gap-5 sm:gap-8 items-center sm:items-start md:items-end">
               <div className="flex flex-col items-center gap-2">
-                <div className="h-[180px] w-[130px] sm:h-[210px] sm:w-[150px] lg:h-[250px] lg:w-[180px] rounded-lg overflow-hidden shadow-[0_0_25px_rgba(0,0,0,0.3)] shrink-0 -mt-14 sm:-mt-18 md:-mt-24 sm:mb-0 ring-2 ring-white/10 bg-card">
+                <div className="h-[180px] w-[130px] sm:h-[210px] sm:w-[150px] lg:h-[250px] lg:w-[180px] rounded-lg overflow-hidden shadow-[0_0_25px_rgba(0,0,0,0.3)] shrink-0 -mt-14 sm:-mt-18 md:-mt-24 sm:mb-0 ring-2 ring-white/10 bg-card transform transition-all duration-300">
                   <Skeleton className="h-full w-full" />
                 </div>
 
                 <div className="hidden sm:block w-full">
-                  <Skeleton className="h-7 w-full rounded-md" />
+                  <Skeleton className="h-8 w-full rounded-md" />
                 </div>
               </div>
 
               <div className="flex-1 text-center sm:text-left max-w-full">
                 <div className="flex items-center justify-center sm:justify-start flex-wrap gap-2 mb-2 sm:mb-3">
-                  <Skeleton className="h-6 w-12 rounded-full" />
-                  <Skeleton className="h-6 w-16 rounded-full" />
+                  <Skeleton className="h-6 w-12 rounded-md" />
+                  <Skeleton className="h-6 w-20 rounded-md" />
+                  <Skeleton className="h-6 w-16 rounded-md" />
                 </div>
 
-                <Skeleton className="h-8 sm:h-9 md:h-10 lg:h-12 w-4/5 mx-auto sm:mx-0 mb-1 sm:mb-2" />
+                <Skeleton className="h-6 sm:h-7 md:h-8 lg:h-10 w-4/5 mx-auto sm:mx-0 mb-1 sm:mb-2" />
 
                 <Skeleton className="h-4 sm:h-5 w-3/5 mx-auto sm:mx-0 mb-2" />
 
                 <div className="flex flex-wrap justify-center sm:justify-start gap-y-2 gap-x-3 mt-3 mb-4">
                   {[1, 2, 3].map((i) => (
-                    <Skeleton key={i} className="h-6 w-20 rounded-full" />
+                    <div key={i} className="flex items-center bg-card/60 backdrop-blur-md border border-white/5 rounded-full px-3 py-1">
+                      <Skeleton className="h-3 w-12" />
+                    </div>
                   ))}
                 </div>
 
@@ -47,7 +50,8 @@ export default function DetailAnimeSkeleton() {
                       className="bg-card/40 backdrop-blur-sm rounded-lg p-3 border border-border/20 flex flex-col items-center justify-center"
                     >
                       <Skeleton className="h-3 w-16 mb-1" />
-                      <Skeleton className="h-6 w-12" />
+                      <Skeleton className="h-5 sm:h-6 w-12" />
+                      {i === 1 && <Skeleton className="h-2 w-20 mt-0.5" />}
                     </div>
                   ))}
                 </div>
@@ -61,7 +65,7 @@ export default function DetailAnimeSkeleton() {
         </div>
       </section>
 
-      <section className="container mx-auto pb-8 sm:pb-10 px-4 -mt-0 md:-mt-24 relative z-10">
+      <section className="container mx-auto pb-8 sm:pb-10 px-4 -mt-0 md:-mt-24 lg:-mt-48 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 lg:gap-8">
           <div className="lg:col-span-1">
             <div className="py-0 shadow-lg border-border/40 rounded-xl bg-card">

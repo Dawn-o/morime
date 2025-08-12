@@ -56,7 +56,7 @@ export function HomeCarousel({ items }) {
         {items.map((item, i) => (
             <CarouselItem
               key={item.mal_id + i}
-              className="relative h-[40vh] md:h-[45vh] lg:h-[58vh]"
+              className="relative h-[350px] md:h-[400px] lg:h-[550px]"
             >
               <Link
                 href={`/anime/${item.mal_id}/${toSnakeCase(item.title)}`}
