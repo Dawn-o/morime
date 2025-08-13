@@ -31,8 +31,8 @@ export function Header() {
     { label: "SEASONAL SCHEDULE", link: "anime/season" },
     { label: "TOP ANIME", link: "anime/top" },
     { label: "POPULAR ANIME", link: "anime/top/bypopularity" },
-    { label: "ON-GOING ANIME", link: "anime/season" },
-    { label: "COMPLETED ANIME", link: "anime/completed" },
+    { label: "ON-GOING ANIME", link: "anime/airing" },
+    { label: "RECENTLY COMPLETED", link: "anime/completed" },
     { label: "POPULAR THIS SEASON", link: "anime/top/airing" },
     { label: "UPCOMING ANIME", link: "anime/upcoming" },
   ];

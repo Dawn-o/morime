@@ -1,5 +1,6 @@
 import { CACHE_CONFIG, DEFAULT_LIMITS } from "@/lib/api/config";
 import { fetchWithSfw, fetchSingle } from "@/lib/api/utils";
+import { getRecentSeasons } from "@/lib/navigation/season-utils";
 
 export async function getAnime(page = 1, apiConfig = {}) {
   const {
@@ -10,6 +11,7 @@ export async function getAnime(page = 1, apiConfig = {}) {
     order_by,
     sort,
     producers,
+    status,
   } = apiConfig;
 
   try {
@@ -34,6 +36,10 @@ export async function getAnime(page = 1, apiConfig = {}) {
 
     if (producers) {
       params.producers = producers;
+    }
+
+    if (status) {
+      params.status = status;
     }
 
     const data = await fetchWithSfw(endpoint, params, CACHE_CONFIG.SHORT);
@@ -199,6 +205,73 @@ export async function searchAnime(
     console.error("Error searching anime:", error);
     return {
       data: [],
+      total: 0,
+      hasNextPage: false,
+      currentPage: page,
+      error: error.message,
+    };
+  }
+}
+
+export async function getRecentlyCompletedAnime(page = 1, apiConfig = {}) {
+  const { type, limit = DEFAULT_LIMITS.ANIME_LIST } = apiConfig;
+
+  try {
+    const recentSeasons = getRecentSeasons(3);
+    const allAnime = [];
+
+    for (const { year, season } of recentSeasons) {
+      try {
+        const params = {
+          limit: 25,
+          filter: type || undefined,
+        };
+        const seasonData = await fetchWithSfw(
+          `/seasons/${year}/${season}`,
+          params,
+          CACHE_CONFIG.SHORT
+        );
+
+        if (seasonData?.data) {
+          const completedAnime = seasonData.data.filter(
+            (anime) => anime.status === "Finished Airing"
+          );
+          allAnime.push(...completedAnime);
+        }
+      } catch (seasonError) {
+        console.warn(`Failed to fetch ${season} ${year}:`, seasonError);
+      }
+    }
+
+    const uniqueAnime = allAnime.filter(
+      (anime, index, self) =>
+        index === self.findIndex((a) => a.mal_id === anime.mal_id)
+    );
+
+    uniqueAnime.sort((a, b) => {
+      if (b.score !== a.score) {
+        return (b.score || 0) - (a.score || 0);
+      }
+      return (b.members || 0) - (a.members || 0);
+    });
+
+    const startIndex = (page - 1) * limit;
+    const endIndex = startIndex + limit;
+    const paginatedData = uniqueAnime.slice(startIndex, endIndex);
+    const totalPages = Math.ceil(uniqueAnime.length / limit);
+
+    return {
+      data: paginatedData,
+      totalPages,
+      total: uniqueAnime.length,
+      hasNextPage: page < totalPages,
+      currentPage: page,
+    };
+  } catch (error) {
+    console.error("Error fetching recently completed anime:", error);
+    return {
+      data: [],
+      totalPages: 1,
       total: 0,
       hasNextPage: false,
       currentPage: page,
