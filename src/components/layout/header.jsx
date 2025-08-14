@@ -60,6 +60,7 @@ export function Header() {
           </Button>
           <ModeToggle />
           <SfwToggle />
+          <ProfileToggle />
         </div>
 
         <div className="hidden md:flex min-w-lg flex-row gap-3 items-center">
