@@ -66,7 +66,7 @@ export default function SignInPage({ searchParams }) {
       urlSuccess);
 
   return (
-    <div className="flex flex-col items-center justify-center py-10">
+    <div className="flex flex-col items-center justify-center p-10">
       <div className="flex w-full max-w-md flex-col gap-6">
         <Card>
           <CardHeader className="text-center">
