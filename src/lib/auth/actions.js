@@ -26,12 +26,14 @@ export async function login(prevState, formData) {
 
     if (error.message.includes("Invalid login credentials")) {
       return {
-        error: "Invalid email or password. Please check your credentials and try again.",
+        error:
+          "Invalid email or password. Please check your credentials and try again.",
         success: null,
       };
     } else if (error.message.includes("Email not confirmed")) {
       return {
-        error: "Please check your email and click the confirmation link before signing in.",
+        error:
+          "Please check your email and click the confirmation link before signing in.",
         success: null,
       };
     } else {
@@ -103,7 +105,8 @@ export async function signup(prevState, formData) {
   if (data.user && !data.session) {
     return {
       error: null,
-      success: "Please check your email and click the confirmation link to complete your registration.",
+      success:
+        "Please check your email and click the confirmation link to complete your registration.",
     };
   } else if (data.session) {
     revalidatePath("/", "layout");
@@ -111,7 +114,8 @@ export async function signup(prevState, formData) {
   } else {
     return {
       error: null,
-      success: "Please check your email and click the confirmation link to complete your registration.",
+      success:
+        "Please check your email and click the confirmation link to complete your registration.",
     };
   }
 }
@@ -122,9 +126,7 @@ export async function signInWithGoogle() {
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "google",
     options: {
-      redirectTo: `${
-        process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"
-      }/auth/callback`,
+      redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/auth/callback`,
       queryParams: {
         access_type: "offline",
         prompt: "consent",
