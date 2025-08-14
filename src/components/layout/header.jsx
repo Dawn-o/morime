@@ -8,6 +8,7 @@ import { Separator } from "@/components/ui/separator";
 import { SfwToggle } from "@/components/toggles/sfw-toggle";
 import { ModeToggle } from "@/components/toggles/mode-toggle";
 import { Link } from "@/components/ui/link";
+import ProfileToggle from "@/components/toggles/profile-toggle";
 
 export function Header() {
   const [isSearchVisible, setIsSearchVisible] = useState(false);
@@ -76,6 +77,7 @@ export function Header() {
           <div className="flex items-center gap-2">
             <ModeToggle />
             <SfwToggle />
+            <ProfileToggle />
           </div>
         </div>
       </div>
