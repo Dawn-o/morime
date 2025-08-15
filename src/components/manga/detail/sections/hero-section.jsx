@@ -21,7 +21,7 @@ const MangaImage = ({ imageUrl, title }) => {
             fill
             priority={true}
             className="object-cover opacity-25 blur-[10px]"
-            sizes="1024px"
+            sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
           />
         </div>
       </div>

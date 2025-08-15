@@ -76,7 +76,7 @@ export function HomeCarousel({ items }) {
                       className="object-cover"
                       priority={i === 0}
                       quality={85}
-                      sizes="1024px"
+                      sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
                     />
                   ) : (
                     <div className="w-full h-full bg-muted/50"></div>
@@ -95,7 +95,7 @@ export function HomeCarousel({ items }) {
                           alt={`${item.title} cover`}
                           fill
                           className="object-cover"
-                          sizes="1024px"
+                          sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
                         />
                       )}
                     </div>
