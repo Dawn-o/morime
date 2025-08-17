@@ -23,6 +23,7 @@ export default function SignInPage({ searchParams }) {
   const [loginState, loginAction, loginPending] = useActionState(login, {
     error: null,
     success: null,
+    errors: {},
   });
 
   const urlParams = use(searchParams) || {};
@@ -50,11 +51,14 @@ export default function SignInPage({ searchParams }) {
       "Google sign in failed. Please try again.") ||
     (urlError === "signout-failed" &&
       "Failed to sign out. Please try again.") ||
+    (urlError === "invalid-email" &&
+      "Please enter a valid email address.") ||
     (urlError &&
       urlError !== "callback-error" &&
       urlError !== "oauth-error" &&
       urlError !== "signout-failed" &&
-      urlError);
+      urlError !== "invalid-email" &&
+      decodeURIComponent(urlError));
 
   const displaySuccess =
     (urlSuccess === "signed-out" && "You have been signed out successfully.") ||
@@ -121,9 +125,17 @@ export default function SignInPage({ searchParams }) {
                       id="email"
                       name="email"
                       type="email"
-                      placeholder="m@example.com"
+                      placeholder="your@example.com"
                       required
+                      className={loginState.errors?.email ? "border-red-500" : ""}
                     />
+                    {loginState.errors?.email && (
+                      <div className="text-sm text-red-500">
+                        {loginState.errors.email.map((error) => (
+                          <p key={error}>{error}</p>
+                        ))}
+                      </div>
+                    )}
                   </div>
                   <div className="grid gap-3">
                     <div className="flex items-center">
@@ -140,7 +152,15 @@ export default function SignInPage({ searchParams }) {
                       name="password"
                       type="password"
                       required
+                      className={loginState.errors?.password ? "border-red-500" : ""}
                     />
+                    {loginState.errors?.password && (
+                      <div className="text-sm text-red-500">
+                        {loginState.errors.password.map((error) => (
+                          <p key={error}>{error}</p>
+                        ))}
+                      </div>
+                    )}
                   </div>
                   <Button
                     type="submit"
