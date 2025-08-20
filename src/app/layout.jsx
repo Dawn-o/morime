@@ -13,8 +13,8 @@ const poppins = Poppins({
 });
 
 export const metadata = {
-  title: "Morime - Anime Tracking",
-  description: "An anime discovery and tracking platform, inspired by MyAnimeList",
+  title: "Morime - Anime & Manga Tracking",
+  description: "An anime & Manga discovery and tracking platform, inspired by MyAnimeList",
 };
 
 export default function RootLayout({ children }) {
