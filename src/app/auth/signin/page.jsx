@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import SignInFormClient from "@/components/auth/signin-form-client";
 
-export default async function SignInPage({ searchParams }) {
+export default async function SignInPage() {
   const supabase = await createClient();
 
   const {
@@ -14,5 +14,5 @@ export default async function SignInPage({ searchParams }) {
     redirect("/profile");
   }
 
-  return <SignInFormClient searchParams={searchParams} />;
+  return <SignInFormClient />;
 }
