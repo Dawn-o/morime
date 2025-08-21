@@ -1,7 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { use } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -16,24 +15,14 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { AlertCircleIcon } from "lucide-react";
 import SignUpForm from "@/components/forms/signup-form";
 
-export default function SignUpFormClient() {
-  const searchParams = useSearchParams();
-  const [oauthMessage, setOauthMessage] = useState(null);
+export default function SignUpFormClient({ searchParams }) {
+  const urlParams = use(searchParams) || {};
+  const urlError = urlParams.error;
 
-  useEffect(() => {
-    const error = searchParams.get("error");
-
-    if (error === "oauth-error") {
-      setOauthMessage({
-        type: "error",
-        text: "Google sign up failed. Please try again.",
-      });
-
-      const url = new URL(window.location);
-      url.searchParams.delete("error");
-      window.history.replaceState({}, "", url);
-    }
-  }, [searchParams]);
+  const displayError =
+    (urlError === "oauth-error" &&
+      "Google sign up failed. Please try again.") ||
+    (urlError && urlError !== "oauth-error" && urlError);
 
   return (
     <div className="flex flex-col items-center justify-center p-10">
@@ -46,11 +35,11 @@ export default function SignUpFormClient() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            {oauthMessage?.type === "error" && (
+            {displayError && (
               <Alert className="mb-4" variant="destructive">
                 <AlertCircleIcon />
                 <AlertTitle>Sign Up Failed</AlertTitle>
-                <AlertDescription>{oauthMessage.text}</AlertDescription>
+                <AlertDescription>{displayError}</AlertDescription>
               </Alert>
             )}
 

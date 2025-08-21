@@ -35,6 +35,7 @@ export async function login(prevState, formData) {
   });
 
   if (error) {
+    console.error("Login error:", error);
 
     if (error.message.includes("Invalid login credentials")) {
       return {
@@ -120,6 +121,7 @@ export async function signup(prevState, formData) {
   });
 
   if (error) {
+    console.error("Signup error:", error);
 
     // Handle specific signup errors
     if (error.message.includes("User already registered")) {
@@ -186,6 +188,7 @@ export async function signInWithGoogle() {
   });
 
   if (error) {
+    console.error("Google sign in error:", error);
     redirect("/auth/signin?error=oauth-error");
   }
 
@@ -203,11 +206,12 @@ export async function signOut() {
   const { error } = await supabase.auth.signOut();
 
   if (error) {
-    redirect("/auth/signin");
+    console.error("Sign out error:", error);
+    redirect("/auth/signin?error=signout-failed");
   }
 
   revalidatePath("/", "layout");
-  redirect("/auth/signin");
+  redirect("/auth/signin?success=signed-out");
 }
 
 /**
@@ -232,6 +236,7 @@ export async function resendConfirmation(email) {
   });
 
   if (error) {
+    console.error("Resend confirmation error:", error);
     redirect(
       `/auth/signin?error=${encodeURIComponent(
         "Failed to resend confirmation email. Please try again."

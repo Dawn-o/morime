@@ -1,7 +1,6 @@
 "use client";
 
-import { useActionState, useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { useActionState, use } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -17,51 +16,41 @@ import { login, signInWithGoogle } from "@/lib/auth/actions";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { AlertCircleIcon, CheckCircle2Icon } from "lucide-react";
 
-export default function SignInFormClient() {
-  const searchParams = useSearchParams();
-  const [oauthMessage, setOauthMessage] = useState(null);
-
+export default function SignInFormClient({ searchParams }) {
   const [loginState, loginAction, loginPending] = useActionState(login, {
     error: null,
     success: null,
     errors: {},
   });
 
-  useEffect(() => {
-    const error = searchParams.get("error");
-    const success = searchParams.get("success");
-
-    if (error === "callback-error") {
-      setOauthMessage({
-        type: "error",
-        text: "Authentication failed. Please try again.",
-      });
-    } else if (error === "oauth-error") {
-      setOauthMessage({
-        type: "error",
-        text: "Google sign in failed. Please try again.",
-      });
-    } else if (success === "signed-out") {
-      setOauthMessage({
-        type: "success",
-        text: "You have been signed out successfully.",
-      });
-    }
-
-    if (error || success) {
-      const url = new URL(window.location);
-      url.searchParams.delete("error");
-      url.searchParams.delete("success");
-      window.history.replaceState({}, "", url);
-    }
-  }, [searchParams]);
+  const urlParams = use(searchParams) || {};
+  const urlError = urlParams.error;
+  const urlSuccess = urlParams.success;
 
   const displayError =
     loginState.error ||
-    (oauthMessage?.type === "error" ? oauthMessage.text : null);
+    (urlError === "callback-error" &&
+      "Authentication failed. Please try again.") ||
+    (urlError === "oauth-error" &&
+      "Google sign in failed. Please try again.") ||
+    (urlError === "signout-failed" &&
+      "Failed to sign out. Please try again.") ||
+    (urlError === "invalid-email" && "Please enter a valid email address.") ||
+    (urlError &&
+      urlError !== "callback-error" &&
+      urlError !== "oauth-error" &&
+      urlError !== "signout-failed" &&
+      urlError !== "invalid-email" &&
+      decodeURIComponent(urlError));
+
   const displaySuccess =
-    loginState.success ||
-    (oauthMessage?.type === "success" ? oauthMessage.text : null);
+    (urlSuccess === "signed-out" && "You have been signed out successfully.") ||
+    (urlSuccess === "confirmation-resent" &&
+      "Confirmation email has been resent. Please check your inbox.") ||
+    (urlSuccess &&
+      urlSuccess !== "signed-out" &&
+      urlSuccess !== "confirmation-resent" &&
+      urlSuccess);
 
   return (
     <div className="flex flex-col items-center justify-center p-10">
