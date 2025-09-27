@@ -29,7 +29,7 @@ export function Footer() {
                 <span className="sr-only">Twitter</span>
               </Link>
               <Link
-                href="https://instagram.com/dawn_bloodfallen"
+                href="https://instagram.com/rushel.id"
                 className="text-muted-foreground hover:text-foreground"
               >
                 <Instagram size={20} />
