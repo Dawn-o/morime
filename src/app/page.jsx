@@ -18,7 +18,7 @@ export default async function Home() {
       status: anime.status,
       genres: anime.genres?.slice(0, 3),
       imageUrl: anime.images?.webp?.large_image_url,
-      trailerImageUrl: anime.trailer?.images?.maximum_image_url,
+      trailerUrl: anime.trailer?.embed_url,
     })) || [];
 
   const topAnimeData =

@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils/cn";
 import { toSnakeCase } from "@/lib/utils/formatter";
 import { Link } from "@/components/ui/link";
+import { getYouTubeThumbnail } from "@/lib/utils/youtube";
 
 export function HomeCarousel({ items }) {
   const [api, setApi] = useState(null);
@@ -53,10 +54,10 @@ export function HomeCarousel({ items }) {
         }}
       >
         <CarouselContent>
-        {items.map((item, i) => (
+          {items.map((item, i) => (
             <CarouselItem
               key={item.mal_id + i}
-              className="relative h-[350px] md:h-[400px] lg:h-[550px]"
+              className="relative h-87.5 md:h-100 lg:h-137.5"
             >
               <Link
                 href={`/anime/${item.mal_id}/${toSnakeCase(item.title)}`}
@@ -68,9 +69,9 @@ export function HomeCarousel({ items }) {
                 <div className="hidden lg:block bg-background lg:col-span-1"></div>
 
                 <div className="relative h-full lg:col-span-2">
-                  {item.trailerImageUrl ? (
+                  {item.trailerUrl ? (
                     <Image
-                      src={item.trailerImageUrl}
+                      src={getYouTubeThumbnail(item.trailerUrl, "maxres")}
                       alt={`${item.title} background`}
                       fill
                       className="object-cover"
@@ -81,13 +82,13 @@ export function HomeCarousel({ items }) {
                   ) : (
                     <div className="w-full h-full bg-muted/50"></div>
                   )}
-                  <div className="absolute inset-0 -left-1 bg-gradient-to-t lg:bg-gradient-to-r from-background from-15% lg:from-1% via-background/90 via-30% lg:via-5% to-transparent to-70% lg:to-100%"></div>
+                  <div className="absolute inset-0 -left-1 bg-linear-to-t lg:bg-linear-to-r from-background from-15% lg:from-1% via-background/90 via-30% lg:via-5% to-transparent to-70% lg:to-100%"></div>
                 </div>
               </div>
 
               <div className="grid grid-cols-1 lg:grid-cols-3 h-full relative z-10">
                 <div className="flex flex-col lg:flex-row lg:items-end gap-6 p-0 lg:p-8 z-20 lg:col-span-2">
-                  <div className="hidden lg:block w-48 h-72 flex-shrink-0">
+                  <div className="hidden lg:block w-48 h-72 shrink-0">
                     <div className="w-full h-full overflow-hidden rounded-lg shadow-[0_0_20px_rgba(0,0,0,0.3)] relative">
                       {item.imageUrl && (
                         <Image
@@ -111,8 +112,8 @@ export function HomeCarousel({ items }) {
                           {item.status === "Currently Airing"
                             ? "Airing"
                             : item.status === "Not yet aired"
-                            ? "Upcoming"
-                            : "Completed"}
+                              ? "Upcoming"
+                              : "Completed"}
                         </Badge>
                       </div>
                     )}
@@ -159,7 +160,7 @@ export function HomeCarousel({ items }) {
                 "w-2 h-2 p-0 rounded-full transition-all",
                 i === current
                   ? "bg-primary w-6"
-                  : "bg-primary/40 hover:bg-primary/30"
+                  : "bg-primary/40 hover:bg-primary/30",
               )}
               aria-label={`Go to slide ${i + 1}`}
             />

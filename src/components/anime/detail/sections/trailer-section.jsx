@@ -1,7 +1,8 @@
 import { EmptyState } from "@/components/content/empty-state";
+import { setYouTubeAutoplay } from "@/lib/utils/youtube";
 
 export function TrailerSection({ trailersData }) {
-  if (!trailersData?.youtube_id) {
+  if (!trailersData?.embed_url) {
     return (
       <EmptyState
         message="No trailer available."
@@ -14,11 +15,11 @@ export function TrailerSection({ trailersData }) {
   return (
     <div className="aspect-video w-full rounded-lg overflow-hidden shadow-xl">
       <iframe
-        src={`https://www.youtube.com/embed/${trailersData.youtube_id}`}
+        src={setYouTubeAutoplay(trailersData.embed_url, false)}
         title="Anime Trailer"
         className="w-full h-full"
         allowFullScreen
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         loading="lazy"
       />
     </div>

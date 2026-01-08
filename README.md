@@ -1,36 +1,155 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Morime
+
+An anime and manga discovery and tracking platform inspired by MyAnimeList. Built with Next.js 16, React 19, and Bun.
+
+---
+
+## About
+
+Morime provides a modern interface for browsing and tracking anime and manga. The platform integrates with the Jikan API (unofficial MyAnimeList API) to deliver comprehensive information about anime series, manga, characters, and production studios.
+
+## Features
+
+- Browse anime by season, status, and genre
+- Discover manga series with detailed information
+- View anime schedules and airing times
+- Explore production studios and their works
+- Character information and voice actors
+- Trailer integration with YouTube
+- Dark mode support
+- Responsive design for all devices
+
+---
+
+## Tech Stack
+
+- Next.js 16 (App Router)
+- React 19
+- Tailwind CSS 4
+- Bun (Package Manager & Runtime)
+- Radix UI Components
+- Embla Carousel
+- Lucide Icons
+
+---
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Bun 1.0 or higher
+
+### Installation
+
+Install dependencies:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
+bun install
+```
+
+### Development
+
+Run the development server:
+
+```bash
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+### Build
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Build for production:
 
-## Learn More
+```bash
+bun run build
+```
 
-To learn more about Next.js, take a look at the following resources:
+### Production
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Start the production server:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+bun start
+```
 
-## Deploy on Vercel
+## Project Structure
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```
+morime/
+├── src/
+│   ├── actions/         # Server actions
+│   ├── app/            # Next.js app router pages
+│   ├── components/     # React components
+│   │   ├── anime/      # Anime-specific components
+│   │   ├── manga/      # Manga-specific components
+│   │   ├── ui/         # Reusable UI components
+│   │   └── ...
+│   ├── hooks/          # Custom React hooks & API functions
+│   └── lib/            # Utility functions
+│       └── utils/      # Helper utilities
+├── public/             # Static assets
+└── ...
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## Key Components
+
+### Home Carousel
+Displays upcoming anime with YouTube thumbnail backgrounds extracted from trailer URLs. Automatically cycles through featured anime.
+
+### Anime Detail Pages
+Comprehensive anime information including synopsis, characters, staff, relations, and trailers.
+
+### Manga Detail Pages
+Detailed manga information with character listings and publication data.
+
+### Producer Pages
+Browse anime studios and production companies with their complete anime catalog.
+
+---
+
+## Utilities
+
+### YouTube Utilities
+Located in `src/lib/utils/youtube.js`, provides functions for:
+- Extracting video IDs from YouTube URLs
+- Generating thumbnail URLs for carousel backgrounds
+- Controlling autoplay and embed parameters
+
+Example usage:
+```javascript
+import { getYouTubeThumbnail, setYouTubeAutoplay } from '@/lib/utils/youtube';
+
+const thumbnail = getYouTubeThumbnail(embedUrl, 'maxres');
+const noAutoplay = setYouTubeAutoplay(embedUrl, false);
+```
+
+---
+
+## API Integration
+
+The project uses the Jikan API v4 for fetching anime and manga data. API calls are centralized in the `src/hooks` directory.
+
+---
+
+## Styling
+
+Tailwind CSS 4 is used for styling with custom configurations. The project includes:
+- Custom color schemes
+- Dark mode support via next-themes
+- Responsive breakpoints
+- Animation utilities
+
+---
+
+## Environment
+
+The application is optimized for deployment on Vercel with built-in analytics and speed insights.
+
+---
+
+## License
+
+Private project - All rights reserved
