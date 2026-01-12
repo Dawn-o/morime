@@ -2,12 +2,13 @@ import { HomeCarousel } from "@/components/anime/home/carousel";
 import { SectionHeader } from "@/components/headers/section-header";
 import { AnimeCarousel } from "@/components/anime/home/anime-carousel";
 import { GenreList } from "@/components/display/anime/genre-list";
+import { getCurrentSeasonPath } from "@/lib/utils/season";
 
 export default async function HomePage({
   upcomings = [],
   topAnimes = [],
   animes = [],
-  genresList = []
+  genresList = [],
 }) {
   return (
     <main className="container mx-auto pb-12">
@@ -36,7 +37,7 @@ export default async function HomePage({
           <SectionHeader
             title="Ongoing Anime"
             subtitle="Currently airing this season"
-            viewAllLink="/anime/season"
+            viewAllLink={getCurrentSeasonPath()}
           />
           <AnimeCarousel animes={animes} />
         </div>

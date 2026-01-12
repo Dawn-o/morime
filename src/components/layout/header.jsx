@@ -41,7 +41,7 @@ export function Header() {
     <header className="w-full bg-background">
       <div className="flex items-center justify-between p-4 max-w-7xl mx-auto">
         <Link href="/" className="flex items-center">
-          <div className="w-[135px] h-10 flex items-center justify-center">
+          <div className="w-33.75 h-10 flex items-center justify-center">
             <span className="font-bold text-4xl text-foreground font-[Poppins]">
               MORIME
             </span>
@@ -104,7 +104,7 @@ export function Header() {
             <Button
               variant="secondary"
               size="sm"
-              className="text-xs cursor-pointer flex-shrink-0"
+              className="text-xs cursor-pointer shrink-0"
             >
               <House />
             </Button>
@@ -114,7 +114,7 @@ export function Header() {
               <Button
                 variant="secondary"
                 size="sm"
-                className="text-xs cursor-pointer flex-shrink-0"
+                className="text-xs cursor-pointer shrink-0"
               >
                 {item.label}
               </Button>

@@ -1,17 +1,8 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Link } from "@/components/ui/link"; 
-
-function getCurrentSeason() {
-  const currentDate = new Date();
-  const currentMonth = currentDate.getMonth() + 1;
-
-  if (currentMonth >= 1 && currentMonth <= 3) return "winter";
-  else if (currentMonth >= 4 && currentMonth <= 6) return "spring";
-  else if (currentMonth >= 7 && currentMonth <= 9) return "summer";
-  else return "fall";
-}
+import { Link } from "@/components/ui/link";
+import { getCurrentSeason } from "@/lib/utils/season";
 
 function YearDisplay({ year }) {
   return (
