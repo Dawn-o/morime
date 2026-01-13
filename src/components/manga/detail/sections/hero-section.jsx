@@ -25,8 +25,8 @@ const MangaImage = ({ imageUrl, title }) => {
           />
         </div>
       </div>
-      <div className="absolute inset-0 bg-gradient-to-t from-background via-background/70 to-background/20" />
-      <div className="absolute inset-0 bg-gradient-to-r from-background/90 to-transparent" />
+      <div className="absolute inset-0 bg-linear-to-t from-background via-background/70 to-background/20" />
+      <div className="absolute inset-0 bg-linear-to-r from-background/90 to-transparent" />
       <div className="absolute inset-0 opacity-10 mix-blend-overlay bg-[url('/noise.png')] bg-repeat" />
     </>
   );
@@ -37,7 +37,7 @@ const MangaPoster = ({ imageUrl, title }) => {
 
   return (
     <div className="flex flex-col items-center gap-2">
-      <div className="h-[180px] w-[130px] sm:h-[210px] sm:w-[150px] lg:h-[250px] lg:w-[180px] rounded-lg overflow-hidden shadow-[0_0_25px_rgba(0,0,0,0.3)] shrink-0 -mt-14 sm:-mt-18 md:-mt-24 sm:mb-0 ring-2 ring-white/10 bg-card transform transition-all duration-300 hover:shadow-[0_0_30px_rgba(0,0,0,0.4)] hover:scale-[1.02]">
+      <div className="h-45 w-32.5 sm:h-52.5 sm:w-37.5 lg:h-62.5 lg:w-45 rounded-lg overflow-hidden shadow-[0_0_25px_rgba(0,0,0,0.3)] shrink-0 -mt-14 sm:-mt-18 md:-mt-24 sm:mb-0 ring-2 ring-white/10 bg-card transform transition-all duration-300 hover:shadow-[0_0_30px_rgba(0,0,0,0.4)] hover:scale-[1.02]">
         {imageUrl && !imageError ? (
           <Image
             src={getImageWithFallback(imageUrl)}
@@ -103,11 +103,11 @@ const MangaTitle = ({ title, titleEnglish, titleJapanese, titleSynonyms }) => {
 
   return (
     <>
-      <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight line-clamp-2 mb-1 sm:mb-2 bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/90">
+      <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight line-clamp-2 mb-1 sm:mb-2 bg-clip-text text-transparent bg-linear-to-r from-foreground to-foreground/90">
         {title}
       </h1>
 
-      <p className="text-xs sm:text-sm md:text-base text-muted-foreground/90 line-clamp-1 mb-2 min-h-[1rem] sm:min-h-[1.25rem] md:min-h-[1.5rem]">
+      <p className="text-xs sm:text-sm md:text-base text-muted-foreground/90 line-clamp-1 mb-2 min-h-4 sm:min-h-5 md:min-h-6">
         {getAlternativeTitle()}
       </p>
     </>
@@ -202,17 +202,11 @@ const StatsGrid = ({ score, scoredBy, rank, popularity, members }) => {
     <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6">
       <ScoreCard score={score} scoredBy={scoredBy} />
 
-      {rank && (
-        <StatCard label="Ranked" value={`#${rank}`} />
-      )}
+      {rank && <StatCard label="Ranked" value={`#${rank}`} />}
 
-      {popularity && (
-        <StatCard label="Popularity" value={`#${popularity}`} />
-      )}
+      {popularity && <StatCard label="Popularity" value={`#${popularity}`} />}
 
-      {members && (
-        <StatCard label="Members" value={formatNumber(members)} />
-      )}
+      {members && <StatCard label="Members" value={formatNumber(members)} />}
     </div>
   );
 };
@@ -232,15 +226,12 @@ export function MangaHeroSection({ heroData }) {
     popularity,
     members,
     published,
-    authors
+    authors,
   } = heroData;
 
   return (
-    <section className="w-full min-h-[400px] md:min-h-[500px] lg:min-h-[600px] relative overflow-hidden bg-gradient-to-b from-background/60 via-background/80 to-background">
-      <MangaImage
-        imageUrl={imageUrl}
-        title={title}
-      />
+    <section className="w-full min-h-100 md:min-h-125 lg:min-h-150 relative overflow-hidden bg-linear-to-b from-background/60 via-background/80 to-background">
+      <MangaImage imageUrl={imageUrl} title={title} />
 
       <div className="container mx-auto h-full relative z-10 px-4">
         <div className="flex h-full items-end pb-8 md:pb-10 pt-20 sm:pt-24">
@@ -264,11 +255,7 @@ export function MangaHeroSection({ heroData }) {
                 titleJapanese={titleJapanese}
                 titleSynonyms={titleSynonyms}
               />
-              <InfoTags
-                score={score}
-                published={published}
-                authors={authors}
-              />
+              <InfoTags score={score} published={published} authors={authors} />
               <StatsGrid
                 score={score}
                 scoredBy={scoredBy}

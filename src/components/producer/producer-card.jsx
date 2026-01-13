@@ -12,12 +12,12 @@ export function ProducerCard({ producers }) {
   return (
     <Link
       href={`/producer/${producers.mal_id}/${toSnakeCase(
-        producers.titles?.[0]?.title
+        producers.titles?.[0]?.title,
       )}`}
       className="group block p-4 border border-border rounded-lg hover:border-primary transition-all duration-300 hover:shadow-md"
     >
       <div className="flex items-start space-x-4">
-        <div className="flex-shrink-0 w-16 h-16 overflow-hidden rounded-lg bg-muted relative">
+        <div className="shrink-0 w-16 h-16 overflow-hidden rounded-lg bg-muted relative">
           {producers.imageUrl && !imageError ? (
             <Image
               src={getImageWithFallback(producers.imageUrl)}

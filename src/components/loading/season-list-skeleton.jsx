@@ -3,28 +3,23 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 function YearDisplaySkeleton() {
   return (
-    <div className="bg-gradient-to-b from-muted/30 to-muted/60 flex flex-col items-center justify-center min-w-[80px] border-r border-border/50 -my-6">
+    <div className="bg-linear-to-b from-muted/30 to-muted/60 flex flex-col items-center justify-center min-w-20 border-r border-border/50 -my-6">
       {[...Array(4)].map((_, i) => (
-        <Skeleton
-          key={i}
-          className="h-6 w-4 mb-1 bg-muted-foreground/20"
-        />
+        <Skeleton key={i} className="h-6 w-4 mb-1 bg-muted-foreground/20" />
       ))}
     </div>
   );
 }
 
 function SeasonButtonSkeleton() {
-  return (
-    <Skeleton className="h-8 w-full rounded-md bg-muted/50" />
-  );
+  return <Skeleton className="h-8 w-full rounded-md bg-muted/50" />;
 }
 
 function ListCardSkeleton() {
   return (
     <Card className="overflow-hidden border-border/50">
       <CardContent className="p-0">
-        <div className="flex min-h-[120px]">
+        <div className="flex min-h-30">
           <YearDisplaySkeleton />
           <div className="flex-1 p-4">
             <div className="flex flex-col gap-2 justify-center h-full">

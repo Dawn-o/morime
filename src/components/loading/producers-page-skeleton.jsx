@@ -20,18 +20,15 @@ function ProducerCardSkeleton() {
 export default function ProducersPageSkeleton() {
   return (
     <section className="container mx-auto py-8 sm:py-10 px-4">
-      {/* Header skeleton */}
       <div className="text-center space-y-2 mb-8">
         <Skeleton className="h-8 w-48 mx-auto" />
         <Skeleton className="h-5 w-64 mx-auto" />
       </div>
 
-      {/* Search input skeleton */}
       <div className="mb-8">
         <Skeleton className="h-10 w-full max-w-md mx-auto" />
       </div>
 
-      {/* Grid skeleton */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {[...Array(24)].map((_, i) => (
           <ProducerCardSkeleton key={i} />

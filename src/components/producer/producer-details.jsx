@@ -16,7 +16,7 @@ export function ProducerDetails({ producer, animes, currentPage }) {
       <Card>
         <CardHeader className="p-4 sm:p-6">
           <div className="flex flex-col sm:flex-row items-start gap-4 sm:gap-6">
-            <div className="flex-shrink-0 w-24 h-24 sm:w-32 sm:h-32 mx-auto sm:mx-0 overflow-hidden rounded-lg bg-muted border relative">
+            <div className="shrink-0 w-24 h-24 sm:w-32 sm:h-32 mx-auto sm:mx-0 overflow-hidden rounded-lg bg-muted border relative">
               {producer.imageUrl && !imageError ? (
                 <Image
                   src={getImageWithFallback(producer.imageUrl)}
@@ -36,7 +36,7 @@ export function ProducerDetails({ producer, animes, currentPage }) {
             </div>
 
             <div className="flex-1 min-w-0 text-center sm:text-left">
-              <CardTitle className="text-xl sm:text-2xl lg:text-3xl mb-2 sm:mb-3 break-words">
+              <CardTitle className="text-xl sm:text-2xl lg:text-3xl mb-2 sm:mb-3 wrap-break-words">
                 {producer.titles?.[0]?.title ||
                   producer.name ||
                   "Unknown Producer"}
@@ -117,7 +117,7 @@ export function ProducerDetails({ producer, animes, currentPage }) {
             animeData={animes}
             currentPage={currentPage}
             basePath={`/producer/${producer.mal_id}/${toSnakeCase(
-              producer.titles?.[0]?.title
+              producer.titles?.[0]?.title,
             )}`}
             queryParams={{}}
           />

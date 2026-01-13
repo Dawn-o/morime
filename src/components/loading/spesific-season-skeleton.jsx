@@ -20,11 +20,11 @@ export function SpecificSeasonSkeleton() {
 
         <div className="md:hidden overflow-x-auto mb-4">
           <div className="flex justify-center gap-2 pb-2 min-w-max px-1">
-            <Skeleton className="h-8 w-8 flex-shrink-0" />
+            <Skeleton className="h-8 w-8 shrink-0" />
             {Array.from({ length: 2 }).map((_, i) => (
-              <Skeleton key={i} className="h-8 w-24 flex-shrink-0" />
+              <Skeleton key={i} className="h-8 w-24 shrink-0" />
             ))}
-            <Skeleton className="h-8 w-8 flex-shrink-0" />
+            <Skeleton className="h-8 w-8 shrink-0" />
           </div>
         </div>
 
@@ -41,7 +41,7 @@ export function SpecificSeasonSkeleton() {
         <div className="md:hidden overflow-x-auto">
           <div className="flex justify-center gap-2 pb-2 min-w-max px-1">
             {Array.from({ length: 6 }).map((_, i) => (
-              <Skeleton key={i} className="h-8 w-16 flex-shrink-0" />
+              <Skeleton key={i} className="h-8 w-16 shrink-0" />
             ))}
           </div>
         </div>
@@ -50,7 +50,7 @@ export function SpecificSeasonSkeleton() {
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
         {Array.from({ length: 24 }).map((_, i) => (
           <div key={i} className="space-y-2">
-            <Skeleton className="aspect-[3/4] w-full rounded-md" />
+            <Skeleton className="aspect-3/4 w-full rounded-md" />
             <Skeleton className="h-4 w-full" />
             <Skeleton className="h-3 w-3/4" />
           </div>

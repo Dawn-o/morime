@@ -20,7 +20,7 @@ export function MangaCharactersSection({ characters }) {
 
   const loadMore = () => {
     setVisibleCharacters((prev) =>
-      Math.min(prev + INCREMENT, characters.length)
+      Math.min(prev + INCREMENT, characters.length),
     );
   };
 
@@ -33,7 +33,7 @@ export function MangaCharactersSection({ characters }) {
               key={`${character.character?.mal_id}-${i}`}
               className="flex items-center gap-4 p-4 rounded-lg bg-card border border-border/50 hover:border-border transition-all duration-200 hover:shadow-sm"
             >
-              <div className="flex-shrink-0">
+              <div className="shrink-0">
                 <Image
                   src={
                     character.character?.images?.webp?.image_url ||

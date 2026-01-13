@@ -20,7 +20,7 @@ export function CharactersSection({ characters }) {
 
   const loadMore = () => {
     setVisibleCharacters((prev) =>
-      Math.min(prev + INCREMENT, characters.length)
+      Math.min(prev + INCREMENT, characters.length),
     );
   };
 
@@ -29,7 +29,7 @@ export function CharactersSection({ characters }) {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {displayCharacters.map((character, i) => {
           const japaneseVA = character.voice_actors?.find(
-            (va) => va.language === "Japanese"
+            (va) => va.language === "Japanese",
           );
 
           return (
@@ -37,7 +37,7 @@ export function CharactersSection({ characters }) {
               key={`${character.character?.mal_id}-${i}`}
               className="flex items-center gap-4 p-4 rounded-lg bg-card border border-border/50 hover:border-border transition-all duration-200 hover:shadow-sm"
             >
-              <div className="flex-shrink-0">
+              <div className="shrink-0">
                 <Image
                   src={
                     character.character?.images?.webp?.image_url ||

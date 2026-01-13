@@ -1,4 +1,4 @@
-import { Link } from "@/components/ui/link"; 
+import { Link } from "@/components/ui/link";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export function TypeFilterTabs({ typeFilter, basePath }) {
@@ -32,7 +32,7 @@ export function TypeFilterTabs({ typeFilter, basePath }) {
         <div className="flex justify-center gap-2 pb-2 min-w-max px-1">
           <Link
             href={basePath}
-            className={`flex-shrink-0 px-4 py-2 rounded-md text-sm font-medium whitespace-nowrap transition-colors ${
+            className={`shrink-0 px-4 py-2 rounded-md text-sm font-medium whitespace-nowrap transition-colors ${
               !typeFilter || typeFilter === "all"
                 ? "bg-primary text-primary-foreground"
                 : "bg-muted text-muted-foreground hover:bg-muted/80"
@@ -44,7 +44,7 @@ export function TypeFilterTabs({ typeFilter, basePath }) {
             <Link
               key={type}
               href={`${basePath}?type=${type}`}
-              className={`flex-shrink-0 px-4 py-2 rounded-md text-sm font-medium whitespace-nowrap transition-colors ${
+              className={`shrink-0 px-4 py-2 rounded-md text-sm font-medium whitespace-nowrap transition-colors ${
                 typeFilter === type
                   ? "bg-primary text-primary-foreground"
                   : "bg-muted text-muted-foreground hover:bg-muted/80"

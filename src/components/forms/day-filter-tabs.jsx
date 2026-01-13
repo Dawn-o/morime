@@ -1,8 +1,18 @@
-import { Link } from "@/components/ui/link"; 
+import { Link } from "@/components/ui/link";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export function DayFilterTabs({ dayFilter }) {
-  const days = [ "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday", "other", "unknown"];
+  const days = [
+    "monday",
+    "tuesday",
+    "wednesday",
+    "thursday",
+    "friday",
+    "saturday",
+    "sunday",
+    "other",
+    "unknown",
+  ];
 
   return (
     <Tabs value={dayFilter || "monday"} className="mb-4">
@@ -37,7 +47,7 @@ export function DayFilterTabs({ dayFilter }) {
                   ? "/anime/schedule"
                   : `/anime/schedule?day=${day}`
               }
-              className={`flex-shrink-0 px-4 py-2 rounded-md text-sm font-medium whitespace-nowrap transition-colors ${
+              className={`shrink-0 px-4 py-2 rounded-md text-sm font-medium whitespace-nowrap transition-colors ${
                 dayFilter === day || (!dayFilter && day === "monday")
                   ? "bg-primary text-primary-foreground"
                   : "bg-muted text-muted-foreground hover:bg-muted/80"

@@ -6,7 +6,7 @@ import { getCurrentSeason } from "@/lib/utils/season";
 
 function YearDisplay({ year }) {
   return (
-    <div className="bg-gradient-to-b from-muted/30 to-muted/60 flex flex-col items-center justify-center min-w-[80px] border-r border-border/50 -my-6">
+    <div className="bg-linear-to-b from-muted/30 to-muted/60 flex flex-col items-center justify-center min-w-20 border-r border-border/50 -my-6">
       {year
         .toString()
         .split("")
@@ -40,7 +40,7 @@ function SeasonButton({ season, year }) {
         {isCurrentSeason && (
           <Badge
             variant="destructive"
-            className="absolute -top-1 -right-1 text-xs px-1 py-0 h-4 min-w-[16px] flex items-center justify-center"
+            className="absolute -top-1 -right-1 text-xs px-1 py-0 h-4 min-w-4 flex items-center justify-center"
           >
             •
           </Badge>
@@ -54,7 +54,7 @@ function ListCard({ list }) {
   return (
     <Card className="overflow-hidden hover:shadow-md transition-shadow duration-200 border-border/50">
       <CardContent className="p-0">
-        <div className="flex min-h-[184px]">
+        <div className="flex min-h-46">
           <YearDisplay year={list.year} />
           <div className="flex-1 p-4">
             <div className="flex flex-col gap-2 justify-center h-full">

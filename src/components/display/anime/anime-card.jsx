@@ -14,9 +14,9 @@ export function AnimeCard({ anime, priority = false }) {
       href={`/anime/${anime.mal_id}/${toSnakeCase(anime.title)}`}
       className="group transition-all duration-300 hover:-translate-y-1"
     >
-      <div className="w-full h-auto aspect-[2/3] flex flex-col">
+      <div className="w-full h-auto aspect-2/3 flex flex-col">
         <div className="w-full h-full overflow-hidden rounded-lg shadow-lg group-hover:shadow-xl relative">
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent z-10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          <div className="absolute inset-0 bg-linear-to-t from-black/80 via-transparent to-transparent z-10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
 
           <Image
             src={getImageWithFallback(anime.imageUrl)}

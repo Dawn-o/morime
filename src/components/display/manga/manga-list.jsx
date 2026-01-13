@@ -15,7 +15,7 @@ function MangaListCard({ manga }) {
       className="group block p-4 border border-border rounded-lg hover:border-primary transition-all duration-300 hover:shadow-md"
     >
       <div className="flex items-start space-x-4">
-        <div className="flex-shrink-0 w-16 h-24 overflow-hidden rounded-lg bg-muted relative">
+        <div className="shrink-0 w-16 h-24 overflow-hidden rounded-lg bg-muted relative">
           {manga.imageUrl && !imageError ? (
             <Image
               src={getImageWithFallback(manga.imageUrl)}

@@ -19,7 +19,7 @@ export function SeasonNavigation({ routeParams }) {
   const getDesktopVisibleItems = () => {
     const startIndex = Math.max(
       0,
-      Math.min(activeIndex - 1, seasonNavItems.length - totalVisible)
+      Math.min(activeIndex - 1, seasonNavItems.length - totalVisible),
     );
     const endIndex = Math.min(seasonNavItems.length, startIndex + totalVisible);
     return {
@@ -33,7 +33,7 @@ export function SeasonNavigation({ routeParams }) {
     const startIndex = Math.max(0, activeIndex - 1);
     const endIndex = Math.min(
       seasonNavItems.length,
-      startIndex + mobileVisible
+      startIndex + mobileVisible,
     );
     return {
       startIndex,
@@ -50,7 +50,7 @@ export function SeasonNavigation({ routeParams }) {
       variant={item.isActive ? "default" : isMobile ? "outline" : "ghost"}
       size="sm"
       asChild
-      className={isMobile ? "flex-shrink-0 whitespace-nowrap text-xs px-3" : ""}
+      className={isMobile ? "shrink-0 whitespace-nowrap text-xs px-3" : ""}
     >
       <Link href={item.href} className="capitalize">
         {item.label}
@@ -91,7 +91,7 @@ export function SeasonNavigation({ routeParams }) {
               seasonNavItems[
                 Math.min(
                   seasonNavItems.length - 1,
-                  desktop.endIndex + totalVisible - 1
+                  desktop.endIndex + totalVisible - 1,
                 )
               ].href
             }
@@ -109,7 +109,7 @@ export function SeasonNavigation({ routeParams }) {
               <EllipsisButton
                 href={seasonNavItems[Math.max(0, mobile.startIndex - 2)].href}
                 title="Earlier seasons"
-                className="flex-shrink-0"
+                className="shrink-0"
               >
                 ←
               </EllipsisButton>
@@ -131,7 +131,7 @@ export function SeasonNavigation({ routeParams }) {
                   ].href
                 }
                 title="Later seasons"
-                className="flex-shrink-0"
+                className="shrink-0"
               >
                 →
               </EllipsisButton>
