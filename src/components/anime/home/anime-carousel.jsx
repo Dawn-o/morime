@@ -18,7 +18,7 @@ export function AnimeCarousel({ animes }) {
           <CarouselContent>
             {animes.map((anime, i) => (
               <CarouselItem
-                key={anime.mal_id + i}
+                key={`${anime.mal_id}-${i}`}
                 className="basis-1/2 sm:basis-1/3 md:basis-1/4 lg:basis-1/5 xl:basis-1/6"
               >
                 <AnimeCard anime={anime} priority={i < 6} />

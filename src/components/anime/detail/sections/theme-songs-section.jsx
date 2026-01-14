@@ -1,10 +1,8 @@
 import { EmptyState } from "@/components/content/empty-state";
 
 export function ThemeSongsSection({ themesData }) {
-  const hasOpenings =
-    themesData?.openings && themesData.openings.length > 0;
-  const hasEndings =
-    themesData?.endings && themesData.endings.length > 0;
+  const hasOpenings = themesData?.openings && themesData.openings.length > 0;
+  const hasEndings = themesData?.endings && themesData.endings.length > 0;
 
   if (!hasOpenings && !hasEndings) {
     return <EmptyState message="No theme songs available." />;
@@ -17,7 +15,10 @@ export function ThemeSongsSection({ themesData }) {
         {hasOpenings ? (
           <ul className="space-y-1 text-sm text-muted-foreground">
             {themesData.openings.map((opening, i) => (
-              <li key={i} className="pl-2 border-l-2 border-primary/30">
+              <li
+                key={`opening-${i}-${opening.substring(0, 20)}`}
+                className="pl-2 border-l-2 border-primary/30"
+              >
                 {opening}
               </li>
             ))}
@@ -34,7 +35,10 @@ export function ThemeSongsSection({ themesData }) {
         {hasEndings ? (
           <ul className="space-y-1 text-sm text-muted-foreground">
             {themesData.endings.map((ending, i) => (
-              <li key={i} className="pl-2 border-l-2 border-primary/30">
+              <li
+                key={`ending-${i}-${ending.substring(0, 20)}`}
+                className="pl-2 border-l-2 border-primary/30"
+              >
                 {ending}
               </li>
             ))}

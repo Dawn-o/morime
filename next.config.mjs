@@ -1,7 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  compiler: {
+    removeConsole: process.env.NODE_ENV === "production",
+  },
   images: {
     unoptimized: true,
+    qualities: [75, 80, 85],
     remotePatterns: [
       {
         protocol: "https",

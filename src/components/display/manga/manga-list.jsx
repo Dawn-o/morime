@@ -77,7 +77,7 @@ export function MangaList({ mangaData, currentPage, basePath, queryParams }) {
   return (
     <div className="space-y-3">
       {mangaData.data.map((manga, i) => (
-        <MangaListCard key={manga.mal_id + i} manga={manga} />
+        <MangaListCard key={`${manga.mal_id}-${i}`} manga={manga} />
       ))}
     </div>
   );

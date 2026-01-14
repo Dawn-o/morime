@@ -76,7 +76,7 @@ export function AnimeList({ animeData, currentPage, basePath, queryParams }) {
   return (
     <div className="space-y-3">
       {animeData.data.map((anime, i) => (
-        <AnimeListCard key={anime.mal_id + i} anime={anime} />
+        <AnimeListCard key={`${anime.mal_id}-${i}`} anime={anime} />
       ))}
     </div>
   );

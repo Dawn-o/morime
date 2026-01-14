@@ -56,7 +56,7 @@ export function HomeCarousel({ items }) {
         <CarouselContent>
           {items.map((item, i) => (
             <CarouselItem
-              key={item.mal_id + i}
+              key={`${item.mal_id}-${i}`}
               className="relative h-87.5 md:h-100 lg:h-137.5"
             >
               <Link

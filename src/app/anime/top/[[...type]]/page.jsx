@@ -2,8 +2,10 @@ import { getTopAnime } from "@/hooks/anime";
 import { AnimeGrid } from "@/components/display/anime/anime-grid";
 
 export default async function TopAnimePage({ params, searchParams }) {
-  const type = params?.type?.[0] || "all";
-  const currentPage = parseInt(searchParams?.page) || 1;
+  const resolvedParams = await params;
+  const resolvedSearchParams = await searchParams;
+  const type = resolvedParams?.type?.[0] || "all";
+  const currentPage = parseInt(resolvedSearchParams?.page) || 1;
   const apiConfig = { limit: 24 };
 
   if (["tv", "movie", "ova", "ona", "special"].includes(type)) {

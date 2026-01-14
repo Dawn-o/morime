@@ -33,8 +33,7 @@ const InfoValue = ({ children }) => (
 
 const AlternativeTitlesSection = ({ titleJapanese, titleSynonyms }) => {
   const hasAlternativeTitles =
-    titleJapanese ||
-    (titleSynonyms && titleSynonyms.length > 0);
+    titleJapanese || (titleSynonyms && titleSynonyms.length > 0);
 
   return (
     <SidebarSection title="Alternative Titles" condition={hasAlternativeTitles}>
@@ -43,9 +42,7 @@ const AlternativeTitlesSection = ({ titleJapanese, titleSynonyms }) => {
           <span className="text-xs text-muted-foreground/80 font-medium block">
             Japanese
           </span>
-          <div className="font-japanese text-sm">
-            {titleJapanese}
-          </div>
+          <div className="font-japanese text-sm">{titleJapanese}</div>
         </div>
       )}
 
@@ -56,7 +53,7 @@ const AlternativeTitlesSection = ({ titleJapanese, titleSynonyms }) => {
           </span>
           <div className="space-y-0.5">
             {titleSynonyms.map((title, i) => (
-              <div key={i} className="text-sm">
+              <div key={`synonym-${i}-${title}`} className="text-sm">
                 {title}
               </div>
             ))}
@@ -67,7 +64,16 @@ const AlternativeTitlesSection = ({ titleJapanese, titleSynonyms }) => {
   );
 };
 
-const BasicInfoSection = ({ status, episodes, rating, season, year, aired, duration, broadcast }) => {
+const BasicInfoSection = ({
+  status,
+  episodes,
+  rating,
+  season,
+  year,
+  aired,
+  duration,
+  broadcast,
+}) => {
   const formatSeason = (season, year) => {
     if (!season) return null;
     return `${season.charAt(0).toUpperCase() + season.slice(1)} ${year}`;
@@ -91,9 +97,7 @@ const BasicInfoSection = ({ status, episodes, rating, season, year, aired, durat
 
       {season && (
         <InfoRow label="Season">
-          <InfoValue>
-            {formatSeason(season, year)}
-          </InfoValue>
+          <InfoValue>{formatSeason(season, year)}</InfoValue>
         </InfoRow>
       )}
 
@@ -141,7 +145,7 @@ const CreditsSection = ({ studios, producers, licensors }) => (
             <Link
               key={producer.mal_id}
               href={`/producer/${producer.mal_id}/${toSnakeCase(
-                producer.name
+                producer.name,
               )}`}
             >
               <Badge
@@ -290,7 +294,7 @@ export function AnimeSidebar({ sidebarData }) {
     rank,
     popularity,
     members,
-    favorites
+    favorites,
   } = sidebarData;
 
   return (

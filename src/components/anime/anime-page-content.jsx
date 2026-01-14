@@ -8,8 +8,9 @@ import { MorimePagination } from "@/components/navigation/pagination";
 import { GenreCategories } from "../display/anime/genre-categories";
 
 export default async function AnimePageContent({ searchParams }) {
-  const currentPage = parseInt(searchParams?.page) || 1;
-  const searchQuery = searchParams?.q || "";
+  const resolvedSearchParams = await searchParams;
+  const currentPage = parseInt(resolvedSearchParams?.page) || 1;
+  const searchQuery = resolvedSearchParams?.q || "";
   const genresList = await getAnimeGenresList();
 
   let animeData;

@@ -2,8 +2,9 @@ import { getAnimeTitle } from "@/lib/content/anime-titles";
 import { PageHeader } from "@/components/headers/page-header";
 import { TopAnimeNavigation } from "@/components/navigation/top-navigation";
 
-export default function TopAnimeLayout({ children, params }) {
-  const type = params?.type?.[0] || "all";
+export default async function TopAnimeLayout({ children, params }) {
+  const resolvedParams = await params;
+  const type = resolvedParams?.type?.[0] || "all";
   const titleData = getAnimeTitle(type);
 
   return (

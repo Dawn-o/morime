@@ -5,7 +5,7 @@ import { getAnime } from "@/hooks/anime";
 
 export async function generateMetadata({ params }) {
   try {
-    const { malId } = params;
+    const { malId } = await params;
     const producer = await getProducerById(malId);
 
     if (!producer) {
@@ -28,7 +28,7 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function ProducerDetailsPage({ params, searchParams }) {
-  const { malId } = params;
+  const { malId } = await params;
   const currentPage = parseInt((await searchParams)?.page) || 1;
 
   if (!malId || isNaN(Number(malId))) {
