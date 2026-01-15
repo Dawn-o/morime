@@ -4,9 +4,9 @@ import { Badge } from "@/components/ui/Badge";
 import { PageContainer } from "@/components/layout/PageContainer";
 
 export const metadata = {
-  title: "About - Morime",
+  title: "About",
   description:
-    "Learn about Morime - A modern anime and manga discovery platform",
+    "Learn about Morime - A modern anime and manga discovery platform inspired by MyAnimeList. Built with Next.js, React, and powered by the Jikan API.",
 };
 
 export default function AboutPage() {

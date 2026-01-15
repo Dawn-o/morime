@@ -4,8 +4,9 @@ import { Badge } from "@/components/ui/Badge";
 import { PageContainer } from "@/components/layout/PageContainer";
 
 export const metadata = {
-  title: "Help Center - Morime",
-  description: "Get help using Morime - FAQs and guides",
+  title: "Help Center",
+  description:
+    "Get help using Morime. Find answers to frequently asked questions, guides, and tips for discovering anime and manga on our platform.",
 };
 
 export default function HelpPage() {

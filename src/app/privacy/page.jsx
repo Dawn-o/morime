@@ -2,8 +2,9 @@ import { Separator } from "@/components/ui/Separator";
 import { PageContainer } from "@/components/layout/PageContainer";
 
 export const metadata = {
-  title: "Privacy Policy - Morime",
-  description: "Morime's privacy policy and data handling practices",
+  title: "Privacy Policy",
+  description:
+    "Learn about Morime's privacy policy, data handling practices, and how we protect your information. Transparent policies for our anime and manga platform.",
 };
 
 export default function PrivacyPage() {

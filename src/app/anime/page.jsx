@@ -10,7 +10,7 @@ const AnimePageContent = dynamic(
 export const metadata = {
   title: "Anime List",
   description:
-    "Browse all anime series, movies, and specials from extensive collection.",
+    "Browse thousands of anime series, movies, and specials. Search by genre, filter by season, and discover your next favorite anime with detailed information and ratings.",
 };
 
 function AnimePageSkeleton({ searchParams }) {

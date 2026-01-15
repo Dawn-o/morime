@@ -10,7 +10,7 @@ const MangaPageContent = dynamic(
 export const metadata = {
   title: "Manga List",
   description:
-    "Browse all manga series, movies, and specials from extensive collection.",
+    "Browse thousands of manga series across all genres. Search, filter, and discover your next favorite manga with comprehensive information, ratings, and character details.",
 };
 
 function MangaPageSkeleton({ searchParams }) {

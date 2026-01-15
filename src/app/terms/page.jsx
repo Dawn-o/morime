@@ -2,8 +2,9 @@ import { Separator } from "@/components/ui/Separator";
 import { PageContainer } from "@/components/layout/PageContainer";
 
 export const metadata = {
-  title: "Terms of Service - Morime",
-  description: "Morime's terms of service and usage guidelines",
+  title: "Terms of Service",
+  description:
+    "Read Morime's terms of service and usage guidelines. Understand your rights and responsibilities when using our anime and manga discovery platform.",
 };
 
 export default function TermsPage() {

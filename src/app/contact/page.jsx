@@ -5,8 +5,9 @@ import { Github, Bug, Lightbulb, MessageSquare } from "lucide-react";
 import { PageContainer } from "@/components/layout/PageContainer";
 
 export const metadata = {
-  title: "Contact - Morime",
-  description: "Get in touch with the Morime team",
+  title: "Contact",
+  description:
+    "Get in touch with the Morime team. Report bugs, suggest features, or ask questions about our anime and manga discovery platform.",
 };
 
 export default function ContactPage() {
