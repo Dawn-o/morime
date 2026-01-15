@@ -1,7 +1,7 @@
-import { getAnimeTitle } from "@/lib/content/anime-titles";
-import { PageHeader } from "@/components/headers/page-header";
-import { TopAnimeNavigation } from "@/components/navigation/top-navigation";
-import { PageContainer } from "@/components/layout/page-container";
+import { getAnimeTitle } from "@/lib/content/AnimeTitles";
+import { PageHeader } from "@/components/headers/PageHeader";
+import { TopAnimeNavigation } from "@/components/navigation/TopNavigation";
+import { PageContainer } from "@/components/layout/PageContainer";
 
 export default async function TopAnimeLayout({ children, params }) {
   const resolvedParams = await params;

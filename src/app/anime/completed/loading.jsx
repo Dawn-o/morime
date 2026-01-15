@@ -1,6 +1,6 @@
-import { AnimeGridSkeleton } from "@/components/loading/anime-grid-skeleton";
-import { Skeleton } from "@/components/ui/skeleton";
-import { PageContainer } from "@/components/layout/page-container";
+import { AnimeGridSkeleton } from "@/components/loading/AnimeGridSkeleton";
+import { Skeleton } from "@/components/ui/Skeleton";
+import { PageContainer } from "@/components/layout/PageContainer";
 
 export default function RecentlyCompletedAnimeLoading() {
   return (

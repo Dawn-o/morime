@@ -1,9 +1,9 @@
-import { getDetailManga, getMangaCharacters } from "@/hooks/manga";
+import { getDetailManga, getMangaCharacters } from "@/hooks/UseManga";
 import { notFound } from "next/navigation";
-import { ContentSection } from "@/components/layout/page-container";
-import { MangaHeroSection } from "@/components/manga/detail/sections/hero-section";
-import { MangaSidebar } from "@/components/manga/detail/sections/sidebar";
-import { MangaContentSections } from "@/components/manga/detail/sections/content-sections";
+import { ContentSection } from "@/components/layout/PageContainer";
+import { MangaHeroSection } from "@/components/manga/detail/sections/HeroSection";
+import { MangaSidebar } from "@/components/manga/detail/sections/Sidebar";
+import { MangaContentSections } from "@/components/manga/detail/sections/ContentSections";
 
 export async function generateMetadata({ params }) {
   try {

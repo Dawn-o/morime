@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import dynamic from "next/dynamic";
-import { SeasonListSkeleton } from "@/components/loading/season-list-skeleton";
+import { SeasonListSkeleton } from "@/components/loading/SeasonListSkeleton";
 
 export const metadata = {
   title: "Anime Season List",
@@ -8,7 +8,7 @@ export const metadata = {
 };
 
 const SeasonListContent = dynamic(
-  () => import("@/components/anime/season/season-list-content"),
+  () => import("@/components/anime/season/SeasonListContent"),
   { suspense: true }
 );
 

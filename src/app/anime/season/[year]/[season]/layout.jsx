@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
-import { PageHeader } from "@/components/headers/page-header";
-import { SeasonNavigation } from "@/components/navigation/season-navigation";
-import { PageContainer } from "@/components/layout/page-container";
+import { PageHeader } from "@/components/headers/PageHeader";
+import { SeasonNavigation } from "@/components/navigation/SeasonNavigation";
+import { PageContainer } from "@/components/layout/PageContainer";
 
 export default async function SeasonLayout({ children, params }) {
   const { year, season } = await params;

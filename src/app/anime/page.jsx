@@ -1,9 +1,9 @@
 import { Suspense } from "react";
 import dynamic from "next/dynamic";
-import AnimeListSkeleton from "@/components/loading/anime-list-skeleton";
+import AnimeListSkeleton from "@/components/loading/AnimeListSkeleton";
 
 const AnimePageContent = dynamic(
-  () => import("@/components/anime/anime-page-content"),
+  () => import("@/components/anime/AnimePageContent"),
   { suspense: true },
 );
 

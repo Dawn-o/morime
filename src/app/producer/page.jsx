@@ -1,7 +1,7 @@
-import { getProducers, searchProducers } from "@/hooks/producer";
-import { SearchInput } from "@/components/forms/search-input";
-import { ProducersGrid } from "@/components/producer/producers-grid";
-import { PageContainer, PageHeader } from "@/components/layout/page-container";
+import { getProducers, searchProducers } from "@/hooks/UseProducer";
+import { SearchInput } from "@/components/forms/SearchInput";
+import { ProducersGrid } from "@/components/producer/ProducersGrid";
+import { PageContainer, PageHeader } from "@/components/layout/PageContainer";
 
 export async function generateMetadata() {
   return {

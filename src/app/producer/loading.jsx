@@ -1,4 +1,4 @@
-import ProducersPageSkeleton from "@/components/loading/producers-page-skeleton";
+import ProducersPageSkeleton from "@/components/loading/ProducersPageSkeleton";
 
 export default function Loading() {
   return <ProducersPageSkeleton />;

@@ -1,8 +1,8 @@
-import HomePage from "@/components/anime/home/home-page";
-import { getTopAnime, getAnimeGenresList } from "@/hooks/anime";
-import { getSeason } from "@/hooks/season";
+import HomePage from "@/components/anime/home/HomePage";
+import { getTopAnime, getAnimeGenresList } from "@/hooks/UseAnime";
+import { getSeason } from "@/hooks/UseSeason";
 import { Suspense } from "react";
-import { HomePageSkeleton } from "@/components/loading/home-page-skeleton";
+import { HomePageSkeleton } from "@/components/loading/HomePageSkeleton";
 
 export default async function Home() {
   const upcomings = await getSeason(2, { type: "seasons/upcoming", limit: 6 });

@@ -2,12 +2,12 @@ import {
   getDetailAnime,
   getEpisodeAnime,
   getAnimeCharacters,
-} from "@/hooks/anime";
+} from "@/hooks/UseAnime";
 import { notFound } from "next/navigation";
-import { ContentSection } from "@/components/layout/page-container";
-import { AnimeHeroSection } from "@/components/anime/detail/sections/hero-section";
-import { AnimeSidebar } from "@/components/anime/detail/sections/sidebar";
-import { AnimeContentSections } from "@/components/anime/detail/sections/content-sections";
+import { ContentSection } from "@/components/layout/PageContainer";
+import { AnimeHeroSection } from "@/components/anime/detail/sections/HeroSection";
+import { AnimeSidebar } from "@/components/anime/detail/sections/Sidebar";
+import { AnimeContentSections } from "@/components/anime/detail/sections/ContentSections";
 
 export async function generateMetadata({ params }) {
   const { malId } = await params;

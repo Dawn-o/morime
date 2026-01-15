@@ -1,8 +1,8 @@
-import { Separator } from "@/components/ui/separator";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/Separator";
+import { Card, CardContent } from "@/components/ui/Card";
+import { Badge } from "@/components/ui/Badge";
 import { Github, Bug, Lightbulb, MessageSquare } from "lucide-react";
-import { PageContainer } from "@/components/layout/page-container";
+import { PageContainer } from "@/components/layout/PageContainer";
 
 export const metadata = {
   title: "Contact - Morime",

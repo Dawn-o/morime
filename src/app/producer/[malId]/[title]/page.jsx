@@ -1,8 +1,8 @@
-import { getProducerById } from "@/hooks/producer";
-import { ProducerDetails } from "@/components/producer/producer-details";
+import { getProducerById } from "@/hooks/UseProducer";
+import { ProducerDetails } from "@/components/producer/ProducerDetails";
 import { notFound } from "next/navigation";
-import { getAnime } from "@/hooks/anime";
-import { PageContainer } from "@/components/layout/page-container";
+import { getAnime } from "@/hooks/UseAnime";
+import { PageContainer } from "@/components/layout/PageContainer";
 
 export async function generateMetadata({ params }) {
   try {

@@ -1,5 +1,5 @@
-import { getTopAnime } from "@/hooks/anime";
-import { AnimeGrid } from "@/components/display/anime/anime-grid";
+import { getTopAnime } from "@/hooks/UseAnime";
+import { AnimeGrid } from "@/components/display/anime/AnimeGrid";
 
 export default async function TopAnimePage({ params, searchParams }) {
   const resolvedParams = await params;

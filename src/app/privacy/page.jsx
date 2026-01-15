@@ -1,5 +1,5 @@
-import { Separator } from "@/components/ui/separator";
-import { PageContainer } from "@/components/layout/page-container";
+import { Separator } from "@/components/ui/Separator";
+import { PageContainer } from "@/components/layout/PageContainer";
 
 export const metadata = {
   title: "Privacy Policy - Morime",

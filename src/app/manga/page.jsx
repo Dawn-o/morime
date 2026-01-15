@@ -1,9 +1,9 @@
 import { Suspense } from "react";
 import dynamic from "next/dynamic";
-import MangaListSkeleton from "@/components/loading/manga-list-skeleton";
+import MangaListSkeleton from "@/components/loading/MangaListSkeleton";
 
 const MangaPageContent = dynamic(
-  () => import("@/components/manga/manga-page-content"),
+  () => import("@/components/manga/MangaPageContent"),
   { suspense: true },
 );
 

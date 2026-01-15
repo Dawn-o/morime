@@ -1,8 +1,8 @@
-import { getSchedules } from "@/hooks/schedule";
-import { AnimeGrid } from "@/components/display/anime/anime-grid";
-import { DayFilterTabs } from "@/components/forms/day-filter-tabs";
+import { getSchedules } from "@/hooks/UseSchedule";
+import { AnimeGrid } from "@/components/display/anime/AnimeGrid";
+import { DayFilterTabs } from "@/components/forms/DayFilterTabs";
 import { notFound } from "next/navigation";
-import { PageContainer, PageHeader } from "@/components/layout/page-container";
+import { PageContainer, PageHeader } from "@/components/layout/PageContainer";
 
 export async function generateMetadata({ searchParams }) {
   const currentPage = parseInt((await searchParams)?.page) || 1;

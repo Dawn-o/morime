@@ -1,7 +1,7 @@
-import { getSeason } from "@/hooks/season";
-import { TypeFilterTabs } from "@/components/forms/type-filter-tabs";
-import { AnimeGrid } from "@/components/display/anime/anime-grid";
-import { PageContainer, PageHeader } from "@/components/layout/page-container";
+import { getSeason } from "@/hooks/UseSeason";
+import { TypeFilterTabs } from "@/components/forms/TypeFilterTabs";
+import { AnimeGrid } from "@/components/display/anime/AnimeGrid";
+import { PageContainer, PageHeader } from "@/components/layout/PageContainer";
 
 export async function generateMetadata({ searchParams }) {
   const currentPage = parseInt((await searchParams)?.page) || 1;

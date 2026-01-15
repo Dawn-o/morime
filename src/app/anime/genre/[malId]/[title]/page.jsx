@@ -1,12 +1,12 @@
-import { getAnime, getAnimeGenresList } from "@/hooks/anime";
-import { AnimeGrid } from "@/components/display/anime/anime-grid";
-import { Badge } from "@/components/ui/badge";
-import { GenreGrid } from "@/components/display/anime/genre-grid";
+import { getAnime, getAnimeGenresList } from "@/hooks/UseAnime";
+import { AnimeGrid } from "@/components/display/anime/AnimeGrid";
+import { Badge } from "@/components/ui/Badge";
+import { GenreGrid } from "@/components/display/anime/GenreGrid";
 import {
   PageContainer,
   PageHeader,
   ContentSection,
-} from "@/components/layout/page-container";
+} from "@/components/layout/PageContainer";
 
 export async function generateMetadata({ params }) {
   const { title } = await params;

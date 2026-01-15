@@ -1,7 +1,7 @@
-import { Separator } from "@/components/ui/separator";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { PageContainer } from "@/components/layout/page-container";
+import { Separator } from "@/components/ui/Separator";
+import { Card, CardContent } from "@/components/ui/Card";
+import { Badge } from "@/components/ui/Badge";
+import { PageContainer } from "@/components/layout/PageContainer";
 
 export const metadata = {
   title: "About - Morime",

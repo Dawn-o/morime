@@ -1,12 +1,12 @@
-import { getManga, getMangaGenresList } from "@/hooks/manga";
-import { MangaGrid } from "@/components/display/manga/manga-grid";
-import { Badge } from "@/components/ui/badge";
-import { GenreGrid } from "@/components/display/anime/genre-grid";
+import { getManga, getMangaGenresList } from "@/hooks/UseManga";
+import { MangaGrid } from "@/components/display/manga/MangaGrid";
+import { Badge } from "@/components/ui/Badge";
+import { GenreGrid } from "@/components/display/anime/GenreGrid";
 import {
   PageContainer,
   PageHeader,
   ContentSection,
-} from "@/components/layout/page-container";
+} from "@/components/layout/PageContainer";
 
 export async function generateMetadata({ params }) {
   const { title } = await params;

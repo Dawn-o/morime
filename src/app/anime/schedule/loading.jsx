@@ -1,4 +1,4 @@
-import { ScheduleSkeleton } from "@/components/loading/schedule-skeleton";
+import { ScheduleSkeleton } from "@/components/loading/ScheduleSkeleton";
 
 export default function loading() {
   return <ScheduleSkeleton />;

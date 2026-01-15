@@ -1,6 +1,6 @@
-import { getSeason } from "@/hooks/season";
-import { TypeFilterTabs } from "@/components/forms/type-filter-tabs";
-import { AnimeGrid } from "@/components/display/anime/anime-grid";
+import { getSeason } from "@/hooks/UseSeason";
+import { TypeFilterTabs } from "@/components/forms/TypeFilterTabs";
+import { AnimeGrid } from "@/components/display/anime/AnimeGrid";
 
 export async function generateMetadata({ params, searchParams }) {
     const { year, season } = await params;

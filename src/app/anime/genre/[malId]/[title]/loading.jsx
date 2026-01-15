@@ -1,4 +1,4 @@
-import GenrePageSkeleton from "@/components/loading/genre-page-skeleton";
+import GenrePageSkeleton from "@/components/loading/GenrePageSkeleton";
 
 export default function loading() {
   return <GenrePageSkeleton />;
