@@ -1,11 +1,12 @@
 import { getSeasonList } from "@/hooks/season";
 import { SeasonList } from "@/components/anime/season/season-list";
+import { PageContainer } from "@/components/layout/page-container";
 
 export default async function SeasonListContent() {
   const listData = await getSeasonList();
 
   return (
-    <section className="container mx-auto py-8 sm:py-10 px-4">
+    <PageContainer as="section">
       <div className="text-center space-y-2 mb-8">
         <h1 className="text-2xl font-bold text-foreground">
           Anime Season List
@@ -16,6 +17,6 @@ export default async function SeasonListContent() {
       </div>
 
       <SeasonList listData={listData} />
-    </section>
+    </PageContainer>
   );
 }

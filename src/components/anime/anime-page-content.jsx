@@ -6,6 +6,11 @@ import { GenreGrid } from "@/components/display/anime/genre-grid";
 import { Separator } from "@/components/ui/separator";
 import { MorimePagination } from "@/components/navigation/pagination";
 import { GenreCategories } from "../display/anime/genre-categories";
+import {
+  PageContainer,
+  PageHeader,
+  ContentSection,
+} from "@/components/layout/page-container";
 
 export default async function AnimePageContent({ searchParams }) {
   const resolvedSearchParams = await searchParams;
@@ -50,17 +55,15 @@ export default async function AnimePageContent({ searchParams }) {
 
   return (
     <>
-      <section className="container mx-auto py-8 sm:py-10 px-4">
-        <div className="text-center space-y-2 mb-8">
-          <h1 className="text-2xl font-bold text-foreground">
-            {searchQuery ? `Search: ${searchQuery}` : "Anime List"}
-          </h1>
-          <p className="text-sm text-muted-foreground">
-            {searchQuery
+      <PageContainer as="section">
+        <PageHeader
+          title={searchQuery ? `Search: ${searchQuery}` : "Anime List"}
+          description={
+            searchQuery
               ? `Search results for "${searchQuery}"`
-              : "Browse all anime series, movies, and specials from extensive collection"}
-          </p>
-        </div>
+              : "Browse all anime series, movies, and specials from extensive collection"
+          }
+        />
 
         <SearchInput
           defaultValue={searchQuery}
@@ -99,12 +102,12 @@ export default async function AnimePageContent({ searchParams }) {
         ) : (
           <GenreCategories genres={genresList} />
         )}
-      </section>
+      </PageContainer>
 
       {searchQuery && (
-        <section className="container mx-auto pb-8 sm:pb-10 px-4">
+        <ContentSection>
           <GenreGrid genres={genresList} />
-        </section>
+        </ContentSection>
       )}
     </>
   );

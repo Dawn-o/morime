@@ -1,9 +1,10 @@
 import { AnimeGridSkeleton } from "@/components/loading/anime-grid-skeleton";
 import { Skeleton } from "@/components/ui/skeleton";
+import { PageContainer } from "@/components/layout/page-container";
 
 export default function AiringAnimeLoading() {
   return (
-    <div className="container mx-auto py-8 sm:py-10 px-4">
+    <PageContainer>
       <div className="text-center space-y-2 mb-8">
         <Skeleton className="h-8 w-56 mx-auto" />
         <Skeleton className="h-4 w-72 mx-auto" />
@@ -18,6 +19,6 @@ export default function AiringAnimeLoading() {
       </div>
 
       <AnimeGridSkeleton />
-    </div>
+    </PageContainer>
   );
 }

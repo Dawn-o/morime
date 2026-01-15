@@ -1,11 +1,15 @@
 import { Skeleton } from "@/components/ui/skeleton";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
+import {
+  PageContainer,
+  ContentSection,
+} from "@/components/layout/page-container";
 
 export default function GenrePageSkeleton() {
   return (
     <>
-      <section className="container mx-auto py-8 sm:py-10 px-4">
+      <PageContainer as="section">
         <div className="text-center space-y-2 mb-8">
           <div className="flex items-center justify-center gap-2 mb-4">
             <Badge variant="secondary" className="text-sm px-3 py-1">
@@ -35,9 +39,9 @@ export default function GenrePageSkeleton() {
           <Skeleton className="h-10 w-10" />
           <Skeleton className="h-10 w-20" />
         </div>
-      </section>
+      </PageContainer>
 
-      <section className="container mx-auto pb-8 sm:pb-10 px-4">
+      <ContentSection>
         <div className="border border-primary-foreground p-4 rounded-lg">
           <div className="flex items-center justify-center flex-wrap gap-2">
             {Array.from({ length: 24 }).map((_, i) => (
@@ -45,7 +49,7 @@ export default function GenrePageSkeleton() {
             ))}
           </div>
         </div>
-      </section>
+      </ContentSection>
     </>
   );
 }

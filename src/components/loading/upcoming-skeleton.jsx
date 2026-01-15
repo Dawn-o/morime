@@ -1,9 +1,10 @@
 import { Skeleton } from "@/components/ui/skeleton";
+import { PageContainer } from "@/components/layout/page-container";
 import { Separator } from "@/components/ui/separator";
 
 export default function UpcomingSkeleton() {
   return (
-    <section className="container mx-auto py-8 sm:py-10 px-4">
+    <PageContainer as="section">
       <div className="text-center space-y-2 mb-8">
         <Skeleton className="h-8 w-64 mx-auto" />
         <Skeleton className="h-4 w-80 mx-auto" />
@@ -44,7 +45,7 @@ export default function UpcomingSkeleton() {
         <Skeleton className="h-10 w-10" />
         <Skeleton className="h-10 w-20" />
       </div>
-    </section>
+    </PageContainer>
   );
 }
 

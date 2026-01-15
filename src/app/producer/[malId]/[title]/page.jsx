@@ -2,6 +2,7 @@ import { getProducerById } from "@/hooks/producer";
 import { ProducerDetails } from "@/components/producer/producer-details";
 import { notFound } from "next/navigation";
 import { getAnime } from "@/hooks/anime";
+import { PageContainer } from "@/components/layout/page-container";
 
 export async function generateMetadata({ params }) {
   try {
@@ -77,12 +78,12 @@ export default async function ProducerDetailsPage({ params, searchParams }) {
     : null;
 
   return (
-    <section className="container mx-auto py-8 sm:py-10 px-4">
+    <PageContainer as="section">
       <ProducerDetails
         producer={producerDetailsData}
         animes={producedAnimesData}
         currentPage={currentPage}
       />
-    </section>
+    </PageContainer>
   );
 }

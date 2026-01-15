@@ -10,12 +10,13 @@ export function Footer() {
           <div>
             <h3 className="font-bold text-lg mb-4">Morime</h3>
             <p className="text-muted-foreground text-sm">
-              Your ultimate anime tracking platform with comprehensive
-              content discovery and personalized recommendations.
+              Your ultimate anime tracking platform with comprehensive content
+              discovery and personalized recommendations.
             </p>
             <div className="flex mt-4 space-x-4">
               <Link
                 href="https://github.com/dawn-o"
+                prefetch={true}
                 className="text-muted-foreground hover:text-foreground"
               >
                 <Github size={20} />
@@ -23,6 +24,7 @@ export function Footer() {
               </Link>
               <Link
                 href="https://twitter.com"
+                prefetch={true}
                 className="text-muted-foreground hover:text-foreground"
               >
                 <Twitter size={20} />
@@ -30,6 +32,7 @@ export function Footer() {
               </Link>
               <Link
                 href="https://instagram.com/rushel.id"
+                prefetch={true}
                 className="text-muted-foreground hover:text-foreground"
               >
                 <Instagram size={20} />
@@ -136,7 +139,8 @@ export function Footer() {
               <ul className="space-y-2">
                 <li>
                   <Link
-                    href="#"
+                    prefetch={true}
+                    href="/about"
                     className="text-muted-foreground hover:text-foreground"
                   >
                     About
@@ -144,7 +148,8 @@ export function Footer() {
                 </li>
                 <li>
                   <Link
-                    href="#"
+                    prefetch={true}
+                    href="/contact"
                     className="text-muted-foreground hover:text-foreground"
                   >
                     Contact
@@ -152,7 +157,8 @@ export function Footer() {
                 </li>
                 <li>
                   <Link
-                    href="#"
+                    prefetch={true}
+                    href="/privacy"
                     className="text-muted-foreground hover:text-foreground"
                   >
                     Privacy Policy
@@ -160,7 +166,8 @@ export function Footer() {
                 </li>
                 <li>
                   <Link
-                    href="#"
+                    prefetch={true}
+                    href="/terms"
                     className="text-muted-foreground hover:text-foreground"
                   >
                     Terms of Service
@@ -168,7 +175,8 @@ export function Footer() {
                 </li>
                 <li>
                   <Link
-                    href="#"
+                    prefetch={true}
+                    href="/help"
                     className="text-muted-foreground hover:text-foreground"
                   >
                     Help Center
@@ -184,10 +192,14 @@ export function Footer() {
         </div>
 
         <div className="container mx-auto flex flex-col md:flex-row justify-between items-center text-sm text-muted-foreground">
-          <p>© 2025 Morime. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} Morime. All rights reserved.</p>
           <p className="mt-2 md:mt-0">
             Powered by{" "}
-            <Link href="https://jikan.moe/" className="underline">
+            <Link
+              prefetch={true}
+              href="https://jikan.moe/"
+              className="underline"
+            >
               Jikan API
             </Link>
           </p>

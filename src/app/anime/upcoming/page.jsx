@@ -1,6 +1,7 @@
 import { getSeason } from "@/hooks/season";
 import { TypeFilterTabs } from "@/components/forms/type-filter-tabs";
 import { AnimeGrid } from "@/components/display/anime/anime-grid";
+import { PageContainer, PageHeader } from "@/components/layout/page-container";
 
 export async function generateMetadata({ searchParams }) {
   const currentPage = parseInt((await searchParams)?.page) || 1;
@@ -42,13 +43,11 @@ export default async function UpcomingPage({ searchParams }) {
     : null;
 
   return (
-    <section className="container mx-auto py-8 sm:py-10 px-4">
-      <div className="text-center space-y-2 mb-8">
-        <h1 className="text-2xl font-bold text-foreground">Upcoming Anime</h1>
-        <p className="text-sm text-muted-foreground">
-          Discover upcoming anime releases and new seasons
-        </p>
-      </div>
+    <PageContainer as="section">
+      <PageHeader
+        title="Upcoming Anime"
+        description="Discover upcoming anime releases and new seasons"
+      />
 
       <TypeFilterTabs typeFilter={typeFilter} basePath="/anime/upcoming" />
 
@@ -60,6 +59,6 @@ export default async function UpcomingPage({ searchParams }) {
           ...(typeFilter && { type: typeFilter }),
         }}
       />
-    </section>
+    </PageContainer>
   );
 }

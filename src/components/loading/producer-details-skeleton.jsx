@@ -1,9 +1,10 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
+import { PageContainer } from "@/components/layout/page-container";
 
 export default function ProducerDetailsSkeleton() {
   return (
-    <section className="container mx-auto py-8 sm:py-10 px-4">
+    <PageContainer as="section">
       <div className="space-y-6">
         <Card>
           <CardHeader>
@@ -44,7 +45,7 @@ export default function ProducerDetailsSkeleton() {
           </CardContent>
         </Card>
       </div>
-    </section>
+    </PageContainer>
   );
 }
 

@@ -1,4 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card";
+import { PageContainer } from "@/components/layout/page-container";
 import { Skeleton } from "@/components/ui/skeleton";
 
 function YearDisplaySkeleton() {
@@ -37,7 +38,7 @@ function ListCardSkeleton() {
 
 export function SeasonListSkeleton() {
   return (
-    <section className="container mx-auto py-8 sm:py-10 px-4">
+    <PageContainer as="section">
       <div className="text-center space-y-2 mb-8">
         <Skeleton className="h-8 w-48 mx-auto bg-muted/50" />
         <Skeleton className="h-4 w-64 mx-auto bg-muted/30" />
@@ -50,6 +51,6 @@ export function SeasonListSkeleton() {
           ))}
         </div>
       </div>
-    </section>
+    </PageContainer>
   );
 }

@@ -1,6 +1,7 @@
 import { getRecentlyCompletedAnime } from "@/hooks/anime";
 import { AnimeGrid } from "@/components/display/anime/anime-grid";
 import { TypeFilterTabs } from "@/components/forms/type-filter-tabs";
+import { PageContainer, PageHeader } from "@/components/layout/page-container";
 
 export async function generateMetadata({ searchParams }) {
   const currentPage = parseInt((await searchParams)?.page) || 1;
@@ -45,15 +46,11 @@ export default async function CompletedAnimePage({ searchParams }) {
     : null;
 
   return (
-    <div className="container mx-auto py-8 sm:py-10 px-4">
-      <div className="text-center space-y-2 mb-8">
-        <h1 className="text-2xl font-bold text-foreground">
-          Recently Completed Anime
-        </h1>
-        <p className="text-sm text-muted-foreground">
-          Browse anime series that recently finished airing
-        </p>
-      </div>
+    <PageContainer>
+      <PageHeader
+        title="Recently Completed Anime"
+        description="Browse anime series that recently finished airing"
+      />
 
       <div className="mb-6">
         <TypeFilterTabs currentType={typeFilter} basePath="/anime/completed" />
@@ -65,6 +62,6 @@ export default async function CompletedAnimePage({ searchParams }) {
         basePath="/anime/completed"
         queryParams={typeFilter ? { type: typeFilter } : {}}
       />
-    </div>
+    </PageContainer>
   );
 }

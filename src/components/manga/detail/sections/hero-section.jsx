@@ -2,9 +2,10 @@
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { StarIcon, BookOpen, Calendar } from "lucide-react";
+import { StarIcon, Calendar } from "lucide-react";
 import { Link } from "@/components/ui/link";
 import { toSnakeCase } from "@/lib/utils/formatter";
+import { PageContainer } from "@/components/layout/page-container";
 import { getImageWithFallback } from "@/lib/utils/image-fallback";
 import { useState } from "react";
 
@@ -233,7 +234,7 @@ export function MangaHeroSection({ heroData }) {
     <section className="w-full min-h-100 md:min-h-125 lg:min-h-150 relative overflow-hidden bg-linear-to-b from-background/60 via-background/80 to-background">
       <MangaImage imageUrl={imageUrl} title={title} />
 
-      <div className="container mx-auto h-full relative z-10 px-4">
+      <PageContainer noPaddingY className="h-full relative z-10">
         <div className="flex h-full items-end pb-8 md:pb-10 pt-20 sm:pt-24">
           <div className="flex flex-col sm:flex-row w-full gap-5 sm:gap-8 items-center sm:items-start md:items-end">
             <MangaPoster imageUrl={imageUrl} title={title} />
@@ -273,7 +274,7 @@ export function MangaHeroSection({ heroData }) {
             </div>
           </div>
         </div>
-      </div>
+      </PageContainer>
     </section>
   );
 }

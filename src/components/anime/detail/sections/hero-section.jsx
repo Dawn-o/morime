@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { StarIcon, Calendar } from "lucide-react";
 import { Link } from "@/components/ui/link";
 import { toSnakeCase } from "@/lib/utils/formatter";
+import { PageContainer } from "@/components/layout/page-container";
 
 const AnimeImage = ({ imageUrl, title }) => {
   if (!imageUrl) return null;
@@ -252,7 +253,7 @@ export function AnimeHeroSection({ heroData }) {
     <section className="w-full min-h-100 md:min-h-125 lg:min-h-150 relative overflow-hidden bg-linear-to-b from-background/60 via-background/80 to-background">
       <AnimeImage imageUrl={imageUrl} title={title} />
 
-      <div className="container mx-auto h-full relative z-10 px-4">
+      <PageContainer noPaddingY className="h-full relative z-10">
         <div className="flex h-full items-end pb-8 md:pb-10 pt-20 sm:pt-24">
           <div className="flex flex-col sm:flex-row w-full gap-5 sm:gap-8 items-center sm:items-start md:items-end">
             <AnimePoster imageUrl={imageUrl} title={title} />
@@ -298,7 +299,7 @@ export function AnimeHeroSection({ heroData }) {
             </div>
           </div>
         </div>
-      </div>
+      </PageContainer>
     </section>
   );
 }

@@ -2,6 +2,11 @@ import { getManga, getMangaGenresList } from "@/hooks/manga";
 import { MangaGrid } from "@/components/display/manga/manga-grid";
 import { Badge } from "@/components/ui/badge";
 import { GenreGrid } from "@/components/display/anime/genre-grid";
+import {
+  PageContainer,
+  PageHeader,
+  ContentSection,
+} from "@/components/layout/page-container";
 
 export async function generateMetadata({ params }) {
   const { title } = await params;
@@ -47,20 +52,16 @@ export default async function MangaGenrePage({ params, searchParams }) {
 
   return (
     <>
-      <section className="container mx-auto py-8 sm:py-10 px-4">
-        <div className="text-center space-y-2 mb-8">
-          <div className="flex items-center justify-center gap-2 mb-4">
+      <PageContainer as="section">
+        <PageHeader
+          title={`${genreName} Manga`}
+          description={`Browse manga series in the ${genreName} genre`}
+          badge={
             <Badge variant="secondary" className="text-sm px-3 py-1">
               Genre
             </Badge>
-          </div>
-          <h1 className="text-2xl font-bold text-foreground capitalize">
-            {genreName} Manga
-          </h1>
-          <p className="text-sm text-muted-foreground">
-            Browse manga series in the {genreName} genre
-          </p>
-        </div>
+          }
+        />
 
         <MangaGrid
           mangaData={mangaListData}
@@ -68,11 +69,11 @@ export default async function MangaGenrePage({ params, searchParams }) {
           basePath={`/manga/genre/${malId}/${title}`}
           queryParams={{}}
         />
-      </section>
+      </PageContainer>
 
-      <section className="container mx-auto pb-8 sm:pb-10 px-4">
+      <ContentSection>
         <GenreGrid genres={genresList} />
-      </section>
+      </ContentSection>
     </>
   );
 }

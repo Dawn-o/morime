@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { PageHeader } from "@/components/headers/page-header";
 import { SeasonNavigation } from "@/components/navigation/season-navigation";
+import { PageContainer } from "@/components/layout/page-container";
 
 export default async function SeasonLayout({ children, params }) {
   const { year, season } = await params;
@@ -24,7 +25,7 @@ export default async function SeasonLayout({ children, params }) {
   } ${year} Anime`;
 
   return (
-    <section className="container mx-auto py-8 sm:py-10 px-4">
+    <PageContainer as="section">
       <PageHeader
         title={seasonTitle}
         description={`Anime from ${season} ${year} season`}
@@ -33,6 +34,6 @@ export default async function SeasonLayout({ children, params }) {
       <SeasonNavigation routeParams={[year, season]} />
 
       {children}
-    </section>
+    </PageContainer>
   );
 }

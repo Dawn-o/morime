@@ -1,4 +1,8 @@
 import { Skeleton } from "@/components/ui/skeleton";
+import {
+  PageContainer,
+  ContentSection,
+} from "@/components/layout/page-container";
 
 export default function DetailMangaSkeleton() {
   return (
@@ -11,7 +15,7 @@ export default function DetailMangaSkeleton() {
         <div className="absolute inset-0 bg-linear-to-t from-background via-background/70 to-background/20" />
         <div className="absolute inset-0 bg-linear-to-r from-background/90 to-transparent" />
 
-        <div className="container mx-auto h-full relative z-10 px-4">
+        <PageContainer noPaddingY className="h-full relative z-10">
           <div className="flex h-full items-end pb-8 md:pb-10 pt-20 sm:pt-24">
             <div className="flex flex-col sm:flex-row w-full gap-5 sm:gap-8 items-center sm:items-start md:items-end">
               <div className="flex flex-col items-center gap-2">
@@ -65,10 +69,10 @@ export default function DetailMangaSkeleton() {
               </div>
             </div>
           </div>
-        </div>
+        </PageContainer>
       </section>
 
-      <section className="container mx-auto pb-8 sm:pb-10 px-4 mt-0 md:-mt-24 lg:-mt-48 relative z-10">
+      <ContentSection className="mt-0 md:-mt-24 lg:-mt-48 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 lg:gap-8">
           <div className="lg:col-span-1">
             <div className="py-0 shadow-lg border-border/40 rounded-xl bg-card">
@@ -218,7 +222,7 @@ export default function DetailMangaSkeleton() {
             </div>
           </div>
         </div>
-      </section>
+      </ContentSection>
     </>
   );
 }

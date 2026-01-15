@@ -1,4 +1,5 @@
 import { Skeleton } from "@/components/ui/skeleton";
+import { PageContainer } from "@/components/layout/page-container";
 
 function HomeCarouselSkeleton() {
   return (
@@ -137,7 +138,7 @@ function AnimeCarouselSkeleton() {
 
 export function HomePageSkeleton() {
   return (
-    <main className="container mx-auto pb-12">
+    <PageContainer as="main" noPaddingY className="pb-12">
       <section className="px-3 md:px-0 mt-3 mb-6">
         <HomeCarouselSkeleton />
       </section>
@@ -161,6 +162,6 @@ export function HomePageSkeleton() {
           <AnimeCarouselSkeleton />
         </div>
       </section>
-    </main>
+    </PageContainer>
   );
 }

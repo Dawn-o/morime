@@ -1,5 +1,9 @@
 import { Skeleton } from "@/components/ui/skeleton";
 import { Separator } from "@/components/ui/separator";
+import {
+  PageContainer,
+  ContentSection,
+} from "@/components/layout/page-container";
 
 export default function MangaListSkeleton({
   showSearch = true,
@@ -7,7 +11,7 @@ export default function MangaListSkeleton({
 }) {
   return (
     <>
-      <section className="container mx-auto py-8 sm:py-10 px-4">
+      <PageContainer as="section">
         <div className="text-center space-y-2 mb-8">
           <Skeleton className="h-8 w-64 mx-auto" />
           <Skeleton className="h-4 w-96 mx-auto" />
@@ -77,16 +81,16 @@ export default function MangaListSkeleton({
             ))}
           </div>
         )}
-      </section>
+      </PageContainer>
 
       {isSearching && (
-        <section className="container mx-auto pb-8 sm:pb-10 px-4">
+        <ContentSection>
           <div className="flex items-center justify-center flex-wrap gap-2">
             {Array.from({ length: 20 }).map((_, i) => (
               <Skeleton key={i} className="h-7 w-16 rounded" />
             ))}
           </div>
-        </section>
+        </ContentSection>
       )}
     </>
   );

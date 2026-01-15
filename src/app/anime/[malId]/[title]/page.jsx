@@ -4,6 +4,7 @@ import {
   getAnimeCharacters,
 } from "@/hooks/anime";
 import { notFound } from "next/navigation";
+import { ContentSection } from "@/components/layout/page-container";
 import { AnimeHeroSection } from "@/components/anime/detail/sections/hero-section";
 import { AnimeSidebar } from "@/components/anime/detail/sections/sidebar";
 import { AnimeContentSections } from "@/components/anime/detail/sections/content-sections";
@@ -99,7 +100,7 @@ export default async function AnimeDetailsPage({ params }) {
   return (
     <>
       <AnimeHeroSection heroData={heroData} />
-      <section className="container mx-auto pb-8 sm:pb-10 px-4 mt-0 md:-mt-24 lg:-mt-48 relative z-10">
+      <ContentSection className="mt-0 md:-mt-24 lg:-mt-48 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 lg:gap-8">
           <div className="lg:col-span-1">
             <AnimeSidebar sidebarData={sidebarData} />
@@ -108,7 +109,7 @@ export default async function AnimeDetailsPage({ params }) {
             <AnimeContentSections contentData={contentData} />
           </div>
         </div>
-      </section>
+      </ContentSection>
     </>
   );
 }
