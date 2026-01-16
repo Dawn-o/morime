@@ -1,0 +1,97 @@
+import type { Metadata } from "next";
+import { getProducerById } from "@/hooks/UseProducer";
+import { ProducerDetails } from "@/components/producer/ProducerDetails";
+import { notFound } from "next/navigation";
+import { getAnime } from "@/hooks/UseAnime";
+import { PageContainer } from "@/components/layout/PageContainer";
+
+
+import type { DetailWithPaginationProps } from "@/types/pages";
+export async function generateMetadata({
+  params,
+}: DetailWithPaginationProps): Promise<Metadata> {
+  try {
+    const { malId } = await params;
+    const producer = await getProducerById(Number(malId));
+
+    if (!producer) {
+      return {
+        title: "Producer Not Found",
+        description: "The requested producer could not be found.",
+      };
+    }
+
+    return {
+      title: `${producer.titles?.[0]?.title} - Producer Details`,
+      description: `Information about ${producer.titles?.[0]?.title} anime production studio`,
+    };
+  } catch (error) {
+    return {
+      title: "Producer Details",
+      description: "Anime producer information",
+    };
+  }
+}
+
+export default async function ProducerDetailsPage({
+  params,
+  searchParams,
+}: DetailWithPaginationProps) {
+  const { malId } = await params;
+  const currentPage = parseInt((await searchParams)?.page) || 1;
+
+  if (!malId || isNaN(Number(malId))) {
+    notFound();
+  }
+
+  const [producer, animes] = await Promise.all([
+    getProducerById(Number(malId)),
+    getAnime(currentPage, {
+      limit: 24,
+      order_by: "favorites",
+      sort: "desc",
+      producers: malId,
+    }),
+  ]);
+
+  if (!producer) {
+    notFound();
+  }
+
+  const producerDetailsData = {
+    mal_id: producer.mal_id,
+    titles: producer.titles,
+    name: producer.name,
+    imageUrl: producer.images?.jpg?.image_url,
+    established: producer.established,
+    about: producer.about,
+    count: producer.count,
+    favorites: producer.favorites,
+  };
+
+  const producedAnimesData = animes
+    ? {
+        data:
+          animes.data?.map((anime) => ({
+            mal_id: anime.mal_id,
+            title: anime.title,
+            imageUrl: anime.images?.webp?.large_image_url,
+            score: anime.score,
+            episodes: anime.episodes,
+            year: anime.year,
+            type: anime.type,
+          })) || [],
+        totalPages: animes.totalPages,
+      }
+    : null;
+
+  return (
+    <PageContainer as="section">
+      <ProducerDetails
+        producer={producerDetailsData}
+        animes={producedAnimesData}
+        currentPage={currentPage}
+      />
+    </PageContainer>
+  );
+}
