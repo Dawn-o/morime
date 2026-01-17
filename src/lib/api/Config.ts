@@ -11,13 +11,13 @@ interface CacheConfig {
 export const CACHE_CONFIG: Record<"SHORT" | "MEDIUM" | "LONG", CacheConfig> = {
   SHORT: {
     next: {
-      revalidate: parseInt(process.env.CACHE_SHORT_TTL || "60"),
+      revalidate: parseInt(process.env.CACHE_SHORT_TTL || "300"),
       tags: ["anime-list"],
     },
   },
   MEDIUM: {
     next: {
-      revalidate: parseInt(process.env.CACHE_MEDIUM_TTL || "3600"),
+      revalidate: parseInt(process.env.CACHE_MEDIUM_TTL || "7200"),
       tags: ["anime-details"],
     },
   },
@@ -37,7 +37,7 @@ export const DEFAULT_LIMITS: Record<string, number> = {
 };
 
 export const RATE_LIMIT = {
-  delay: 400,
-  maxRetries: 5,
-  retryDelay: 800,
+  delay: parseInt(process.env.RATE_LIMIT_DELAY || "333"),
+  maxRetries: parseInt(process.env.RATE_LIMIT_MAX_RETRIES || "5"),
+  retryDelay: parseInt(process.env.RATE_LIMIT_RETRY_DELAY || "2000"),
 } as const;

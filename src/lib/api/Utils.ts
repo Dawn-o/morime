@@ -53,12 +53,27 @@ async function withRateLimit<T>(fetchFn: () => Promise<T>): Promise<T> {
       attempts++;
 
       const fetchError = error as FetchError;
-      if (fetchError.status === 429 || !fetchError.status) {
+      // Retry on rate limit (429), network errors, or gateway timeouts (502, 503, 504)
+      if (
+        fetchError.status === 429 ||
+        fetchError.status === 502 ||
+        fetchError.status === 503 ||
+        fetchError.status === 504 ||
+        !fetchError.status
+      ) {
+        const errorType =
+          fetchError.status === 429
+            ? "Rate limit"
+            : fetchError.status === 504
+              ? "Gateway timeout"
+              : fetchError.status
+                ? `Server error (${fetchError.status})`
+                : "Network error";
         console.warn(
-          `Rate limit hit, retrying... (${attempts}/${RATE_LIMIT.maxRetries})`,
+          `${errorType}, retrying... (${attempts}/${RATE_LIMIT.maxRetries})`,
         );
         if (attempts === RATE_LIMIT.maxRetries) {
-          throw new Error("Too many requests. Please try again later.");
+          throw error;
         }
         continue;
       }
@@ -98,16 +113,21 @@ export async function fetchWithSfw<T>(
     const url = buildUrl(endpoint, { ...fetchParams, sfw });
 
     const response = await withRateLimit(async () => {
+      const controller =
+        typeof AbortController !== "undefined" ? new AbortController() : null;
+      const timeoutId = controller
+        ? setTimeout(() => controller.abort(), 30000)
+        : null; // 30 second timeout
+
       const res = await fetch(url, {
         ...cacheConfig,
         headers: {
           Accept: "application/json",
         },
-        signal:
-          typeof AbortController !== "undefined"
-            ? new AbortController().signal
-            : undefined,
+        signal: controller?.signal,
       });
+
+      if (timeoutId) clearTimeout(timeoutId);
 
       if (!res.ok) {
         if (res.status === 404) {
@@ -167,16 +187,21 @@ export async function fetchSingle<T>(
   const url = buildUrl(endpoint, { ...params, sfw });
 
   return withRateLimit(async () => {
+    const controller =
+      typeof AbortController !== "undefined" ? new AbortController() : null;
+    const timeoutId = controller
+      ? setTimeout(() => controller.abort(), 30000)
+      : null; // 30 second timeout
+
     const response = await fetch(url, {
       ...cacheConfig,
       headers: {
         Accept: "application/json",
       },
-      signal:
-        typeof AbortController !== "undefined"
-          ? new AbortController().signal
-          : undefined,
+      signal: controller?.signal,
     });
+
+    if (timeoutId) clearTimeout(timeoutId);
 
     if (!response.ok) {
       if (response.status === 404) {
