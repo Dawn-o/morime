@@ -244,7 +244,7 @@ export default function TermsPage() {
               If you have any questions about these Terms of Service, please
               contact us by creating an issue on our{" "}
               <a
-                href="https://github.com/dawn-o/morime/issues"
+                href="https://github.com/rushelasli/morime/issues"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-primary hover:underline"

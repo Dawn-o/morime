@@ -15,7 +15,7 @@ export function Footer() {
             </p>
             <div className="flex mt-4 space-x-4">
               <Link
-                href="https://github.com/dawn-o"
+                href="https://github.com/rushelasli"
                 prefetch={true}
                 className="text-muted-foreground hover:text-foreground"
               >

@@ -56,7 +56,7 @@ export default function ContactPage() {
                       Found an issue? Report it on GitHub
                     </p>
                     <a
-                      href="https://github.com/dawn-o/morime/issues/new?labels=bug"
+                      href="https://github.com/rushelasli/morime/issues/new?labels=bug"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-primary hover:underline text-sm"
@@ -80,7 +80,7 @@ export default function ContactPage() {
                       Share your ideas with us
                     </p>
                     <a
-                      href="https://github.com/dawn-o/morime/issues/new?labels=enhancement"
+                      href="https://github.com/rushelasli/morime/issues/new?labels=enhancement"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-primary hover:underline text-sm"
@@ -104,7 +104,7 @@ export default function ContactPage() {
                       Ask questions or start discussions
                     </p>
                     <a
-                      href="https://github.com/dawn-o/morime/issues/new?labels=question"
+                      href="https://github.com/rushelasli/morime/issues/new?labels=question"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-primary hover:underline text-sm"
@@ -128,7 +128,7 @@ export default function ContactPage() {
                       Browse existing issues and discussions
                     </p>
                     <a
-                      href="https://github.com/dawn-o/morime/issues"
+                      href="https://github.com/rushelasli/morime/issues"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-primary hover:underline text-sm"
@@ -203,13 +203,13 @@ export default function ContactPage() {
                 <strong>Repository:</strong>
               </p>
               <a
-                href="https://github.com/dawn-o/morime"
+                href="https://github.com/rushelasli/morime"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-primary hover:underline text-sm flex items-center gap-2"
               >
                 <Github className="h-4 w-4" />
-                github.com/dawn-o/morime
+                github.com/rushelasli/morime
               </a>
             </div>
             <div className="flex gap-2 flex-wrap mt-4">

@@ -360,7 +360,7 @@ export default function PrivacyPage() {
               <p className="text-sm mb-2">
                 GitHub:{" "}
                 <a
-                  href="https://github.com/dawn-o/morime/issues/new?labels=question"
+                  href="https://github.com/rushelasli/morime/issues/new?labels=question"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-primary hover:underline"

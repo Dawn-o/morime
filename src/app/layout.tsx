@@ -36,8 +36,8 @@ export const metadata: Metadata = {
   ],
   authors: [
     {
-      name: "Dawn-o",
-      url: "https://github.com/dawn-o/morime",
+      name: "rushelasli",
+      url: "https://github.com/rushelasli/morime",
     },
   ],
   creator: "Morime",
@@ -56,7 +56,7 @@ export const metadata: Metadata = {
     title: "Morime - Anime & Manga Discovery",
     description:
       "Discover and track anime and manga. Browse thousands of titles and explore seasonal anime.",
-    creator: "Dawn-o",
+    creator: "rushelasli",
   },
   robots: {
     index: true,

@@ -211,7 +211,7 @@ export default function AboutPage() {
               Have ideas for new features? Found a bug? Want to contribute?
               Morime is open source and we welcome contributions on{" "}
               <a
-                href="https://github.com/dawn-o/morime"
+                href="https://github.com/rushelasli/morime"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-primary hover:underline"
