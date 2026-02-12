@@ -87,7 +87,6 @@ export function PageHeader({
   );
 }
 
-// Section wrapper for content blocks with consistent spacing.
 export interface ContentSectionProps {
   children: ReactNode;
   className?: string;

@@ -1,8 +1,5 @@
-// Common Component Props Types
-
 import { ReactNode } from "react";
 
-// Shared Display Card Data Types
 export interface AnimeCardData {
   mal_id: number;
   title: string;
@@ -43,7 +40,6 @@ export interface ProducerDetailsData {
   favorites: number;
 }
 
-// Layout Components
 export interface PageContainerProps {
   children: ReactNode;
   className?: string;
@@ -68,7 +64,6 @@ export interface ContentSectionProps {
   noPadding?: boolean;
 }
 
-// Navigation Components
 export interface PaginationProps {
   currentPage: number;
   totalPages: number;
@@ -85,7 +80,6 @@ export interface TopNavigationProps {
   currentType?: string;
 }
 
-// Form Components
 export interface SearchInputProps {
   defaultValue?: string;
   basePath: string;
@@ -101,7 +95,6 @@ export interface TypeFilterTabsProps {
   selectedType?: string;
 }
 
-// Display Components
 export interface AnimeGridProps {
   animes: Array<{
     mal_id: number;
@@ -193,7 +186,6 @@ export interface GenreCategoriesProps {
   }>;
 }
 
-// Producer Components
 export interface ProducerCardProps {
   mal_id: number;
   name: string;
@@ -224,7 +216,6 @@ export interface ProducerDetailsProps {
   }>;
 }
 
-// Home Page Components
 export interface HomePageProps {
   upcomings: Array<{
     mal_id: number;
@@ -291,7 +282,6 @@ export interface AnimeCarouselProps {
   }>;
 }
 
-// Content Components
 export interface EmptyStateProps {
   title: string;
   description?: string;
@@ -304,14 +294,12 @@ export interface ErrorStateProps {
   error?: Error | string;
 }
 
-// Section Components
 export interface SectionHeaderProps {
   title: string;
   subtitle?: string;
   viewAllLink?: string;
 }
 
-// Utility Types
 export type Without<T, U> = { [P in Exclude<keyof T, keyof U>]?: never };
 export type XOR<T, U> = T | U extends object
   ? (Without<T, U> & U) | (Without<U, T> & T)

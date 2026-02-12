@@ -1,5 +1,3 @@
-// Anime & Manga Types for Jikan API v4
-
 export interface Image {
   image_url?: string;
   small_image_url?: string;
@@ -307,7 +305,6 @@ export interface PaginatedResponse<T> extends ApiResponse<T[]> {
   totalPages?: number;
 }
 
-// Component Props Types
 export interface AnimeCardProps {
   mal_id: number;
   title: string;
@@ -330,7 +327,6 @@ export interface MangaCardProps {
   members?: number | null;
 }
 
-// API Config Types
 export interface ApiConfig {
   type?: string;
   limit?: number;
